@@ -1,0 +1,4 @@
+namespaces:
+    root: App
+    services: services
+trace: 0

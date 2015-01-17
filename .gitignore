@@ -1,0 +1,5 @@
+# Ignore drupal files.
+core/vendor/*
+
+# Ignore vendor files
+lib/vendor/*
