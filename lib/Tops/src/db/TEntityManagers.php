@@ -56,27 +56,29 @@ class TEntityManagers {
      * @throws \Doctrine\ORM\ORMException
      */
     private static function createManager($typeKey,$isDevMode=null) {
-        $config = new TConfig("databases");
-        $databaseId = $config->Value("type/$typeKey");
+        $config = new TConfig("appsettings");
+
+        $databaseId = $config->Value("databases/type/$typeKey");
         if ($isDevMode === null) {
             $isDevMode = self::$environment == "development";
         }
-        $entityPath = $config->Value("models/$databaseId");
+        $entityPath = $config->Value("databases/models/$databaseId");
         $metaConfigPath = TPath::FromLib($entityPath);
-        $connectionParams = $config->Value(self::$environment."/connections/$databaseId");
+
+        $connectionsConfig = new TConfig("connections-".self::$environment);
+        $connectionParams = $connectionsConfig->Value($databaseId);
+
         $metaConfig = Setup::createAnnotationMetadataConfiguration(array($metaConfigPath), $isDevMode);
         $entityManager = EntityManager::create($connectionParams,$metaConfig);
         self::$managers[$typeKey] = $entityManager;
         return $entityManager;
     }
 
-    public static function ReadDbConfig($typeKey="application",$isDevMode=null) {
-        $config = new TConfig("databases");
-        $databaseId = $config->Value("type/$typeKey");
-        if ($isDevMode === null) {
-            $isDevMode = self::$environment == "development";
-        }
-        $connectionParams = $config->Value(self::$environment."/connections/$databaseId");
+    public static function ReadDbConfig($typeKey="application") {
+        $config = new TConfig("appsettings");
+        $databaseId = $config->Value("databases/type/$typeKey");
+        $connectionsConfig = new TConfig("connections-".self::$environment);
+        $connectionParams = $connectionsConfig->Value($databaseId);
         return $connectionParams;
     }
 

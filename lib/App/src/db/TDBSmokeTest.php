@@ -6,11 +6,11 @@
  * Time: 7:59 AM
  */
 
-namespace scym\db;
+namespace App\db;
 
 
 class TDBSmokeTest {
     public static function Test() {
-        print "Hello World (scym\\db)\n";
+        print "Hello World (App\\db)\n";
     }
 }

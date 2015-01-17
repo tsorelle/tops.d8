@@ -6,7 +6,7 @@
  * Time: 7:42 AM
  */
 
-namespace scym\db;
+namespace App\db;
 
 /**
  * @Entity

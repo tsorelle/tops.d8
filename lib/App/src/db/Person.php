@@ -1,6 +1,6 @@
 <?php
 
-namespace scym\db;
+namespace App\db;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -183,7 +183,7 @@ class Person
      * Set firstname
      *
      * @param string $firstname
-     * @return Persons
+     * @return Person
      */
     public function setFirstname($firstname)
     {
@@ -206,7 +206,7 @@ class Person
      * Set lastname
      *
      * @param string $lastname
-     * @return Persons
+     * @return Person
      */
     public function setLastname($lastname)
     {
@@ -229,7 +229,7 @@ class Person
      * Set middlename
      *
      * @param string $middlename
-     * @return Persons
+     * @return Person
      */
     public function setMiddlename($middlename)
     {
@@ -252,7 +252,7 @@ class Person
      * Set addressid
      *
      * @param integer $addressid
-     * @return Persons
+     * @return Person
      */
     public function setAddressid($addressid)
     {
@@ -275,7 +275,7 @@ class Person
      * Set phone
      *
      * @param string $phone
-     * @return Persons
+     * @return Person
      */
     public function setPhone($phone)
     {
@@ -298,7 +298,7 @@ class Person
      * Set workphone
      *
      * @param string $workphone
-     * @return Persons
+     * @return Person
      */
     public function setWorkphone($workphone)
     {
@@ -321,7 +321,7 @@ class Person
      * Set email
      *
      * @param string $email
-     * @return Persons
+     * @return Person
      */
     public function setEmail($email)
     {
@@ -344,7 +344,7 @@ class Person
      * Set membershipstatus
      *
      * @param integer $membershipstatus
-     * @return Persons
+     * @return Person
      */
     public function setMembershipstatus($membershipstatus)
     {
@@ -367,7 +367,7 @@ class Person
      * Set birthyear
      *
      * @param integer $birthyear
-     * @return Persons
+     * @return Person
      */
     public function setBirthyear($birthyear)
     {
@@ -390,7 +390,7 @@ class Person
      * Set username
      *
      * @param string $username
-     * @return Persons
+     * @return Person
      */
     public function setUsername($username)
     {
@@ -413,7 +413,7 @@ class Person
      * Set password
      *
      * @param string $password
-     * @return Persons
+     * @return Person
      */
     public function setPassword($password)
     {
@@ -436,7 +436,7 @@ class Person
      * Set notes
      *
      * @param string $notes
-     * @return Persons
+     * @return Person
      */
     public function setNotes($notes)
     {
@@ -459,7 +459,7 @@ class Person
      * Set dateadded
      *
      * @param \DateTime $dateadded
-     * @return Persons
+     * @return Person
      */
     public function setDateadded($dateadded)
     {
@@ -482,7 +482,7 @@ class Person
      * Set dateupdated
      *
      * @param \DateTime $dateupdated
-     * @return Persons
+     * @return Person
      */
     public function setDateupdated($dateupdated)
     {
@@ -505,7 +505,7 @@ class Person
      * Set junior
      *
      * @param boolean $junior
-     * @return Persons
+     * @return Person
      */
     public function setJunior($junior)
     {
@@ -528,7 +528,7 @@ class Person
      * Set active
      *
      * @param boolean $active
-     * @return Persons
+     * @return Person
      */
     public function setActive($active)
     {
@@ -551,7 +551,7 @@ class Person
      * Set sortkey
      *
      * @param string $sortkey
-     * @return Persons
+     * @return Person
      */
     public function setSortkey($sortkey)
     {
@@ -574,7 +574,7 @@ class Person
      * Set affiliationcode
      *
      * @param string $affiliationcode
-     * @return Persons
+     * @return Person
      */
     public function setAffiliationcode($affiliationcode)
     {
@@ -597,7 +597,7 @@ class Person
      * Set ymstatuscode
      *
      * @param integer $ymstatuscode
-     * @return Persons
+     * @return Person
      */
     public function setYmstatuscode($ymstatuscode)
     {
@@ -620,7 +620,7 @@ class Person
      * Set ympersonid
      *
      * @param integer $ympersonid
-     * @return Persons
+     * @return Person
      */
     public function setYmpersonid($ympersonid)
     {
@@ -643,7 +643,7 @@ class Person
      * Set affiliationcode2
      *
      * @param string $affiliationcode2
-     * @return Persons
+     * @return Person
      */
     public function setAffiliationcode2($affiliationcode2)
     {

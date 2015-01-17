@@ -1,2 +1,3 @@
 environment: development
 memory: 512
+trace: 0
