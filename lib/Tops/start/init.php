@@ -8,5 +8,7 @@
 $libPath = realpath(__DIR__."/../..");
 require_once($libPath . "/Tops/src/sys/TClassPath.php");
 \Tops\sys\TClassPath::Create($libPath);
+\Tops\sys\TClassPath::Add('\App','App/src');
 unset($libPath);
+
 

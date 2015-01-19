@@ -7,5 +7,6 @@
  */
 \Tops\sys\TClassPath::Add('\Doctrine\ORM',\Tops\sys\TPath::FromLib('vendor\doctrine\orm\lib'));
 \Tops\sys\TClassPath::Add('\Doctrine\DBAL',\Tops\sys\TPath::FromLib('vendor\doctrine\dbal\lib'));
+\Tops\sys\TClassPath::Add('\Symfony\Component','vendor/Symfony/Component');
 
 

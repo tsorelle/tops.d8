@@ -96,16 +96,20 @@ class TClassPath
 
 
     public static function Create($libPath) {
-        self::$instance = new \Tops\sys\TClassPath($libPath);
+        self::$instance = new TClassPath($libPath);
         self::$instance->register();
         self::$instance->addNamespace('Tops','Tops/src');
     }
 
     public static function Add($prefix, $subPath = NULL) {
+        self::_add(self::$instance, $prefix, $subPath);
+    }
+
+    private static function _add(TClassPath $instance, $prefix, $subPath) {
         if ($subPath === NULL) {
             $subPath = $prefix;
         }
-        self::$instance->addNamespace($prefix,$subPath);
+        $instance->addNamespace($prefix,$subPath);
     }
 
 
