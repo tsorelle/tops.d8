@@ -19,6 +19,10 @@ class UserEntity {
      */
     private $id;
 
+    public function getId() {
+        return $this->id;
+    }
+
     /**
      * @var string
      *

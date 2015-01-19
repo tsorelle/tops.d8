@@ -7,7 +7,7 @@
  */
 
 namespace Tops\sys;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+// use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /*****************************************************************
 Used to disable error checking for functions which might run afowl
@@ -92,7 +92,7 @@ class TPath
         return $this->path;
     }
 
-    public function getFilePath($fileName, $throwException=false)
+    public function getFilePath($fileName) // , $throwException=false)
     {
         return self::Append($this->path,$fileName);
     }

@@ -9,10 +9,11 @@ use Tops\services;
 
 class ServiceFactoryTest extends PHPUnit_Framework_TestCase {
     public function testCreateService() {
+        \Tops\sys\TObjectContainer::clear();
+        \Tops\sys\TObjectContainer::register('configManager','\Tops\sys\TYmlConfigManager');
+        \Tops\sys\TObjectContainer::register('serviceFactory','\Tops\services\TServiceFactory','configManager');
 
-        // $service = $this->createService(new services\TServiceFactory('\App\services'), "TestService");
-        // $factory = new services\TServiceFactory('\App\services');
-        $factory = new services\TServiceFactory();
+        $factory = \Tops\sys\TObjectContainer::get('serviceFactory');
 
         $service = $this->createService($factory, "TestService");
         $this->assertNotNull($service,'Service not instantiated.');

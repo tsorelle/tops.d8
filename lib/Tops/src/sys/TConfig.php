@@ -10,10 +10,17 @@ namespace Tops\sys;
 use Symfony\Component\Yaml\Parser;
 
 
-class TConfig {
+class TConfig implements IConfiguration {
     private $configData;
 
-    public function __construct($fileName,$subSection = '') {
+    public function setConfig($configData,$subSection = '') {
+        if (!empty($subSection)) {
+            $configData = $this->getValue($configData[$subSection]);
+        }
+        $this->configData = $configData;
+    }
+
+    public function loadConfig($fileName,$subSection = '') {
         $filePath = TPath::ConfigPath($fileName.'.yml');
         $yaml = new Parser();
         $raw = file_get_contents($filePath);

@@ -14,6 +14,9 @@ class EntityTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue(class_exists('App\db\Person',true),'Person class not found.');
         $this->assertTrue(class_exists('\Doctrine\ORM\EntityManager',true),'EntityManager class not found.');
 
+        \Tops\sys\TObjectContainer::clear();
+        \Tops\sys\TObjectContainer::register('configManager','\Tops\sys\TYmlConfigManager');
+
         $em = TEntityManagers::Get();
         $repository = $em->getRepository('App\db\Person');
         $person = $repository->findOneBy(array('lastname' => 'SoRelle', 'firstname' => 'Terry'));

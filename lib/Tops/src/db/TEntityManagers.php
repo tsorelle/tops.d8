@@ -9,13 +9,40 @@
 namespace Tops\db;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-use Tops\sys\TConfig;
+use Tops\sys\IConfigManager;
+use Tops\sys\IConfiguration;
+use Tops\sys\TObjectContainer;
 use Tops\sys\TPath;
 
-class TEntityManagers {
-    private static $managers;
-    private static $environment;
 
+class TEntityManagers {
+    private $managers;
+    private $environment;
+    private $configManager;
+
+    private static $instance;
+
+    public static function create(IConfigManager $configManager) {
+        self::$instance = new TEntityManagers($configManager);
+    }
+
+    public function __construct(IConfigManager $configManager)
+    {
+        $this->configManager = $configManager;
+        $topsConfig = $configManager->get("tops");
+        $this->initialize($topsConfig);
+
+    }
+
+    private function initialize(IConfiguration $topsConfig) {
+        $this->managers = Array();
+        $this->environment = $topsConfig->Value("environment");
+
+        if ($this->environment == null) {
+            throw new \Exception("No tops.yml environment setting found.");
+        }
+    }
+    
     /**
      * Get a Doctrine entity manager based on name of database type.
      *
@@ -25,26 +52,20 @@ class TEntityManagers {
      */
     public static function Get($key='application')
     {
-        self::initialize();
-        if (array_key_exists($key,self::$managers))
-            return self::$managers[$key];
-        return self::createManager($key);
+        if (!isset(self::$instance)) {
+            $configManager = TObjectContainer::get("configManager");
+            self::$instance = new TEntityManagers($configManager);
+        }
+        return self::$instance->_get($key);
     }
 
-    /**
-     * Perform one time initialization of static class variables
-     *
-     * @throws \Exception
-     */
-    private static function initialize() {
-        if (isset(self::$managers))
-            return;
-        self::$managers = Array();
-        $env = (new TConfig("tops"))->Value("environment");
-        if ($env == null) {
-            throw new \Exception("No tops.yml environment setting found.");
-        }
-        self::$environment = $env;
+    public function _get($key)
+    {
+        if (array_key_exists($key,$this->managers))
+            return $this->managers[$key];
+
+        $config = $this->configManager->get("appsettings");
+        return $this->createManager($config, $key);
     }
 
 
@@ -55,31 +76,26 @@ class TEntityManagers {
      * @return EntityManager
      * @throws \Doctrine\ORM\ORMException
      */
-    private static function createManager($typeKey,$isDevMode=null) {
-        $config = new TConfig("appsettings");
-
-        $databaseId = $config->Value("databases/type/$typeKey");
+    private function createManager(IConfiguration $dbConfig, $typeKey,$isDevMode=null) {
+        $databaseId = $dbConfig->Value("databases/type/$typeKey");
         if ($isDevMode === null) {
-            $isDevMode = self::$environment == "development";
+            $isDevMode = $this->environment == "development";
         }
-        $entityPath = $config->Value("databases/models/$databaseId");
-        $metaConfigPath = TPath::FromLib($entityPath);
-
-        $connectionsConfig = new TConfig("connections-".self::$environment);
-        $connectionParams = $connectionsConfig->Value($databaseId);
-
-        $metaConfig = Setup::createAnnotationMetadataConfiguration(array($metaConfigPath), $isDevMode);
-        $entityManager = EntityManager::create($connectionParams,$metaConfig);
-        self::$managers[$typeKey] = $entityManager;
+        $entityPath = $dbConfig->Value("databases/models/$databaseId");
+        $connectionsConfig = $this->configManager->get("connections-".$this->environment);
+        $entityManager = $this->configureEntityManager($connectionsConfig,$databaseId,$entityPath,$isDevMode);
+        $this->managers[$typeKey] = $entityManager;
         return $entityManager;
     }
 
-    public static function ReadDbConfig($typeKey="application") {
-        $config = new TConfig("appsettings");
-        $databaseId = $config->Value("databases/type/$typeKey");
-        $connectionsConfig = new TConfig("connections-".self::$environment);
+    private function configureEntityManager(IConfiguration $connectionsConfig, $databaseId, $entityPath, $isDevMode)
+    {
         $connectionParams = $connectionsConfig->Value($databaseId);
-        return $connectionParams;
+        $metaConfigPath = TPath::FromLib($entityPath);
+        $metaConfig = Setup::createAnnotationMetadataConfiguration(array($metaConfigPath), $isDevMode);
+        $entityManager = EntityManager::create($connectionParams,$metaConfig);
+        return $entityManager;
     }
+
 
 }
