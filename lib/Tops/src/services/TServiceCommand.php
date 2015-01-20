@@ -15,23 +15,42 @@ abstract class TServiceCommand {
 
     abstract protected function run();
 
+    /**
+     * Performs type cast on class variable $context.
+     *
+     * @param TServiceContext $result
+     * @return TServiceContext
+     */
+    protected function getContext(TServiceContext $result = null)
+    {
+        if ($result === null) {
+            $result = $this->context;
+        }
+        return $result;
+    }
+
     protected function AddErrorMessage($text) {
-        $this->context->AddErrorMessage($text);
+        $context = $this->getContext();
+        $context->AddErrorMessage($text);
     }
 
     public function AddInfoMessage($text) {
-        $this->context->AddInfoMessage($text);
+        $context = $this->getContext();
+        $context->AddInfoMessage($text);
     }
 
     public function AddWarningMessage($text) {
-        $this->context->AddWarningMessage($text);
+        $context = $this->getContext();
+        $context->AddWarningMessage($text);
     }
 
     public function SetReturnValue($value) {
-        $this->context->SetReturnValue($value);
+        $context = $this->getContext();
+        $context->SetReturnValue($value);
     }
 
     public function GetRequest() {
+
         return $this->request;
     }
 
