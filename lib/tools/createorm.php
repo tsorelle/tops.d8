@@ -6,14 +6,7 @@
  * Time: 7:03 AM
  */
 $outputPath= realpath(__DIR__ . '/model');
-require_once __DIR__ . '/../../core/vendor/autoload.php';
-include (__DIR__."/../Tops/start/init.php");
-\Tops\sys\TClassPath::Add('\Doctrine\ORM','vendor\doctrine\orm\lib\Doctrine\ORM');
-\Tops\sys\TClassPath::Add('\Doctrine\DBAL','vendor\doctrine\dbal\lib\Doctrine\DBAL');
-\Tops\sys\TClassPath::Add('\scym','App/src');
-
-use Tops\sys\TConfig;
-use Tops\db\TEntityManagers;
+require_once __DIR__ . '/../Tops/start/autoload.php';
 
 if (!class_exists('\Doctrine\ORM\EntityManager',true)) {
     throw new \Exception("manager class not found");
