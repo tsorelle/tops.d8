@@ -15,6 +15,12 @@ use Tops\sys\TObjectContainer;
 use Tops\sys\TPath;
 
 
+/**
+ * Class TEntityManagers
+ * @package Tops\db
+ *
+ * Class factory for Doctrine ORM EntityManager
+ */
 class TEntityManagers {
     private $managers;
     private $environment;
@@ -88,6 +94,14 @@ class TEntityManagers {
         return $entityManager;
     }
 
+    /**
+     * @param IConfiguration $connectionsConfig
+     * @param $databaseId
+     * @param $entityPath
+     * @param $isDevMode
+     * @return EntityManager
+     * @throws \Doctrine\ORM\ORMException
+     */
     private function configureEntityManager(IConfiguration $connectionsConfig, $databaseId, $entityPath, $isDevMode)
     {
         $connectionParams = $connectionsConfig->Value($databaseId);

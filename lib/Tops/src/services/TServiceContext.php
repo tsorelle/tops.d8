@@ -38,7 +38,14 @@ class ResultType {
     const ServiceNotAvailable = 4;
 }
 
+/**
+ * Class TServiceContext
+ * @package Tops\services
+ */
 class TServiceContext {
+    /**
+     * @var TServiceResponse
+     */
     private  $response;
 
     public function __construct() {
@@ -80,6 +87,9 @@ class TServiceContext {
         $this->response->Result = ResultType::ServiceNotAvailable;
     }
 
+    /**
+     * @return TServiceResponse
+     */
     public function GetResponse() {
         return $this->response;
     }

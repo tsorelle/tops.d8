@@ -9,6 +9,12 @@ namespace Tops\services;
 use Tops\sys\IConfigManager;
 use Tops\sys\IConfiguration;
 
+/**
+ * Class TServiceFactory
+ * @package Tops\services
+ *
+ * Creates Peanut service command based on ID
+ */
 class TServiceFactory implements IServiceFactory {
 
     public $namespace;
@@ -26,6 +32,10 @@ class TServiceFactory implements IServiceFactory {
         $this->namespace = $namespace;
     }
 
+    /**
+     * @param $serviceId
+     * @return string
+     */
     function CreateService($serviceId)
     {
         $className = $this->namespace.'\T'.$serviceId.'Command';

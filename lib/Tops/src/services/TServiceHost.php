@@ -8,13 +8,25 @@
 namespace Tops\services;
 use \Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class TServiceHost
+ * @package Tops\services
+ */
 class TServiceHost {
 
+    /**
+     * @var TServiceFactory
+     */
     private static $serviceFactory;
     public static function SetNamespace($namespace = null) {
         self::$serviceFactory = new TServiceFactory($namespace);
     }
 
+    /**
+     * @param null $request
+     * @return TServiceResponse
+     * @throws \Exception
+     */
     public static function ExecuteRequest($request = null) {
         if (empty($request)) {
             $request = Request::createFromGlobals();
@@ -45,6 +57,7 @@ class TServiceHost {
         return self::Execute($commandId, $input);
     }
 
+    /*
     private function getServiceFactory() {
         if (self::$serviceFactory == null) {
             $namespaces = (new TConfig("appsettings"))->Value("namespaces");
@@ -56,11 +69,23 @@ class TServiceHost {
         }
         return self::$serviceFactory;
     }
+    */
 
+    /**
+     * @param IServiceFactory $factory
+     * @param $serviceId
+     * @return TServiceCommand
+     */
     public static function CreateServiceCommand(IServiceFactory $factory, $serviceId) {
         return $factory->CreateService($serviceId);
     }
 
+    /**
+     * @param $commandId
+     * @param $input
+     * @return TServiceResponse
+     * @throws \Exception
+     */
     public static function Execute($commandId, $input) {
         $command = self::CreateServiceCommand(self::$serviceFactory, $commandId);
         if (empty($command))

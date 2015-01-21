@@ -10,16 +10,37 @@ namespace Tops\sys;
 use Symfony\Component\Yaml\Parser;
 
 
+/**
+ * Class TConfig
+ * @package Tops\sys
+ *
+ * Stores and dispenses configuration data.
+ * Source may be a YML file or array in memory.
+ */
 class TConfig implements IConfiguration {
     private $configData;
 
-    public function setConfig($configData,$subSection = '') {
+
+    /**
+     * @param array $configData
+     * @param string $subSection
+     *
+     * Set config data source from a memory array.
+     * Typically used in unit testing.
+     */
+    public function setConfig(Array $configData,$subSection = '') {
         if (!empty($subSection)) {
             $configData = $this->getValue($configData[$subSection]);
         }
         $this->configData = $configData;
     }
 
+    /**
+     * @param $fileName
+     * @param string $subSection
+     *
+     * Get config data from a YML configuration file.
+     */
     public function loadConfig($fileName,$subSection = '') {
         $filePath = TPath::ConfigPath($fileName.'.yml');
         $yaml = new Parser();

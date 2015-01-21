@@ -55,6 +55,9 @@ namespace Tops\sys;
  */
 class TClassPath
 {
+    /**
+     * @var TClassPath
+     */
     public static $instance;
     private $libPath;
 
@@ -102,17 +105,11 @@ class TClassPath
     }
 
     public static function Add($prefix, $subPath = NULL) {
-        self::_add(self::$instance, $prefix, $subPath);
-    }
-
-    private static function _add(TClassPath $instance, $prefix, $subPath) {
         if ($subPath === NULL) {
             $subPath = $prefix;
         }
-        $instance->addNamespace($prefix,$subPath);
+        self::$instance->addNamespace($prefix,$subPath);
     }
-
-
 
     /**
      * An associative array where the key is a namespace prefix and the value

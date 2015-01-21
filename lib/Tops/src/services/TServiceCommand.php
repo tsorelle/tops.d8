@@ -8,45 +8,35 @@
 
 namespace Tops\services;
 
+/**
+ * Class TServiceCommand
+ * @package Tops\services
+ */
 abstract class TServiceCommand {
+    /**
+     * @var TServiceContext
+     */
     private  $context;
+    
     private  $request;
 
 
     abstract protected function run();
 
-    /**
-     * Performs type cast on class variable $context.
-     *
-     * @param TServiceContext $result
-     * @return TServiceContext
-     */
-    protected function getContext(TServiceContext $result = null)
-    {
-        if ($result === null) {
-            $result = $this->context;
-        }
-        return $result;
-    }
-
     protected function AddErrorMessage($text) {
-        $context = $this->getContext();
-        $context->AddErrorMessage($text);
+        $this->context->AddErrorMessage($text);
     }
 
     public function AddInfoMessage($text) {
-        $context = $this->getContext();
-        $context->AddInfoMessage($text);
+        $this->context->AddInfoMessage($text);
     }
 
     public function AddWarningMessage($text) {
-        $context = $this->getContext();
-        $context->AddWarningMessage($text);
+        $this->context->AddWarningMessage($text);
     }
 
     public function SetReturnValue($value) {
-        $context = $this->getContext();
-        $context->SetReturnValue($value);
+        $this->context->SetReturnValue($value);
     }
 
     public function GetRequest() {
@@ -58,6 +48,10 @@ abstract class TServiceCommand {
         return true;
     }
 
+    /**
+     * @param $request
+     * @return TServiceResponse
+     */
     public function Execute($request) {
         $this->context = new TServiceContext();
         $this->request = $request;

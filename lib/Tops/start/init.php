@@ -1,5 +1,7 @@
 <?php
 /**
+ * Initialize dependency injection.
+ *
  * Created by PhpStorm.
  * User: Terry
  * Date: 11/8/2014

@@ -9,8 +9,16 @@
 namespace Tops\sys;
 
 
+/**
+ * Class TYmlConfigManager
+ * @package Tops\sys
+ * Class factory for Configuration objects using YML configuration files
+ */
 class TYmlConfigManager implements IConfigManager {
 
+    /**
+     * @inheritdoc
+     */
     public function get($configName, $subSection = '')
     {
         $config = new TConfig();

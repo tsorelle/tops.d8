@@ -9,15 +9,17 @@
 namespace Tops\sys;
 // use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-/*****************************************************************
-Used to disable error checking for functions which might run afowl
-of base_dir restriction.
- *****************************************************************/
+/**
+ * Used to disable error checking for functions which might run afowl of base_dir restriction.
+ */
 function ignoreFileErrors(){}  //  ignoreFileErrors
 
-/**************************************************************
-Handles a variety of file and directory manipulation operations.
- ***************************************************************/
+/**
+ * Class TPath
+ * @package Tops\sys
+ *
+ * Handles a variety of file and directory manipulation operations.
+ */
 class TPath
 {
     private static $documentRoot = null;
@@ -98,6 +100,8 @@ class TPath
     }
 
     /**
+     * Determine if path is valid
+     *
      * @param $path
      * @return bool
      */
@@ -108,6 +112,16 @@ class TPath
         return $result;
     }
 
+    /**
+     * Concatenate to path strings resolving separators etc.
+     * Normalizes both paths.
+     *
+     * @param $path1
+     * @param $path2
+     * @param bool $throwException
+     * @return bool|string
+     * @throws \Exception
+     */
     public static function Join($path1, $path2, $throwException = false)
     {
         $path1 = realpath($path1);
@@ -119,6 +133,16 @@ class TPath
         return self::Append($path1,$path2);
     }
 
+    /**
+     * Append a second path to the first one.
+     * Assumes that the first path has already been normalized
+     *
+     * @param $path1
+     * @param $path2
+     * @param bool $throwException
+     * @return string
+     * @throws \Exception
+     */
     public static function Append($path1, $path2, $throwException=false) {
 
         $path2 = self::Normalize($path2);
@@ -136,11 +160,26 @@ class TPath
         return $path1;
     }
 
+    /**
+     * Return fully qualified path for file in the default configuration directory
+     *
+     * @param $fileName
+     * @return string
+     * @throws \Exception
+     */
     public static function ConfigPath($fileName) {
         self::Initialize();
         return self::Append(self::$configRoot,$fileName);
     }
 
+    /**
+     * Return fully qualified path starting in the application root directory (typically site document root)
+     *
+     * @param string $path
+     * @param bool $throwException
+     * @return null|string
+     * @throws \Exception
+     */
     public static function FromRoot($path='',$throwException=false)
     {
 
@@ -158,6 +197,14 @@ class TPath
         return $result;
     }
 
+    /**
+     * Return fully qualified path starting in the default library directory
+     *
+     * @param string $path
+     * @param bool $throwException
+     * @return null|string
+     * @throws \Exception
+     */
     public static function FromLib($path='',$throwException=false)
     {
         self::Initialize();

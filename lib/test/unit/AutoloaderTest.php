@@ -13,7 +13,6 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
     public function testFindTopsClass() {
 
         $this->findClass('\Symfony\Component\Config\Resource\DirectoryResource');
-        // $this->findClass('\Symfony\Component\Config\Loader\DelegatingLoader');
         $this->findClass('\Doctrine\DBAL\DriverManager');
         $this->findClass('\Symfony\Component\Config\Loader\FileLoader');
         $this->findClass('\Tops\db\TEntityManagers');
@@ -21,8 +20,6 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
         $this->findClass('\App\test\TAppSmokeTest');
         $this->findClass('\Doctrine\ORM\NativeQuery');
         $this->findClass('\Doctrine\ORM\EntityManager');
-
-
     }
 
     private function findClass($className) {

@@ -9,6 +9,14 @@
 namespace Tops\sys;
 use Symfony\Component\Config\FileLocatorInterface;
 
+/**
+ * Class TConfigFileLocator
+ * @package Tops\sys
+ *
+ * Used as a adaptor to supply file information from the TPath class
+ * to Symfony 2 components such as configuration.
+ *
+ */
 class TConfigFileLocator implements FileLocatorInterface {
 
     private $basePath;

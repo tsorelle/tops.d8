@@ -7,13 +7,18 @@
  */
 namespace Tops\services;
 
-class TServiceMessage {
-    public $MessageType;
-    public $Text;
-}
-
+/**
+ * Class TServiceResponse
+ * @package Tops\services
+ */
 class TServiceResponse {
+    /**
+     * @var TServiceMessage[]
+     */
     public $Messages;
+    /**
+     * @var int
+     */
     public $Result;
     public $Value;
 }

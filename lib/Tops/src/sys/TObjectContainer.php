@@ -11,12 +11,31 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
+/**
+ * Class TObjectContainer
+ * @package Tops\sys
+ *
+ * A facade for dependency injection using the Symfony 2 component
+ */
 class TObjectContainer {
+    /**
+     * @var ContainerBuilder
+     */
     private static $container;
 
+    /**
+     *  Release container so a new one will be created on next get container call.
+     *  Used primarily for unit tests.
+     */
     public static function clear() {
         self::$container = null;
     }
+
+    /**
+     * @return ContainerBuilder
+     *
+     * Get container instance, create instance if null
+     */
     public static function getContainer() {
         if (!(self::$container)) {
             self::$container = new ContainerBuilder();
@@ -27,21 +46,21 @@ class TObjectContainer {
     /**
      * @param $key
      * @return mixed
+     *
+     * Retrieve instance from the container.
      */
     public static function get($key) {
-        return self::_get(self::getContainer(),$key);
+        return self::$container->get($key);
     }
 
-    private static function _get(ContainerBuilder $container,$key) {
-        return $container->get($key);
-    }
-
+    /**
+     * @param $key
+     * @param $className
+     * @param null $arguments
+     * @return \Symfony\Component\DependencyInjection\Definition
+     */
     public static function register($key,$className,$arguments = null) {
-        return self::_register(self::getContainer(),$key,$className,$arguments);
-    }
-
-    private static function _register(ContainerBuilder $container, $key, $className, $arguments = null) {
-        $definition = $container->register($key,$className);
+        $definition = self::getContainer()->register($key,$className);
         if ($arguments !== null) {
             if (!is_array($arguments)) {
                 $definition->addArgument(New Reference($arguments));
@@ -55,14 +74,17 @@ class TObjectContainer {
         return $definition;
     }
 
+
+    /**
+     * @param null $fileName
+     * @param null $configLocation
+     */
     public static function loadConfig($fileName = null,$configLocation = null) {
-        self::_loadConfig(self::getContainer(),$fileName,$configLocation);
+        $loader = new YamlFileLoader(self::$container, new TConfigFileLocator($configLocation));
+        $loader->load($fileName);
+
     }
 
-    private static function _loadConfig(ContainerBuilder $container, $fileName = null,$configLocation = null) {
-        $loader = new YamlFileLoader($container, new TConfigFileLocator($configLocation));
-        $loader->load($fileName);
-    }
 
 
 

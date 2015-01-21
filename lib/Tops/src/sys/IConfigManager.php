@@ -9,6 +9,15 @@
 namespace Tops\sys;
 
 
+/**
+ * Interface IConfigManager
+ * @package Tops\sys
+ */
 interface IConfigManager {
+    /**
+     * @param $configName
+     * @param string $subSection
+     * @return IConfiguration
+     */
     public function get($configName, $subSection = '');
 }

@@ -7,6 +7,14 @@
  */
 namespace Tops\services;
 
+/**
+ * Interface IServiceFactory
+ * @package Tops\services
+ */
 interface IServiceFactory {
+    /**
+     * @param $serviceId
+     * @return TServiceCommand
+     */
     public function CreateService($serviceId);
 }
