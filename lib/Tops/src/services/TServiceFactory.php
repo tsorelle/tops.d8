@@ -7,7 +7,6 @@
  */
 namespace Tops\services;
 use Tops\sys\IConfigManager;
-use Tops\sys\IConfiguration;
 
 /**
  * Class TServiceFactory
@@ -17,24 +16,43 @@ use Tops\sys\IConfiguration;
  */
 class TServiceFactory implements IServiceFactory {
 
-    public $namespace;
-    public function  __construct(IConfigManager $configManager) {
-        $appConfig = $configManager->get("appsettings");
-        $this->initialize($appConfig);
-    }
+    /**
+     * Namespace for service command classes
+     *
+     * @var string
+     */
+    private $namespace;
 
-    private function initialize(IConfiguration $appConfig) {
-        $namespaces = $appConfig->Value("namespaces");
-        if ($namespaces == null) {
-            throw new \Exception("namespaces section not found in appsettings.yml.");
+    /**
+     * @param IConfigManager $configManager
+     * @throws \Exception
+     */
+    public function  __construct(IConfigManager $configManager = null) {
+        if ($configManager !== null) {
+            $appConfig = $configManager->get("appsettings");
+            $namespaces = $appConfig->Value("namespaces");
+            if ($namespaces == null) {
+                throw new \Exception("namespaces section not found in appsettings.yml.");
+            }
+            $namespace = '\\' . $namespaces['root'] . '\\' . $namespaces['services'];
+            $this->namespace = $namespace;
         }
-        $namespace = '\\'.$namespaces['root'] . '\\' . $namespaces['services'];
-        $this->namespace = $namespace;
     }
 
     /**
-     * @param $serviceId
-     * @return string
+     * Instantiate a service factory for unit testing
+     *
+     * @param $namespace
+     * @return TServiceFactory
+     */
+    public static function Create($namespace) {
+        $result = new TServiceFactory();
+        $result->namespace = $namespace;
+        return $result;
+    }
+
+    /**
+     * @inheritdoc
      */
     function CreateService($serviceId)
     {

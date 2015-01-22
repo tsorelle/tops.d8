@@ -9,6 +9,7 @@
  */
 \Tops\sys\TObjectContainer::register('configManager','\Tops\sys\TYmlConfigManager');
 \Tops\sys\TObjectContainer::register('serviceFactory','\Tops\services\TServiceFactory','configManager');
+\Tops\sys\TObjectContainer::register('serviceHost','\Tops\services\TServiceHost','serviceFactory');
 \Tops\sys\TObjectContainer::loadConfig('di.yml');
 
 

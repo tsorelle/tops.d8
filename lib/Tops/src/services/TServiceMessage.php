@@ -8,10 +8,18 @@
 
 namespace Tops\services;
 /**
+ * Message posted during a service command execution.
+ * See TServiceResponse->$messages
+ *
  * Class TServiceMessage
  * @package Tops\services
  */
 class TServiceMessage {
+    /**
+     * Type of message. Use MessageType:: constants
+     *
+     * @var int
+     */
     public $MessageType;
     public $Text;
 }

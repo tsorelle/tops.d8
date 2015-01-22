@@ -7,6 +7,7 @@
  */
 namespace Tops\services;
 use \Symfony\Component\HttpFoundation\Request;
+use Tops\sys\TObjectContainer;
 
 /**
  * Class TServiceHost
@@ -15,11 +16,23 @@ use \Symfony\Component\HttpFoundation\Request;
 class TServiceHost {
 
     /**
-     * @var TServiceFactory
+     * @var TServiceHost
      */
-    private static $serviceFactory;
-    public static function SetNamespace($namespace = null) {
-        self::$serviceFactory = new TServiceFactory($namespace);
+    private static $instance;
+    private static function getInstance() {
+        if (!isset(self::$instance)) {
+            self::$instance = TObjectContainer::get('serviceHost');
+        }
+        return self::$instance;
+    }
+
+    /**
+     * @var IServiceFactory
+     */
+    private $serviceFactory;
+
+    public function __construct(IServiceFactory $serviceFactory) {
+        $this->serviceFactory = $serviceFactory;
     }
 
     /**
@@ -27,7 +40,12 @@ class TServiceHost {
      * @return TServiceResponse
      * @throws \Exception
      */
-    public static function ExecuteRequest($request = null) {
+    public static function ExecuteRequest(Request $request = null)
+    {
+        return self::getInstance()->_executeRequest($request);
+    }
+
+    private function _executeRequest(Request $request) {
         if (empty($request)) {
             $request = Request::createFromGlobals();
         }
@@ -54,31 +72,9 @@ class TServiceHost {
         else
             throw new \Exception('Unsupported request method: '.$request->getMethod());
 
-        return self::Execute($commandId, $input);
+        return $this->_execute($commandId, $input);
     }
 
-    /*
-    private function getServiceFactory() {
-        if (self::$serviceFactory == null) {
-            $namespaces = (new TConfig("appsettings"))->Value("namespaces");
-            if ($namespaces == null) {
-                throw new \Exception("namespaces section not found in appsettings.yml.");
-            }
-            $namespace = '\\'.$namespaces['root'] . '\\' . $namespaces['services'];
-            self::SetNamespace($namespace);
-        }
-        return self::$serviceFactory;
-    }
-    */
-
-    /**
-     * @param IServiceFactory $factory
-     * @param $serviceId
-     * @return TServiceCommand
-     */
-    public static function CreateServiceCommand(IServiceFactory $factory, $serviceId) {
-        return $factory->CreateService($serviceId);
-    }
 
     /**
      * @param $commandId
@@ -87,9 +83,14 @@ class TServiceHost {
      * @throws \Exception
      */
     public static function Execute($commandId, $input) {
-        $command = self::CreateServiceCommand(self::$serviceFactory, $commandId);
+        return self::getInstance()->_execute($commandId, $input);
+    }
+
+    public function _execute($commandId, $input) {
+        $command = $this->serviceFactory->CreateService($commandId);
         if (empty($command))
             throw new \Exception("Unable to create service command '$commandId'");
         return $command->Execute($input);
     }
+
 } 

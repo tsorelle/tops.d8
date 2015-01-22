@@ -13,8 +13,11 @@ namespace Tops\services;
  */
 interface IServiceFactory {
     /**
+     * Instantiate a Peanut service command by serviceId value.
+     *
      * @param $serviceId
      * @return TServiceCommand
      */
     public function CreateService($serviceId);
+
 }

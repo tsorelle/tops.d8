@@ -9,37 +9,12 @@
 
 namespace Tops\services;
 
-/*
-        static allMessagesType: number = -1;
-        static infoMessageType: number = 0;
-        static errorMessageType: number = 1;
-        static warningMessageType: number = 2;
-
-        static serviceResultSuccess: number = 0;
-        static serviceResultPending: number = 1;
-        static serviceResultErrors: number = 2;
-        static serviceResultWarnings: number = 3;
-        static serviceResultServiceFailure: number = 4;
-        static serviceResultServiceNotAvailable: number = 5;
-*/
-
-class MessageType {
-    const Info = 0;
-    const Error = 1;
-    const Warning = 2;
-}
-
-class ResultType {
-    const Success = 0;
-    const Pending = 1;
-    const Warnings = 2;
-    const Errors = 2;
-    const ServiceFailure = 3;
-    const ServiceNotAvailable = 4;
-}
 
 /**
  * Class TServiceContext
+ *
+ * Managing container for a service response
+ *
  * @package Tops\services
  */
 class TServiceContext {
