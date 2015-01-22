@@ -34,21 +34,16 @@ class TEntityManagers {
 
     public function __construct(IConfigManager $configManager)
     {
-        $this->configManager = $configManager;
         $topsConfig = $configManager->get("tops");
-        $this->initialize($topsConfig);
-
-    }
-
-    private function initialize(IConfiguration $topsConfig) {
-        $this->managers = Array();
         $this->environment = $topsConfig->Value("environment");
-
         if ($this->environment == null) {
             throw new \Exception("No tops.yml environment setting found.");
         }
+        $this->managers = Array();
+        $this->configManager = $configManager;
+
     }
-    
+
     /**
      * Get a Doctrine entity manager based on name of database type.
      *
