@@ -52,8 +52,12 @@ class TConfig implements IConfiguration {
         $this->configData = $section;
     }
 
-    public function Value($sectionPath='') {
-        return $this->getValue($sectionPath,$this->configData);
+    public function Value($sectionPath='',$default=null) {
+        $result = $this->getValue($sectionPath,$this->configData);
+        if ($result === null) {
+            return $default;
+        }
+        return $result;
     }
 
     private function getValue($sectionPath='',$result) {

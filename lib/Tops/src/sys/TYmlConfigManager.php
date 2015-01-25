@@ -16,6 +16,8 @@ namespace Tops\sys;
  */
 class TYmlConfigManager implements IConfigManager {
 
+    private static $environment;
+
     /**
      * @inheritdoc
      */
@@ -24,5 +26,30 @@ class TYmlConfigManager implements IConfigManager {
         $config = new TConfig();
         $config->loadConfig($configName, $subSection);
         return $config;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getLocal($configName, $subSection = '') {
+        $environment = $this->getEnvironment();
+        return $this->get($configName.'-'.$environment,$subSection);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getEnvironment()
+    {
+        if (!isset(self::$environment)) {
+            $siteConfig = $this->get("sitesettings");
+            self::$environment = $siteConfig->Value("environment");
+            if (self::$environment == null) {
+                throw new \Exception("No tops.yml environment setting found.");
+            }
+        }
+
+        return self::$environment;
+
     }
 }

@@ -4,6 +4,8 @@
  * User: Terry
  * Date: 1/22/2015
  * Time: 8:56 AM
+ *
+ * Deployment specific settings. Do not overwrite with dev version.
  */
 $timezone = 'America/Chicago';
 $includesPath = '';

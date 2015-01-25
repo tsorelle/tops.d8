@@ -10,5 +10,5 @@ namespace Tops\sys;
 
 
 interface IConfiguration {
-    public function Value($key);
+    public function Value($key,$default=null);
 }

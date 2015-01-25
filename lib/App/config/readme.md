@@ -2,8 +2,6 @@ Config notes
 ==============
 Production deployment
 ---------------------
-In tops.yml change environment: development to production and ...
+In sitesettings.yml change environment: development to production and update any other site specific settings. 
 
-Create a connections-production.yml file similar to connections-development.yml
-
-For security reasons, connections-production.yml is not pushed to the repository. See .gitignore file.
+For security reasons, appsettings-production.yml is not pushed to the repository. See .gitignore file.

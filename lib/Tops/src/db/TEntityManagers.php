@@ -22,7 +22,7 @@ use Tops\sys\TPath;
  * Class factory for Doctrine ORM EntityManager
  */
 class TEntityManagers {
-    private $managers;
+    private $entityMananagers;
     private $environment;
     private $configManager;
 
@@ -34,12 +34,8 @@ class TEntityManagers {
 
     public function __construct(IConfigManager $configManager)
     {
-        $topsConfig = $configManager->get("tops");
-        $this->environment = $topsConfig->Value("environment");
-        if ($this->environment == null) {
-            throw new \Exception("No tops.yml environment setting found.");
-        }
-        $this->managers = Array();
+        $this->environment = $configManager->getEnvironment();
+        $this->entityMananagers = Array();
         $this->configManager = $configManager;
 
     }
@@ -62,8 +58,8 @@ class TEntityManagers {
 
     public function _get($key)
     {
-        if (array_key_exists($key,$this->managers))
-            return $this->managers[$key];
+        if (array_key_exists($key,$this->entityMananagers))
+            return $this->entityMananagers[$key];
 
         $config = $this->configManager->get("appsettings");
         return $this->createManager($config, $key);
@@ -83,9 +79,9 @@ class TEntityManagers {
             $isDevMode = $this->environment == "development";
         }
         $entityPath = $dbConfig->Value("databases/models/$databaseId");
-        $connectionsConfig = $this->configManager->get("connections-".$this->environment);
+        $connectionsConfig = $this->configManager->getLocal("appsettings","connections");
         $entityManager = $this->configureEntityManager($connectionsConfig,$databaseId,$entityPath,$isDevMode);
-        $this->managers[$typeKey] = $entityManager;
+        $this->entityMananagers[$typeKey] = $entityManager;
         return $entityManager;
     }
 

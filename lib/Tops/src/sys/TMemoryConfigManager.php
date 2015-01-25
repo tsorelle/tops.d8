@@ -14,6 +14,7 @@ namespace Tops\sys;
  * @package Tops\sys
  *
  * A class factory for TConfig with a memory config data source
+ * Used for unit testing.
  */
 class TMemoryConfigManager implements IConfigManager {
 
@@ -44,5 +45,24 @@ class TMemoryConfigManager implements IConfigManager {
         $config = new TConfig();
         $config->setConfig($configData, $subSection);
         return $config;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getLocal($configName, $subSection = '')
+    {
+        return $this->get($configName,$subSection);
+    }
+
+    /**
+     * Get name of local environment
+     *
+     * @return string
+     */
+    public function getEnvironment()
+    {
+        // TODO: Implement getEnvironment() method.
     }
 }

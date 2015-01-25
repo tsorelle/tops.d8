@@ -15,9 +15,27 @@ namespace Tops\sys;
  */
 interface IConfigManager {
     /**
+     * Get settings by config file and section
+     *
      * @param $configName
      * @param string $subSection
      * @return IConfiguration
      */
     public function get($configName, $subSection = '');
+
+    /**
+     * Get settings from section corresponding to local environment name
+     *
+     * @param $configName
+     * @param string $subSection
+     * @return IConfiguration
+     */
+    public function getLocal($configName, $subSection = '');
+
+    /**
+     * Get name of local environment
+     *
+     * @return string
+     */
+    public function getEnvironment();
 }

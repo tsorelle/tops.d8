@@ -3,3 +3,5 @@ core/vendor/*
 
 # Ignore vendor files
 lib/vendor/*
+
+lib/test/quicktest.php
