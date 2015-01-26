@@ -19,7 +19,6 @@ class ServiceFactoryTest extends PHPUnit_Framework_TestCase {
         $this->assertNotNull($service,'Service not instantiated.');
         $this->assertInstanceOf('\App\services\TTestServiceCommand',$service);
         $this->assertInstanceOf('\Tops\services\TServiceCommand',$service);
-        // $this->verifyService($service);
     }
 
     private function createService(Tops\Services\IServiceFactory $factory, $serviceId) {
