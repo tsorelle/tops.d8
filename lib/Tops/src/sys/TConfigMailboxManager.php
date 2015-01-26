@@ -66,4 +66,16 @@ class TConfigMailboxManager implements IMailBoxManager {
     {
         // TODO: Implement updateMailbox() method.
     }
+
+    /**
+     * @param $code
+     * @param $name
+     * @param $address
+     * @param $description
+     * @return IMailBox
+     */
+    public function createMailBox($code, $name, $address, $description)
+    {
+        return TMailBox::Create($code, $name, $address, $description);
+    }
 }

@@ -52,4 +52,13 @@ interface IMailBoxManager {
      */
     public function updateMailbox(IMailBox $mailbox);
 
+    /**
+     * @param $code
+     * @param $name
+     * @param $address
+     * @param $description
+     * @return IMailBox
+     */
+    public function createMailBox($code, $name, $address, $description);
+
 }

@@ -528,4 +528,12 @@ class TEMailMessage {
             return strip_tags($this->messageBody);
         return $this->alternateBodyText;
     }
+
+    public function getAddressCount() {
+        return
+            sizeof($this->recipientList) +
+            sizeof($this->ccList) +
+            sizeof($this->bccList);
+    }
+
 } // TMailMessage

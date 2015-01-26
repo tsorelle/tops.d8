@@ -22,6 +22,13 @@ class TSwiftMailer implements IMailer {
      */
     private $swiftMailer;
 
+    private $sendEnabled;
+
+    public function setSendEnabled($value) {
+        // override config setting
+        $this->sendEnabled = $value;
+    }
+
     /**
      * SwiftMailer reference may be used to leverage SwiftMailer features not exposed by TMailMessage
      * such as file attachments.
@@ -35,8 +42,10 @@ class TSwiftMailer implements IMailer {
 
     public function __construct(IConfigManager $configManager) {
         $transport = new \Swift_SmtpTransport();
-            // \Swift_SmtpTransport::newInstance();  NOTE: This SwiftMailer method define the wrong return type in PHPDOC
-        $this->configureTransport($transport, $configManager->getLocal("appsettings","smtp"));
+            // \Swift_SmtpTransport::nenstance();  NOTE: This SwiftMailer method define the wrong return type in PHPDOC
+        $config = $configManager->getLocal("appsettings","smtp");
+        $this->sendEnabled = $config->Value('enabled',true);
+        $this->configureTransport($transport, $config);
         $this->swiftMailer = \Swift_Mailer::newInstance($transport);
     }
 
@@ -123,6 +132,11 @@ class TSwiftMailer implements IMailer {
             $swiftMessage->setReturnPath($returnPath->getAddress());
         }
 
-        return $this->swiftMailer->send($swiftMessage);
+        if ($this->sendEnabled) {
+            return $this->swiftMailer->send($swiftMessage);
+        }
+        else {
+            return $message->getAddressCount();
+        }
     }
 }

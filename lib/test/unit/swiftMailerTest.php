@@ -8,13 +8,13 @@
 
 class swiftMailerTest extends PHPUnit_Framework_TestCase {
     public function testSwiftMailerSend() {
-        // $this->assertTrue(true); // disabled for now
+        $sendEnabled = false;  // change to actually send the message.
 
 
         $configManager = new \Tops\sys\TYmlConfigManager();
         if ($configManager->getEnvironment() == 'development') {
             $mailer = new \Tops\sys\TSwiftMailer($configManager);
-
+            $mailer->setSendEnabled($sendEnabled);
             $message = new \Tops\sys\TEMailMessage();
             $message->addRecipient('tls@2quakers.net',"Terry SoRelle");
             $message->setSubject("Test message");

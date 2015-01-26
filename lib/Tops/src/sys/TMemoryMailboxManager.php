@@ -81,11 +81,18 @@ class TMemoryMailboxManager implements IMailBoxManager {
      */
     public function addMailbox($code, $name, $address, $description)
     {
-        $box = TMailBox::Create($code,$name,$address,$description);
+        $box = $this->createMailBox($code, $name, $address, $description);
         $id = $this->boxes->getCount();
         $box->setMailBoxId($id);
         $this->boxes->add($box);
         return $box;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function createMailBox($code, $name, $address, $description) {
+        return TMailBox::Create($code,$name,$address,$description);
     }
 
     /**
@@ -108,6 +115,9 @@ class TMemoryMailboxManager implements IMailBoxManager {
         return true;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getCount() {
         return $this->boxes->getCount();
     }
