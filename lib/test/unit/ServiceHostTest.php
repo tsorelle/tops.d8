@@ -11,7 +11,7 @@ use \Symfony\Component\HttpFoundation\Request;
 /**
  * Class ServiceHostUnitTest
  */
-class ServiceHostUnitTest extends PHPUnit_Framework_TestCase {
+class ServiceHostTest extends PHPUnit_Framework_TestCase {
     protected function setUp()
     {
         \Tops\sys\TObjectContainer::clear();
