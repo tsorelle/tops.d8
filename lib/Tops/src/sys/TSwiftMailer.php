@@ -35,7 +35,7 @@ class TSwiftMailer implements IMailer {
 
     public function __construct(IConfigManager $configManager) {
         $transport = new \Swift_SmtpTransport();
-            // \Swift_SmtpTransport::newInstance();
+            // \Swift_SmtpTransport::newInstance();  NOTE: This SwiftMailer method define the wrong return type in PHPDOC
         $this->configureTransport($transport, $configManager->getLocal("appsettings","smtp"));
         $this->swiftMailer = \Swift_Mailer::newInstance($transport);
     }
@@ -56,11 +56,15 @@ class TSwiftMailer implements IMailer {
         $transport->setHost($host);
         $transport->setPort($port);
 
+        // For some reason the Swift_SmtpTransport methods SetUserName and SetPassword are exposed at runtime
+        // but are not visible to the IDE in PhpStorm
         if ($username) {
+            /** @noinspection PhpUndefinedMethodInspection */
             $transport->setUsername($username);
         };
 
         if ($password) {
+            /** @noinspection PhpUndefinedMethodInspection */
             $transport->setPassword($password);
         }
 
