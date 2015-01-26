@@ -79,10 +79,14 @@ class TObjectContainer {
      * @param null $fileName
      * @param null $configLocation
      */
-    public static function loadConfig($fileName = null,$configLocation = null) {
+    public static function loadConfig($fileName = 'di.yml',$configLocation = null) {
+/*
+        if ($configLocation === null) {
+            $configLocation = TPath::GetConfigRoot();
+        }
+*/
         $loader = new YamlFileLoader(self::$container, new TConfigFileLocator($configLocation));
         $loader->load($fileName);
-
     }
 
 

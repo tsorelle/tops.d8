@@ -17,7 +17,7 @@ interface IMailBoxManager {
     /**
      *
      * @param $id
-     * @return TMailBox
+     * @return IMailBox
      */
     public function find($id);
 
@@ -28,12 +28,12 @@ interface IMailBoxManager {
 
     /**
      * @param $mailboxCode
-     * @return TMailBox
+     * @return IMailBox
      */
     public function findByCode($mailboxCode);
 
     /**
-     * @return TMailBox[]
+     * @return IMailBox
      */
     public function getMailboxes($filter = null);
 
@@ -42,14 +42,14 @@ interface IMailBoxManager {
      * @param $name
      * @param $address
      * @param $description
-     * @return TMailBox
+     * @return IMailBox
      */
     public function addMailbox($code,$name,$address,$description);
 
     /**
-     * @param TMailBox $mailbox
+     * @param IMailBox $mailbox
      * @return int
      */
-    public function updateMailbox(TMailBox $mailbox);
+    public function updateMailbox(IMailBox $mailbox);
 
 }

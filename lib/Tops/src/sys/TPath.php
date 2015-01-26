@@ -62,6 +62,12 @@ class TPath
         self::$configRoot = $configRoot;
     }
 
+    public static function GetConfigRoot()
+    {
+        self::Initialize();
+        return self::$configRoot;
+    }
+
     /**
      * Change directory separators based on OS
      *

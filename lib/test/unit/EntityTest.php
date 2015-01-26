@@ -26,4 +26,20 @@ class EntityTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('SoRelle',$person->getLastName());
 
     }
+
+    public function testLoadMailboxEntity() {
+        $this->assertTrue(class_exists('App\db\ScymMailbox',true),'Person class not found.');
+        // $this->assertTrue(class_exists('\Doctrine\ORM\EntityManager',true),'EntityManager class not found.');
+
+        \Tops\sys\TObjectContainer::clear();
+        \Tops\sys\TObjectContainer::register('configManager','\Tops\sys\TYmlConfigManager');
+
+        $em = TEntityManagers::Get();
+        $repository = $em->getRepository('App\db\ScymMailbox');
+        $mailbox = $repository->findOneBy(array('box' => 'clerk'));
+        $this->assertNotNull($mailbox,'Mailbox not loaded.');
+        $this->assertEquals('SCYM Clerk', $mailbox->getName());
+
+    }
+
 }

@@ -14,7 +14,7 @@ class TConfigMailboxManager implements IMailBoxManager {
     /**
      *
      * @param $id
-     * @return TMailBox
+     * @return IMailBox
      */
     public function find($id)
     {
@@ -31,7 +31,7 @@ class TConfigMailboxManager implements IMailBoxManager {
 
     /**
      * @param $mailboxCode
-     * @return TMailBox
+     * @return IMailBox
      */
     public function findByCode($mailboxCode)
     {
@@ -39,7 +39,7 @@ class TConfigMailboxManager implements IMailBoxManager {
     }
 
     /**
-     * @return TMailBox[]
+     * @return IMailBox
      */
     public function getMailboxes($filter = null)
     {
@@ -51,7 +51,7 @@ class TConfigMailboxManager implements IMailBoxManager {
      * @param $name
      * @param $address
      * @param $description
-     * @return TMailBox
+     * @return IMailBox
      */
     public function addMailbox($code, $name, $address, $description)
     {
@@ -59,10 +59,10 @@ class TConfigMailboxManager implements IMailBoxManager {
     }
 
     /**
-     * @param TMailBox $mailbox
+     * @param IMailBox $mailbox
      * @return int
      */
-    public function updateMailbox(TMailBox $mailbox)
+    public function updateMailbox(IMailBox $mailbox)
     {
         // TODO: Implement updateMailbox() method.
     }

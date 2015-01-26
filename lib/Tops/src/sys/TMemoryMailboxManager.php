@@ -11,7 +11,7 @@ namespace Tops\sys;
 class TMemoryMailboxManager implements IMailBoxManager {
 
     /**
-     * @var TMailBox[]
+     * @var IMailBox
      */
     private $boxes;
     private $compareByIdCallBack;
@@ -20,10 +20,10 @@ class TMemoryMailboxManager implements IMailBoxManager {
 
     public function __construct(array $boxes = null) {
         $this->boxes = new TCollection($boxes);
-        $this->compareByIdCallBack = function (TMailBox $mailBox, $idValue) {
+        $this->compareByIdCallBack = function (IMailBox $mailBox, $idValue) {
             return $mailBox->getMailBoxId() == $idValue;
         };
-        $this->compareByCodeCallBack = function (TMailBox $mailBox, $code) {
+        $this->compareByCodeCallBack = function (IMailBox $mailBox, $code) {
             return $mailBox->getMailBoxCode() == $code;
         };
     }
@@ -33,7 +33,7 @@ class TMemoryMailboxManager implements IMailBoxManager {
      * Use with unit test
      *
      * @param $id
-     * @return TMailBox
+     * @return IMailBox
      */
     public function find($id)
     {
@@ -50,7 +50,7 @@ class TMemoryMailboxManager implements IMailBoxManager {
 
     /**
      * @param $mailboxCode
-     * @return TMailBox
+     * @return IMailBox
      */
     public function findByCode($mailboxCode)
     {
@@ -58,7 +58,7 @@ class TMemoryMailboxManager implements IMailBoxManager {
     }
 
     /**
-     * @return TMailBox[]
+     * @return IMailBox
      */
     public function getMailboxes($filter = null, $arguments = null)
     {
@@ -77,7 +77,7 @@ class TMemoryMailboxManager implements IMailBoxManager {
      * @param $name
      * @param $address
      * @param $description
-     * @return TMailBox
+     * @return IMailBox
      */
     public function addMailbox($code, $name, $address, $description)
     {
@@ -89,10 +89,10 @@ class TMemoryMailboxManager implements IMailBoxManager {
     }
 
     /**
-     * @param TMailBox $mailbox
+     * @param IMailBox $mailbox
      * @return int
      */
-    public function updateMailbox(TMailBox $mailbox)
+    public function updateMailbox(IMailBox $mailbox)
     {
         if ($mailbox->getMailBoxId() < 1) {
             $this->boxes->add($mailbox);

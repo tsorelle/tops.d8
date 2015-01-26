@@ -13,7 +13,8 @@ namespace Tops\sys;
  * Class TMailBox
  * @package Tops\sys
  */
-class TMailBox {
+class TMailBox implements IMailBox
+{
     /**
      * @var int
      */
