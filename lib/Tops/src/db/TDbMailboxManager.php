@@ -92,6 +92,7 @@ abstract class TDbMailboxManager implements IMailBoxManager {
     }
 
     /**
+     * @param null $filter
      * @return IMailBox
      */
     public function getMailboxes($filter = null)

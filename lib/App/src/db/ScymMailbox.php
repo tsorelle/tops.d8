@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Mailboxes
  *
+ * A doctrine entity object that maps the SCYM mailboxes table to the IMailBox interface.
+ *
  * @Table(name="mailboxes", uniqueConstraints={@UniqueConstraint(name="boxIndex", columns={"box"})})
  * @Entity
  */
