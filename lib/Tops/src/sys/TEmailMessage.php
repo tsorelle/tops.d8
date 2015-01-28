@@ -78,9 +78,28 @@ class TEMailMessage {
         $this->recipientList = array();
         $this->ccList = array();
         $this->bccList = array();
+
         $this->addressValidator = new EmailValidator();
         $this->validationErrors = array();
         $this->validationWarnings = array();
+    }
+
+    private function toEmailAddress($address,$name=null) {
+        if (empty($address)) {
+            return null;
+        }
+        $test = is_string($address);
+        if ($test) {
+//        if (is_string($address)) {
+            if ($name == null) {
+                $address = TEmailAddress::FromString($address);
+            }
+            else {
+                $address = new TEmailAddress($address,$name);
+            }
+        }
+
+        return $this->validateEmailAddress($address);
     }
 
     /**
@@ -169,44 +188,49 @@ class TEMailMessage {
     }
 
     /**
-     * @param array $list
+     * @param TEmailAddress[] $list
      * @param $emailAddress
      * @param $name
      * @return bool
      */
-    public function addAddress(Array &$list, $emailAddress, $name) {
+    public function addAddress(Array &$list, TEmailAddress $emailAddress) {
 
-        $isValid = $this->validateAddress($emailAddress);
-        if ($isValid ) {
-            array_push($list,new TEmailAddress($emailAddress, $name));
+        $found = $this->findAddress($list,$emailAddress->getAddress());
+        if ($found) {
+           $list[$found] = $emailAddress;
         }
-        return $isValid;
+        else {
+            array_push($list,$emailAddress);
+        }
     }
 
-    /**
-     * @param $emailAddress
-     * @param $name
-     * @return null|TEmailAddress
-     */
-    public function createAddress($emailAddress, $name) {
-        $isValid = $this->validateAddress($emailAddress);
+
+    public function validateEmailAddress(TEmailAddress $emailAddress) {
+        $isValid = $this->validateAddress($emailAddress->getAddress());
         if ($isValid ) {
-            return new TEmailAddress($emailAddress, $name);
+            return $emailAddress;
         }
         return null;
     }
+
+
 
     /**
      * @param $recipient
      * @param string $name
      * @return bool
      */
-    public function addRecipient($recipient, $name='')
+    public function addRecipient($recipient, $name=null)
     {
-        if ($this->removeAddress($this->bccList,$recipient) === false) {
-            $this->removeAddress($this->ccList, $recipient);
+        $recipient = $this->toEmailAddress($recipient,$name);
+        if ($recipient === null) {
+            return false;
         }
-        return $this->addAddress($this->recipientList, $recipient, $name,$this->ccList);
+        if ($this->removeAddress($this->bccList, $recipient->getAddress()) === false) {
+            $this->removeAddress($this->ccList, $recipient->getAddress());
+        }
+        $this->addAddress($this->recipientList, $recipient, $name,$this->ccList);
+        return true;
     }
 
     /**
@@ -216,13 +240,19 @@ class TEMailMessage {
      */
     public function addCC($recipient, $name='')
     {
-        if ($this->findAddress($this->recipientList,$recipient) !== false) {
+        $recipient = $this->toEmailAddress($recipient,$name);
+        if ($recipient === null) {
+            return false;
+        }
+
+        if ($this->findAddress($this->recipientList,$recipient->getAddress()) !== false) {
             return true;
         }
-        if ($this->findAddress($this->bccList,$recipient) !== false) {
+        if ($this->findAddress($this->bccList,$recipient->getAddress()) !== false) {
             return true;
         }
-        return $this->addAddress($this->ccList, $recipient, $name);
+        $this->addAddress($this->ccList, $recipient, $name);
+        return true;
     }
 
     /**
@@ -232,11 +262,13 @@ class TEMailMessage {
      */
     public function addBCC($recipient, $name='')
     {
-        if ($this->findAddress($this->recipientList,$recipient) !== false) {
-            return true;
+        $recipient = $this->toEmailAddress($recipient,$name);
+        if ($recipient == null) {
+            return false;
         }
         $this->removeAddress($this->ccList,$recipient);
-        return $this->addAddress($this->bccList, $recipient, $name,$this->ccList);
+        $this->addAddress($this->bccList, $recipient, $name,$this->ccList);
+        return true;
     }
 
     /**
@@ -244,10 +276,22 @@ class TEMailMessage {
      * @param $name
      * @return bool
      */
-    public function setRecipient($recipient, $name)
+    public function setRecipient($recipients, $name=null)
     {
         $this->recipientList = Array();
-        return $this->addRecipient($recipient,$name);
+        if (is_string($recipients)) {
+            $recipients = explode(';',$recipients);
+        }
+
+        if (is_array($recipients)) {
+            foreach($recipients as $recipient) {
+                $this->addRecipient($recipient);
+            }
+        }
+        else {
+            $this->addRecipient($recipients, $name);
+        }
+        return sizeof($this->recipientList);
     }  //  setRecipient
 
     /**
@@ -257,13 +301,15 @@ class TEMailMessage {
      */
     public function setFromAddress($sender, $name=null)
     {
-        $address = $this->createAddress($sender,$name);
-        if ($address != null) {
-            $this->fromAddress = $address;
+        $sender = $this->toEmailAddress($sender,$name);
+        if ($sender != null) {
+            $this->fromAddress = $sender;
             return true;
         }
         return false;
     }  //  setFromAddress
+
+
 
     /**
      * @param $address
@@ -272,7 +318,7 @@ class TEMailMessage {
      */
     public function setReturnAddress($address, $name=null)
     {
-        $address = $this->createAddress($address,$name);
+        $address = $this->toEmailAddress($address,$name);
         if ($address != null) {
             $this->returnAddress = $address;
             return true;
@@ -287,7 +333,7 @@ class TEMailMessage {
      */
     public function setReplyTo($address, $name=null)
     {
-        $address = $this->createAddress($address,$name);
+        $address = $this->toEmailAddress($address,$name);
         if ($address != null) {
             $this->fromAddress = $address;
             return true;
@@ -321,8 +367,18 @@ class TEMailMessage {
     /**
      * @param $value
      */
-    public function setMessageBody($value)
+    public function setMessageBody($value, $contentType='text')
     {
+        if ($contentType == 'html') {
+            $this->setHtmlMessageBody($value);
+        }
+        else {
+            $this->setMessageText($value);
+        }
+    }  //  setMessageBody
+
+
+    public function setMessageText($value) {
         if ($this->containsScriptTags($value)) {
             // attempt to insert executable html in message
             // don't take chances. Strip all tags.
@@ -330,8 +386,7 @@ class TEMailMessage {
         }
         $value = str_replace ("\r\n", "\n", $value);
         $this->messageBody = stripslashes($value);
-    }  //  setMessageBody
-
+    }
 
     /**
      * @param $text

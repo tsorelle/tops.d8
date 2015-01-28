@@ -10,6 +10,7 @@
 \Tops\sys\TObjectContainer::register('configManager','\Tops\sys\TYmlConfigManager');
 \Tops\sys\TObjectContainer::register('serviceFactory','\Tops\services\TServiceFactory','configManager');
 \Tops\sys\TObjectContainer::register('serviceHost','\Tops\services\TServiceHost','serviceFactory');
+\Tops\sys\TObjectContainer::register('mailer','\Tops\sys\TSwiftMailer','configManager');
 
 // Application specific objects should be registered in /App/start/init.php (or corresponding directory)
 // e.g.

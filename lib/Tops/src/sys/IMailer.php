@@ -11,4 +11,5 @@ namespace Tops\sys;
 
 interface IMailer {
     public function send(TEMailMessage $message);
+    public function setSendEnabled($value);
 }

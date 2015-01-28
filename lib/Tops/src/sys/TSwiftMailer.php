@@ -139,4 +139,6 @@ class TSwiftMailer implements IMailer {
             return $message->getAddressCount();
         }
     }
+
+
 }

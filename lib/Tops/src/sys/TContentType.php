@@ -11,8 +11,8 @@ namespace Tops\sys;
 
 class TContentType
 {
-    public static $Text = 1;
-    public static $Html = 2;
-    public static $MultiPart = 3;
+    public static $Text = 'text';
+    public static $Html = 'html';
+    public static $MultiPart = 'multi-part';
 }
 // end TContentType
