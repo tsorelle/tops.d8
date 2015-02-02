@@ -16,3 +16,20 @@ services:
   testObject:
     class: Tops\test\TDiTestClass2
     arguments: [@argObject]
+logging:
+  logs:
+    emergency:
+      - email
+      - errorlog
+    alert:
+      - email
+      - errorlog
+    critical: errorlog
+    error: errorlog
+    warning: errorlog
+    notice: errorlog
+    info: errorlog
+    debug: testlog
+  email:
+    sender:  Tops Admin <admin@2quakers.net>
+    recipient: Support <support@2quakers.net>

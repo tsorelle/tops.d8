@@ -7,6 +7,8 @@
  * Date: 11/8/2014
  * Time: 6:02 PM
  */
+
+\Tops\sys\TErrorException::setErrorHandler();
 \Tops\sys\TObjectContainer::register('configManager','\Tops\sys\TYmlConfigManager');
 \Tops\sys\TObjectContainer::register('serviceFactory','\Tops\services\TServiceFactory','configManager');
 \Tops\sys\TObjectContainer::register('serviceHost','\Tops\services\TServiceHost','serviceFactory');

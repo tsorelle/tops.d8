@@ -52,4 +52,33 @@ class TYmlConfigManager implements IConfigManager {
         return self::$environment;
 
     }
+
+    /**
+     * @param $key
+     * @param null $default
+     * @return mixed
+     */
+    public function Value($key, $default = null)
+    {
+        // TODO: Implement Value() method.
+    }
+
+    /**
+     * @param $sectionPath
+     * @param bool $default
+     * @return boolean
+     */
+    public function IsTrue($sectionPath)
+    {
+        // TODO: Implement IsTrue() method.
+    }
+
+    /**
+     * @param $sectionPath
+     * @return IConfiguration
+     */
+    public function GetSection($sectionPath)
+    {
+        // TODO: Implement GetSection() method.
+    }
 }

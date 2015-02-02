@@ -17,23 +17,7 @@ use Symfony\Component\Yaml\Parser;
  * Stores and dispenses configuration data.
  * Source may be a YML file or array in memory.
  */
-class TConfig implements IConfiguration {
-    private $configData;
-
-
-    /**
-     * @param array $configData
-     * @param string $subSection
-     *
-     * Set config data source from a memory array.
-     * Typically used in unit testing.
-     */
-    public function setConfig(Array $configData,$subSection = '') {
-        if (!empty($subSection)) {
-            $configData = $this->getValue($configData[$subSection]);
-        }
-        $this->configData = $configData;
-    }
+class TConfig extends TConfigSection implements IConfiguration {
 
     /**
      * @param $fileName
@@ -49,47 +33,9 @@ class TConfig implements IConfiguration {
         if (!empty($subSection)) {
             $section = $this->getValue($subSection,$section);
         }
-        $this->configData = $section;
+        $this->setConfig($section);
+        // $this->configData = $section;
     }
 
-    public function Value($sectionPath='',$default=null) {
-        $result = $this->getValue($sectionPath,$this->configData);
-        if ($result === null) {
-            return $default;
-        }
-        return $result;
-    }
-
-    private function getValue($sectionPath='',$result) {
-        if (!empty($sectionPath)) {
-            $keys = explode('/', $sectionPath);
-            $count = count($keys);
-            for ($i = 0; $i < $count; $i++) {
-                $result = $this->getConfig($result,$keys[$i]);
-            }
-        }
-        return $result;
-    }
-
-    public function CrossReferenceSection($referencePath) {
-        $realkey = $this->Value($referencePath);
-        if (!$realkey)
-            return null;
-        return $this->Value($realkey);
-    }
-
-    private function getConfig($source, $keyName='')
-    {
-        $length = count($source);
-        if ($length > 0) {
-            if (empty($keyName)) {
-                return $source[0];
-            }
-            if (array_key_exists($keyName, $source)) {
-                return $source[$keyName];
-            }
-        }
-        return null;
-    }
 
 }

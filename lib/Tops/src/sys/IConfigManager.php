@@ -13,7 +13,7 @@ namespace Tops\sys;
  * Interface IConfigManager
  * @package Tops\sys
  */
-interface IConfigManager {
+interface IConfigManager  {
     /**
      * Get settings by config file and section
      *

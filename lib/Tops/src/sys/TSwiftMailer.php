@@ -79,10 +79,6 @@ class TSwiftMailer implements IMailer {
 
     }
 
-
-
-
-
     /**
      * @param TEMailMessage $message
      * @return int
@@ -99,6 +95,7 @@ class TSwiftMailer implements IMailer {
         $cc = $message->getCCsAsArray();
         $bcc = $message->getBCCsAsArray();
         $returnPath = $message->getReturnAddress();
+        $timeStamp = $message->getTimeStamp();
 
         $swiftMessage = new \Swift_Message();
             // Give the message a subject
@@ -106,7 +103,9 @@ class TSwiftMailer implements IMailer {
             // Set the From address with an associative array
             ->setFrom($from)
             // Set the To addresses with an associative array
-            ->setTo($to);
+            ->setTo($to)
+            // Set the date and time
+            ->setDate($timeStamp);
 
         switch ($contentType) {
             case TContentType::$MultiPart:

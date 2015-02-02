@@ -26,7 +26,8 @@ require_once($libPath . "/Tops/src/sys/TClassPath.php");
 \Tops\sys\TClassPath::Add('\Doctrine\ORM','vendor/doctrine/orm/lib/Doctrine/ORM');
 \Tops\sys\TClassPath::Add('\Doctrine\DBAL','vendor/doctrine/dbal/lib/Doctrine/DBAL');
 \Tops\sys\TClassPath::Add('\Symfony\Component','vendor/Symfony/Component');
-// \Tops\sys\TClassPath::Add('\Fusonic','vendor/fusonic/linq/src/Fusonic');
+\Tops\sys\TClassPath::Add('\Monolog','vendor/monolog/monolog/src/Monolog');
+
 
 unset($libPath);
 

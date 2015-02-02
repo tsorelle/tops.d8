@@ -71,6 +71,8 @@ class TEMailMessage {
      */
     private $validationWarnings;
 
+    private $timeStamp;
+
     /**
      *
      */
@@ -589,6 +591,17 @@ class TEMailMessage {
             sizeof($this->recipientList) +
             sizeof($this->ccList) +
             sizeof($this->bccList);
+    }
+
+    public function setTimeStamp($value) {
+        $this->timeStamp = $value;
+    }
+
+    public function getTimeStamp() {
+        if (empty($this->timeStamp) ) {
+            $this->timeStamp = time();
+        }
+        return $this->timeStamp;
     }
 
 } // TMailMessage
