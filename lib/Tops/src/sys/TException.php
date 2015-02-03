@@ -19,7 +19,7 @@ class TException extends \Exception implements IException {
 
     private $severity;
 
-    public function __construct($message = "", $severity, \Exception $previous = null) {
+    public function __construct($message = "", $severity = TException::SeverityError, \Exception $previous = null) {
         $this->severity = $severity;
         parent::__construct($message,0,$previous);
     }

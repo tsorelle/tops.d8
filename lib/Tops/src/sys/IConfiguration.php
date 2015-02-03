@@ -22,7 +22,7 @@ interface IConfiguration {
      * @param bool $default
      * @return boolean
      */
-    public function IsTrue($sectionPath);
+    public function IsTrue($sectionPath,$default=false);
 
     /**
      * @param $sectionPath

@@ -91,7 +91,10 @@ class TCollection {
     }
 
     public function get($key) {
-        return $this->collection[$key];
+        if (array_key_exists($key,$this->collection)) {
+            return $this->collection[$key];
+        }
+        return null;
     }
 
     public function set($key, $value) {
@@ -126,6 +129,12 @@ class TCollection {
                 unset($this->collection[$key]);
             }
         }
+    }
+
+    public function getSort( $compareFunction) {
+        $result = $this->toArray();
+        usort($result,$compareFunction);
+        return $result;
     }
 
     public function removeByKey($key) {

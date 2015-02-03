@@ -11,29 +11,28 @@ namespace Tops\sys;
 
 use Monolog\Logger;
 
-class TExceptionHandler {
+class TExceptionHandler
+{
+    /**
+     * @var TCollection
+     */
     private $policies;
+    private $loggingEnabled;
+    /**
+     * @var ILogger
+     */
+    private $logger;
 
     const RecoverableErrorPolicy = 'application-recoverable';
     const FatalErrorPolicy = 'application-fatal';
     const WarningPolicy = 'application-warning';
 
-    public static function setErrorHandler($functionName = "TExceptionHandler::errorHandler", $errorTypes = E_ALL) {
-        set_error_handler($functionName,$errorTypes);
-    }
 
-    public static function errorHandler($errno, $errstr, $errfile, $errline ) {
-        if (!(error_reporting() & $errno)) {
-            // This error code is not included in error_reporting
-            return false;
-        }
-        throw new TErrorException($errstr, 0, $errno, $errfile, $errline);
-    }
-
-
-
-    public function __construct(IConfigManager $config = null) {
-        $policies = array();
+    public function __construct(ILogger $logger=null, IConfigManager $config = null)
+    {
+        $this->policies = new TCollection();
+        $this->loggingEnabled = $logger !== null;
+        $this->logger = $logger;
         if ($config) {
             $this->configure($config);
         }
@@ -41,16 +40,139 @@ class TExceptionHandler {
 
     public function configure(IConfigManager $config)
     {
-        $configuration = $config->getLocal('appsettings','exceptions');
+        $configuration = $config->getLocal('appsettings', 'exceptions');
+        $this->loggingEnabled = $configuration->IsTrue('logging', true);
         $this->addPolicies($configuration);
     }
 
-    public function addPolicies(IConfiguration $configuration) {
+    public function addPolicies(IConfiguration $configuration)
+    {
+        $policyConfigs = $configuration->Value("policies");
+        if (!empty($policyConfigs)) {
+            $names = array_keys($policyConfigs);
+            foreach ($names as $name) {
+                $section = new TConfigSection($policyConfigs[$name]);
+                $this->addPolicy(
+                    $name,
+                    $section->Value("severity"),
+                    $section->IsTrue("rethrow", null),
+                    $section->Value("log", null)
+                );
 
+            }
+        }
     }
 
-    public function addPolicy($name, $notifyRethrow=false, $logName='errors',$level=Logger::ERROR) {
+    /**
+     * @param $policyName
+     * @return TExceptionPolicy
+     */
+    private function getPolicy($policyName) {
+        if (empty($policyName)) {
+            $policyName = 'default';
+        }
+        return $this->policies->get($policyName);
+    }
 
+    private function getLoggerLevel($severity) {
+        $levels = array_keys(Logger::getLevels());
+        foreach($levels as $level) {
+            if ($level == $severity) {
+                return $severity;
+            }
+        }
+        return Logger::ERROR;
+    }
+
+    function handleException(\Exception $ex, $policyName = null)
+    {
+        $policy = null;
+        if (!empty($policyName)) {
+            $policy = $this->getPolicy($policyName);
+        }
+
+        if ($policy != null) {
+            $severity = $policy->getSeverity();
+        }
+        else {
+            if (method_exists($ex,'getSeverity')) {
+                $severity = $ex->getSeverity();
+            }
+            else {
+                $severity = TException::SeverityError;
+            }
+            $policy = $this->getSeverityPolicy($severity);
+        }
+
+        if ($policy == null) {
+            // if still no policy, rethrow the exception
+            return true;
+        }
+
+        $logName = $policy->getLogName();
+        $rethrow = $policy->getRethrow();
+        if ($rethrow === null) {
+            $rethrow = empty($logName);
+        }
+
+        if ($this->loggingEnabled && !empty($logName)) {
+            $message = $ex->getMessage()."\nTrace: ".$ex->getTraceAsString();
+            $level = $this->getLoggerLevel($severity);
+            $this->logger->write($message,$level,$logName);
+        }
+
+        return $rethrow;
+    }
+
+    /**
+     * @return TExceptionPolicy[]
+     */
+    private function sortPolicies() {
+        return $this->policies->getSort(
+            function (\Tops\sys\TExceptionPolicy $p1, \Tops\sys\TExceptionPolicy $p2) {
+
+                $s1 = $p1->getSeverity();
+                $s2 = $p2->getSeverity();
+
+                if ($s1 == $s2) {
+                    return 0;
+                }
+                return ($s1 > $s2) ? -1 : 1;
+            }
+        );
+    }
+
+    /**
+     * @param $severity
+     * @return null|TExceptionPolicy
+     */
+    public function getSeverityPolicy($severity)
+    {
+        if ($this->policies->getCount() == 0) {
+            return null;
+        }
+        $policies = $this->sortPolicies();
+        $result = $policies[0];
+        for ($i=0;$i<sizeof($policies);$i++) {
+            $policy = $policies[$i];
+            if ($policy->getSeverity() < $severity) {
+                break;
+            }
+            $result = $policy;
+        }
+        return $result;
+    }
+
+
+    /**
+     * @param $name
+     * @param int $severity
+     * @param null $rethrow
+     * @param null $logName
+     */
+    public function addPolicy($name, $severity = TException::SeverityError, $rethrow = null, $logName = null ) {
+        $this->policies->set($name,
+            new TExceptionPolicy($name,$severity,$rethrow,$logName));
     }
 
 

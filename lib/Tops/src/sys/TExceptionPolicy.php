@@ -10,6 +10,16 @@ namespace Tops\sys;
 
 
 class TExceptionPolicy {
+
+    public function __construct($name, $severity = TException::SeverityError, $rethrow = null, $logName = null ) {
+        $this->name = $name;
+        $this->severity  = $severity;
+        if ($rethrow === null) {
+            $rethrow = empty($logName);
+        }
+        $this->rethrow = $rethrow;
+        $this->logName = $logName;
+    }
     /**
      * @return string
      */
@@ -27,9 +37,9 @@ class TExceptionPolicy {
     }
 
     /**
-     * @return boolean
+     * @return boolean | null
      */
-    public function setRethrow()
+    public function getRethrow()
     {
         return $this->rethrow;
     }
@@ -37,7 +47,7 @@ class TExceptionPolicy {
     /**
      * @param boolean $rethrow
      */
-    public function getRethrow($rethrow)
+    public function setRethrow($rethrow)
     {
         $this->rethrow = $rethrow;
     }
@@ -63,15 +73,15 @@ class TExceptionPolicy {
      */
     public function getSeverity()
     {
-        return $this->Severity;
+        return $this->severity;
     }
 
     /**
      * @param int $Severity
      */
-    public function setSeverity($Severity)
+    public function setSeverity($severity)
     {
-        $this->Severity = $Severity;
+        $this->severity = $severity;
     }
 
     /**
@@ -89,5 +99,5 @@ class TExceptionPolicy {
     /**
      * @var int
      */
-    private $Severity;
+    private $severity;
 }
