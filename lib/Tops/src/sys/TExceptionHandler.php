@@ -45,6 +45,23 @@ class TExceptionHandler
         $this->addPolicies($configuration);
     }
 
+    private function getNumericSeverity($value)
+    {
+        if (!empty($value)) {
+            if (is_numeric($value)) {
+                return ($value);
+            }
+            $levels = Logger::getLevels();
+            $keys = array_keys($levels);
+            foreach ($keys as $key) {
+                if ($key == $value) {
+                    return $levels[$key];
+                }
+            }
+        }
+        return Logger::ERROR;
+    }
+
     public function addPolicies(IConfiguration $configuration)
     {
         $policyConfigs = $configuration->Value("policies");
@@ -52,13 +69,13 @@ class TExceptionHandler
             $names = array_keys($policyConfigs);
             foreach ($names as $name) {
                 $section = new TConfigSection($policyConfigs[$name]);
+                $severity = $this->getNumericSeverity($section->Value("severity"));
                 $this->addPolicy(
                     $name,
-                    $section->Value("severity"),
+                    $severity,
                     $section->IsTrue("rethrow", null),
                     $section->Value("log", null)
                 );
-
             }
         }
     }
@@ -75,7 +92,7 @@ class TExceptionHandler
     }
 
     private function getLoggerLevel($severity) {
-        $levels = array_keys(Logger::getLevels());
+        $levels = Logger::getLevels();
         foreach($levels as $level) {
             if ($level == $severity) {
                 return $severity;

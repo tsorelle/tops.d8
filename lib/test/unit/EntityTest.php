@@ -7,18 +7,18 @@
  */
 
 use Tops\db\TEntityManagers;
-use App\db\Person;
+// use App\db\ScymPerson;
 
 class EntityTest extends PHPUnit_Framework_TestCase {
     public function testLoadEntity() {
-        $this->assertTrue(class_exists('App\db\Person',true),'Person class not found.');
+        $this->assertTrue(class_exists('App\db\scym\ScymPerson',true),'Person class not found.');
         // $this->assertTrue(class_exists('\Doctrine\ORM\EntityManager',true),'EntityManager class not found.');
 
         \Tops\sys\TObjectContainer::clear();
         \Tops\sys\TObjectContainer::register('configManager','\Tops\sys\TYmlConfigManager');
 
         $em = TEntityManagers::Get();
-        $repository = $em->getRepository('App\db\Person');
+        $repository = $em->getRepository('App\db\scym\ScymPerson');
         $person = $repository->findOneBy(array('lastname' => 'SoRelle', 'firstname' => 'Terry'));
         $this->assertNotNull($person,'Person 180 not loaded.');
 

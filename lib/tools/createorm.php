@@ -5,8 +5,10 @@
  * Date: 1/2/2015
  * Time: 7:03 AM
  */
-$outputPath= realpath(__DIR__ . '/model');
+$dbPath="fma";
+$outputPath= realpath(__DIR__ . '/model/'.$dbPath.'/');
 require_once __DIR__ . '/../Tops/start/autoload.php';
+require_once __DIR__ . '/../Tops/start/init.php';
 
 if (!class_exists('\Doctrine\ORM\EntityManager',true)) {
     throw new \Exception("manager class not found");
