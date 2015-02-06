@@ -51,7 +51,7 @@ logging:
   logs:
     - name: errors
       handlers:
-        - type: errorlog
+        - type: testlog
           level: error
         - type: email
           level: critical

@@ -35,6 +35,7 @@ class TMailLogHandler extends \Monolog\Handler\AbstractProcessingHandler  {
         $this->message = new TEMailMessage();
         $this->message->setRecipient($recipient);
         $this->message->setFromAddress($sender);
+        $this->message->setSubject( "Message logged on ".date(DATE_RFC850));
 
         $this->startTime = time();
         $this->messageCount = 0;
@@ -55,6 +56,16 @@ class TMailLogHandler extends \Monolog\Handler\AbstractProcessingHandler  {
      */
     protected function send($content, array $records)
     {
+
+        if (!empty($records)) {
+            $count= sizeof($records);
+            if ($count == 1) {
+                $content = "One error was logged.\n\n" . $content;
+            }
+            else {
+                $content = $count." errors were logged.\n\n".$content;;
+            }
+        }
         $message = clone $this->message;
         $message->setMessageText($content);
         $message-> setTimeStamp(time());

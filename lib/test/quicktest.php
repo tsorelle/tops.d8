@@ -12,3 +12,5 @@ require_once(__DIR__.'/../Tops/start/init.php');
 require_once(__DIR__.'/../App/start/init.php');
 
 // use for ad hoc tests
+
+print "\nDone.\n";

@@ -11,7 +11,7 @@ namespace Tops\sys;
 
 use Monolog\Logger;
 
-class TExceptionHandler
+class TExceptionHandler implements IExceptionHandler
 {
     /**
      * @var TCollection

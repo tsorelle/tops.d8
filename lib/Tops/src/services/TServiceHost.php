@@ -7,6 +7,7 @@
  */
 namespace Tops\services;
 use \Symfony\Component\HttpFoundation\Request;
+use Tops\sys\IExceptionHandler;
 use Tops\sys\TObjectContainer;
 
 /**
@@ -31,8 +32,42 @@ class TServiceHost {
      */
     private $serviceFactory;
 
-    public function __construct(IServiceFactory $serviceFactory) {
+    /**
+     * @var IExceptionHandler
+     */
+    private $exceptionHandler;
+
+    /**
+     * @var TServiceResponse
+     */
+    private $failureResponse;
+
+    /**
+     * @return TServiceResponse
+     */
+    private function getFailureResponse() {
+        if (!isset($this->failureResponse)) {
+            $this->failureResponse = new TServiceResponse();
+            $this->failureResponse->Result = \Tops\services\ResultType::ServiceFailure;
+            $message = new TServiceMessage();
+            $message->MessageType = MessageType::Error;
+            $message->Text = 'Service failed. If the problem persists contact the site administrator.';
+            $this->failureResponse->Messages = array($message);
+
+        }
+        return $this->failureResponse;
+    }
+
+    private function handleException($ex) {
+        if (empty($this->exceptionHandler)) {
+            return true;
+        }
+        return $this->exceptionHandler->handleException($ex);
+    }
+
+    public function __construct(IServiceFactory $serviceFactory, IExceptionHandler $exceptionHandler = null) {
         $this->serviceFactory = $serviceFactory;
+        $this->exceptionHandler = $exceptionHandler;
     }
 
     /**
@@ -46,33 +81,40 @@ class TServiceHost {
     }
 
     private function _executeRequest(Request $request) {
-        if (empty($request)) {
-            $request = Request::createFromGlobals();
-        }
-
-        $commandId = $request->get('serviceCode');
-        if  (empty($commandId)) {
-            throw new \Exception('No service command id was in request');
-        }
-
-        $input = null;
-        $serviceRequest= $request->get('request');
-        $requestMethod = $request->getMethod();
-
-        if ($requestMethod == 'POST') {
-            if ($serviceRequest != null) {
-                $input = json_decode($serviceRequest);
+        try {
+            if (empty($request)) {
+                $request = Request::createFromGlobals();
             }
-        }
-        else if ($requestMethod == 'GET') {
-            if ($serviceRequest != null) {
-                $input = $serviceRequest;
-            }
-        }
-        else
-            throw new \Exception('Unsupported request method: '.$request->getMethod());
 
-        return $this->_execute($commandId, $input);
+            $commandId = $request->get('serviceCode');
+            if (empty($commandId)) {
+                throw new \Exception('No service command id was in request');
+            }
+
+            $input = null;
+            $serviceRequest = $request->get('request');
+            $requestMethod = $request->getMethod();
+
+            if ($requestMethod == 'POST') {
+                if ($serviceRequest != null) {
+                    $input = json_decode($serviceRequest);
+                }
+            } else if ($requestMethod == 'GET') {
+                if ($serviceRequest != null) {
+                    $input = $serviceRequest;
+                }
+            } else
+                throw new \Exception('Unsupported request method: ' . $request->getMethod());
+
+            return $this->_execute($commandId, $input);
+        }
+        catch (\Exception $ex) {
+            $rethrow = $this->handleException($ex);
+            if ($rethrow) {
+                throw $ex;
+            }
+            return $this->getFailureResponse();
+        }
     }
 
 

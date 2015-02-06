@@ -63,7 +63,11 @@ class TObjectContainer {
         $definition = self::getContainer()->register($key,$className);
         if ($arguments !== null) {
             if (!is_array($arguments)) {
-                $definition->addArgument(New Reference($arguments));
+                $args = explode(',',$arguments);
+                $count = sizeof($args);
+                for ($i = 0; $i< $count; $i++) {
+                    $definition->addArgument(New Reference($args[$i]));
+                }
             }
             else {
                 foreach($arguments as $arg ) {

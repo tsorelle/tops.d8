@@ -47,7 +47,7 @@ class TLogger implements ILogger
                 foreach ($handlers as $handlerElement) {
                     $handlerConfig = new TConfigSection($handlerElement);
                     // $type = $handlerConfig->Value('type','default');
-                    $handler = $this->createHandler($logName, $handlerConfig, $mailer);
+                    $handler = $this->createHandler($handlerConfig, $mailer);
                     $log->pushHandler($handler);
                 }
                 $this->logs[$logName] = $log;
@@ -117,7 +117,7 @@ class TLogger implements ILogger
      * @param IMailer $mailer
      * @return \Monolog\Handler\HandlerInterface
      */
-    private function createHandler($logName, IConfiguration $handlerConfig, IMailer $mailer)
+    private function createHandler(IConfiguration $handlerConfig, IMailer $mailer = null)
     {
         $level = $this->levelNameToLevel($handlerConfig->Value('level','error'));
         $type = $handlerConfig->Value("type");
