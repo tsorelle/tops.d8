@@ -28,19 +28,21 @@ interface ILogger
      * @param string $logName
      * @return Boolean Whether the record has been processed
      */
-    public function writeError($message, $logName = 'default');
+    public function writeError($message, $logName = null);
 
     /**
      * @param $message
      * @param string $logName
      * @return Boolean Whether the record has been processed
      */
-    public function writeWarning($message, $logName = 'default');
+    public function writeWarning($message, $logName = null);
 
     /**
      * @param $message
      * @param string $logName
      * @return Boolean Whether the record has been processed
      */
-    public function writeInfo($message, $logName = 'default');
+    public function writeInfo($message, $logName = null);
+
+    public function setDefaultLogName($value);
 }

@@ -17,7 +17,7 @@ class TConfigSection implements IConfiguration {
             $this->configData = $configData;
         }
         else {
-            $configData = array();
+            $this->configData = array();
         }
     }
 
@@ -49,7 +49,6 @@ class TConfigSection implements IConfiguration {
             $configData = $this->getValue($configData[$subSection]);
         }
         $this->configData = $configData;
-        // $this->configData = $configData;
     }
 
 

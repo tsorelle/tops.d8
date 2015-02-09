@@ -12,9 +12,11 @@ class ExceptionHandlerTest extends PHPUnit_Framework_TestCase {
      * @return \Tops\sys\TExceptionHandler
      */
     private function setupTestHandler(\Monolog\Handler\TestHandler $logHandler) {
-        $logger = new \Tops\sys\TLogger();
         $monologger = new \Monolog\Logger("default");
         $monologger->pushHandler($logHandler);
+
+        $logMgr = new \Tops\sys\TLogManager();
+        $logger = new \Tops\sys\TLogger($logMgr);
         $logger->setLog('default',$monologger);
 
 

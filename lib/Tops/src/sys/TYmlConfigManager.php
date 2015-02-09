@@ -7,7 +7,7 @@
  */
 
 namespace Tops\sys;
-
+use Symfony\Component\Yaml\Parser;
 
 /**
  * Class TYmlConfigManager
@@ -17,15 +17,44 @@ namespace Tops\sys;
 class TYmlConfigManager implements IConfigManager {
 
     private static $environment;
+    /**
+     * @var TConfigSection[]
+     */
+    private static $cache;
+
+    /**
+     * @param $fileName
+     * @return TConfigSection
+     */
+    private  static function getFile($fileName) {
+        if (isset(self::$cache)) {
+            if (array_key_exists($fileName,self::$cache)) {
+                return self::$cache[$fileName];
+            }
+        }
+        else {
+            self::$cache = array();
+        }
+        $filePath = TPath::ConfigPath($fileName.'.yml');
+        $yaml = new Parser();
+        $raw = file_get_contents($filePath);
+        $contents = $yaml->parse($raw);
+        $section = new TConfigSection($contents);
+        self::$cache[$fileName] = $section;
+        return $section;
+    }
+
 
     /**
      * @inheritdoc
      */
     public function get($configName, $subSection = '')
     {
-        $config = new TConfig();
-        $config->loadConfig($configName, $subSection);
-        return $config;
+        $section = self::getFile($configName);
+        if (!empty($subSection)) {
+            $section = $section->GetSection($subSection);
+        }
+        return $section;
     }
 
     /**

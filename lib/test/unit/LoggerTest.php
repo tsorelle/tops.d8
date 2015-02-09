@@ -15,18 +15,18 @@ class LoggerTest extends PHPUnit_Framework_TestCase {
     public function testLoggerConfig() {
         $configMgr = new \Tops\sys\TYmlConfigManager();
         $mailer = new \Tops\sys\TSwiftMailer($configMgr);
-        $logger = new \Tops\sys\TLogger($configMgr,$mailer);
-        $errlog = $logger->getLog('errors');
+        $logMgr = new \Tops\sys\TLogManager($configMgr,$mailer);
+        $errlog = $logMgr->getLog('errors');
         $this->assertNotNull($errlog);
 
     }
 
     public function testLoggerWrite() {
-        $logger = new \Tops\sys\TLogger();
         $handler = new \Monolog\Handler\TestHandler();
         $monologger = new \Monolog\Logger('default');
         $monologger->pushHandler($handler);
-        $logger->setLog('default',$monologger);
+        $logger = new TLogger( "default"); // ,$logMgr);
+        $logger->setLog('default', $monologger, true);
         $logger->writeError('Test error.');
         $this->assertTrue($handler->hasErrorRecords());
     }

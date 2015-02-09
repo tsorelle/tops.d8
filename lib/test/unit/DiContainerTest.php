@@ -22,7 +22,29 @@ class DiContainerTest extends PHPUnit_Framework_TestCase {
         $this->assertInstanceOf('Tops\test\TDiTestClass',$actual);
     }
 
+    function testLoggerConstruction() {
+        TObjectContainer::clear();
+        TObjectContainer::register('errorLog','Tops\sys\TLogger');
+        TObjectContainer::register('traceLog','Tops\sys\TLogger',':trace');
+        $errorLog = TObjectContainer::get('errorLog');
+        $traceLog = TObjectContainer::get('traceLog');
+        $this->assertNotNull($errorLog);
+        $this->assertNotNull($traceLog);
+        $this->assertEquals('default',$errorLog->getDefaultLogName());
+        $this->assertEquals('trace',$traceLog->getDefaultLogName());
 
+    }
+
+    function testConstructorArgument() {
+        TObjectContainer::clear();
+        TObjectContainer::register('testObject','Tops\test\TDiTestClass3',':testing');
+        $actual = TObjectContainer::get('testObject');
+        $this->assertNotNull($actual,'No object instantiated');
+        $this->assertInstanceOf('Tops\test\TDiTestClass3',$actual);
+        $value = $actual->getValue();
+        $this->assertNotNull($value, 'No injected value.');
+        $this->assertEquals('testing',$value);
+    }
 
     function testConstructorInjection() {
         TObjectContainer::clear();

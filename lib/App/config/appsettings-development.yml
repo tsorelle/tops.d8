@@ -46,6 +46,12 @@ services:
   testObject:
     class: Tops\test\TDiTestClass2
     arguments: [@argObject]
+trace:
+  active: 1
+  log: trace
+  switches:
+    one: 0
+    two: 1
 logging:
   default: debug
   logs:
@@ -58,6 +64,11 @@ logging:
           sender:  Tops Admin <admin@2quakers.net>
           recipient: Support <support@2quakers.net>
     - name: debug
+      handlers:
+        - type: testlog
+          level: debug
+          bubble: 0
+    - name: trace
       handlers:
         - type: testlog
           level: debug
