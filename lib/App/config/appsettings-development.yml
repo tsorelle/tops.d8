@@ -47,11 +47,13 @@ services:
     class: Tops\test\TDiTestClass2
     arguments: [@argObject]
 trace:
-  active: 1
+  console: 1
+  logging: 1
   log: trace
-  switches:
-    one: 0
-    two: 1
+  traces:
+    default: 1
+    trace1: 1
+    trace2: 1
 logging:
   default: debug
   logs:

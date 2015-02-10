@@ -13,7 +13,8 @@
 \Tops\sys\TObjectContainer::register('mailer','\Tops\sys\TSwiftMailer','configManager');
 \Tops\sys\TObjectContainer::register('logManager','\Tops\sys\TLogManager','configManager,mailer');
 \Tops\sys\TObjectContainer::register('errorLogger','\Tops\sys\TTLogger');
-\Tops\sys\TObjectContainer::register('traceLogger','\Tops\sys\TTLogger',':trace');
+\Tops\sys\TObjectContainer::register('traceLogger','\Tops\sys\TLogger',':trace');
+\Tops\sys\TObjectContainer::register('tracer','\Tops\sys\TTracer','configManager,traceLogger');
 \Tops\sys\TObjectContainer::register('exceptionHandler','\Tops\sys\TExceptionHandler','errorLogger,configManager');
 \Tops\sys\TObjectContainer::register('serviceFactory','\Tops\services\TServiceFactory','configManager,exceptionHandler');
 \Tops\sys\TObjectContainer::register('serviceHost','\Tops\services\TServiceHost','serviceFactory');
