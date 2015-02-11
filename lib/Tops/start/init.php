@@ -17,7 +17,9 @@
 \Tops\sys\TObjectContainer::register('tracer','\Tops\sys\TTracer','configManager,traceLogger');
 \Tops\sys\TObjectContainer::register('exceptionHandler','\Tops\sys\TExceptionHandler','errorLogger,configManager');
 \Tops\sys\TObjectContainer::register('serviceFactory','\Tops\services\TServiceFactory','configManager,exceptionHandler');
+\Tops\sys\TObjectContainer::register('user','\Tops\test\TTestUser');
 \Tops\sys\TObjectContainer::register('serviceHost','\Tops\services\TServiceHost','serviceFactory');
+
 
 // Application specific objects should be registered in /App/start/init.php (or corresponding directory)
 // e.g.
