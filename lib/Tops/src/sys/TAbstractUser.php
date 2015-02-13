@@ -19,6 +19,8 @@ abstract class TAbstractUser implements IUser
     protected $fullName = '';
     protected $email  = '';
 
+    private $isCurrentUser = false;
+
 
     /**
      * @param $id
@@ -178,6 +180,13 @@ abstract class TAbstractUser implements IUser
         return $this->email;
     }  //  getEmail
 
+    public function isCurrent() {
+        return $this->isCurrentUser;
+    }
+
+    protected function setCurrent() {
+        $this->isCurrentUser = true;
+    }
 
 
 }

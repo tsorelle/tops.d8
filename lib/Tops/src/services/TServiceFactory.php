@@ -56,7 +56,7 @@ class TServiceFactory implements IServiceFactory {
      */
     function CreateService($serviceId)
     {
-        $className = $this->namespace.'\T'.$serviceId.'Command';
+        $className = $this->namespace.'\\'.$serviceId.'Command';
          return new $className();
     }
 }

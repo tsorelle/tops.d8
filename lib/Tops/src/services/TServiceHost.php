@@ -9,6 +9,8 @@ namespace Tops\services;
 use \Symfony\Component\HttpFoundation\Request;
 use Tops\sys\IExceptionHandler;
 use Tops\sys\TObjectContainer;
+use Tops\sys\IUser;
+use Tops\sys\TUser;
 
 /**
  * Class TServiceHost
@@ -42,6 +44,21 @@ class TServiceHost {
      */
     private $failureResponse;
 
+
+    public function __construct(IServiceFactory $serviceFactory, IUser $user = null, IExceptionHandler $exceptionHandler = null) {
+        $this->serviceFactory = $serviceFactory;
+        $this->exceptionHandler = $exceptionHandler;
+        if ($user !== null) {
+            if (!$user->isCurrent()) {
+                $user->loadCurrentUser();
+            }
+            TUser::setCurrentUser($user);
+        }
+    }
+
+
+
+
     /**
      * @return TServiceResponse
      */
@@ -65,11 +82,6 @@ class TServiceHost {
         return $this->exceptionHandler->handleException($ex);
     }
 
-    public function __construct(IServiceFactory $serviceFactory, IExceptionHandler $exceptionHandler = null) {
-        $this->serviceFactory = $serviceFactory;
-        $this->exceptionHandler = $exceptionHandler;
-    }
-
     /**
      * @param null $request
      * @return TServiceResponse
@@ -80,7 +92,7 @@ class TServiceHost {
         return self::getInstance()->_executeRequest($request);
     }
 
-    private function _executeRequest(Request $request) {
+    private function _executeRequest(Request $request = null) {
         try {
             if (empty($request)) {
                 $request = Request::createFromGlobals();

@@ -15,14 +15,17 @@ class TestUserTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($user->isAuthenticated());
 
         $user = new TTestUser('~current');
+        $this->assertTrue($user->isAuthenticated());
 
         // $user->loadByCurrentUser();
-        $this->assertTrue($user->isAdmin());
+        $user = new TTestUser('admin');
+        $this->assertFalse($user->isAdmin());
 
     }
 
     public function testAuthorization() {
 
+        TTestUser::addUser("admin",1,"admin");
         TTestUser::addUser('testguy',2,'fools,rascals,angels');
         TTestUser::addUser('badguy',3,'fools,rascals');
         TTestUser::addAuthorization('angels','delete database');
@@ -50,7 +53,7 @@ class TestUserTest extends PHPUnit_Framework_TestCase {
         TTestUser::addUser('testguy',2,'fools,rascals,angels');
         TTestUser::addUser('badguy',3,'fools,rascals');
         TTestUser::addAuthorization('angels','delete database');
-        TTestUser::setCurrentUserName('testguy');
+        \Tops\sys\TUser::setCurrent('testguy');
 
         $current = \Tops\sys\TUser::getCurrent();
         $this->assertEquals('testguy',$current->getUserName());

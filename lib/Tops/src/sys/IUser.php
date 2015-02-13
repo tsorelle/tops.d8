@@ -84,4 +84,9 @@ interface IUser
      * @return bool
      */
     public function isAdmin();
+
+    /**
+     * @return bool
+     */
+    public function isCurrent();
 }

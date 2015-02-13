@@ -30,13 +30,13 @@ class ResultType {
     /**
      *  Service response contains errors and possibly warnings as well
      */
-    const Errors = 2;
+    const Errors = 3;
     /**
      *  Service failed execution due to unexpected problem or exception
      */
-    const ServiceFailure = 3;
+    const ServiceFailure = 4;
     /**
      *  Service was not found or was disabled
      */
-    const ServiceNotAvailable = 4;
+    const ServiceNotAvailable = 5;
 }

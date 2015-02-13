@@ -11,6 +11,7 @@ namespace Tops\test;
 
 use Tops\sys\TAbstractUser;
 use Tops\sys\TCollection;
+use Tops\sys\TUser;
 
 class TTestUser extends TAbstractUser {
 
@@ -78,6 +79,7 @@ class TTestUser extends TAbstractUser {
 
     public static function setCurrentUserName($userName) {
         self::$currentUserName = $userName;
+        TUser::getCurrent()->loadCurrentUser();
     }
     public static function addUser($userName,$id,$roles,$firstName = '',$lastName='',$email='')
     {
@@ -154,6 +156,7 @@ class TTestUser extends TAbstractUser {
             self::$currentUserName = 'testuser';
             self::addUser('testuser',1,'admin','Test','User','test@user.com');
         }
+        $this->setCurrent();
         return $this->loadByUserName(self::$currentUserName);
     }
 

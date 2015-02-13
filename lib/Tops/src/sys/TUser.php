@@ -32,4 +32,15 @@ class TUser {
     public static function setCurrentUser(IUser $user) {
         self::$currentUser = $user;
     }
+
+    public static function setCurrent($userName)
+    {
+        if (!(isset(self::$currentUser) && self::$currentUser->getUserName() == $userName)) {
+            self::$currentUser = TObjectContainer::get('user');
+            self::$currentUser->loadByUserName($userName);
+        }
+        return self::$currentUser;
+    }
+
+
 }
