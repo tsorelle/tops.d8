@@ -8,8 +8,9 @@
 
 namespace App\db;
 use \Tops\db\TDbMailboxManager;
+use Tops\sys\IMailBoxManager;
 
-class TScymMailboxManager extends TDbMailboxManager implements \Tops\sys\IMailBoxManager {
+class TScymMailboxManager extends TDbMailboxManager implements IMailBoxManager {
 
 
     protected function getCodeColumn()

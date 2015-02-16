@@ -8,8 +8,9 @@
 
 namespace App\services;
 use Tops\services;
+use Tops\services\TServiceCommand;
 
-class TestGetServiceCommand extends \Tops\services\TServiceCommand {
+class TestGetServiceCommand extends TServiceCommand {
 
     protected function run()
     {

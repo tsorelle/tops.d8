@@ -8,8 +8,9 @@
 
 namespace App\services;
 use Tops\services;
+use Tops\services\TServiceCommand;
 
-class TestRestrictedServiceCommand extends \Tops\services\TServiceCommand {
+class TestRestrictedServiceCommand extends TServiceCommand {
 
     public function __construct() {
         $this->addAuthorization("test authorization");

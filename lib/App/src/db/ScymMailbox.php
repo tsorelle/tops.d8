@@ -3,6 +3,7 @@
 namespace App\db;
 
 use Doctrine\ORM\Mapping as ORM;
+use Tops\sys\IMailBox;
 
 /**
  * Mailboxes
@@ -12,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Table(name="mailboxes", uniqueConstraints={@UniqueConstraint(name="boxIndex", columns={"box"})})
  * @Entity
  */
-class ScymMailbox implements \Tops\sys\IMailBox
+class ScymMailbox implements IMailBox
 {
     /**
      * @var integer
@@ -86,8 +87,9 @@ class ScymMailbox implements \Tops\sys\IMailBox
     /**
      * Set box
      *
-     * @param string $box
+     * @param string $mailBoxCode
      * @return string
+     * @internal param string $box
      */
     public function setMailboxCode($mailBoxCode)
     {
@@ -132,8 +134,9 @@ class ScymMailbox implements \Tops\sys\IMailBox
     /**
      * Set displaytext
      *
-     * @param string $displaytext
+     * @param string $name
      * @return string
+     * @internal param string $displaytext
      */
     public function setName($name)
     {
@@ -155,8 +158,9 @@ class ScymMailbox implements \Tops\sys\IMailBox
     /**
      * Set displaytext
      *
-     * @param string $displaytext
+     * @param string $description
      * @return string
+     * @internal param string $displaytext
      */
     public function setDescription($description)
     {
