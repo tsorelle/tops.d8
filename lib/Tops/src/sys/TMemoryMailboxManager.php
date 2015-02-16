@@ -58,6 +58,8 @@ class TMemoryMailboxManager implements IMailBoxManager {
     }
 
     /**
+     * @param null $filter
+     * @param null $arguments
      * @return IMailBox[]
      */
     public function getMailboxes($filter = null, $arguments = null)

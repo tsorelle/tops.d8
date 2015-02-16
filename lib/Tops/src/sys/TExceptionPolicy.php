@@ -77,7 +77,8 @@ class TExceptionPolicy {
     }
 
     /**
-     * @param int $Severity
+     * @param $severity
+     * @internal param int $Severity
      */
     public function setSeverity($severity)
     {

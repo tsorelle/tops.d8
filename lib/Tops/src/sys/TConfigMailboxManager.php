@@ -39,7 +39,8 @@ class TConfigMailboxManager implements IMailBoxManager {
     }
 
     /**
-     * @return IMailBox
+     * @param null $filter
+     * @return IMailBox[]
      */
     public function getMailboxes($filter = null)
     {

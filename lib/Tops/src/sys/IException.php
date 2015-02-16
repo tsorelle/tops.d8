@@ -66,7 +66,7 @@ interface IException {
      * (PHP 5 &gt;= 5.3.0)<br/>
      * Returns previous Exception
      * @link http://php.net/manual/en/exception.getprevious.php
-     * @return Exception the previous <b>Exception</b> if available
+     * @return \Exception the previous <b>Exception</b> if available
      * or null otherwise.
      */
     public function getPrevious();

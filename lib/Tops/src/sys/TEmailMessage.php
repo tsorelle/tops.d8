@@ -191,9 +191,9 @@ class TEMailMessage {
 
     /**
      * @param TEmailAddress[] $list
-     * @param $emailAddress
-     * @param $name
+     * @param TEmailAddress $emailAddress
      * @return bool
+     * @internal param $name
      */
     public function addAddress(Array &$list, TEmailAddress $emailAddress) {
 
@@ -204,6 +204,7 @@ class TEMailMessage {
         else {
             array_push($list,$emailAddress);
         }
+        return $found;
     }
 
 
@@ -274,9 +275,10 @@ class TEMailMessage {
     }
 
     /**
-     * @param $recipient
+     * @param $recipients
      * @param $name
      * @return bool
+     * @internal param $recipient
      */
     public function setRecipient($recipients, $name=null)
     {
@@ -368,6 +370,7 @@ class TEMailMessage {
 
     /**
      * @param $value
+     * @param string $contentType
      */
     public function setMessageBody($value, $contentType='text')
     {

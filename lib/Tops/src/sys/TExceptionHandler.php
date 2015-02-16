@@ -146,7 +146,7 @@ class TExceptionHandler implements IExceptionHandler
      */
     private function sortPolicies() {
         return $this->policies->getSort(
-            function (\Tops\sys\TExceptionPolicy $p1, \Tops\sys\TExceptionPolicy $p2) {
+            function (TExceptionPolicy $p1, TExceptionPolicy $p2) {
 
                 $s1 = $p1->getSeverity();
                 $s2 = $p2->getSeverity();

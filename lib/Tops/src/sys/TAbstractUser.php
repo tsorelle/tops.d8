@@ -68,9 +68,9 @@ abstract class TAbstractUser implements IUser
 
 
     /**
-     * @param $first
-     * @param string $last
-     * @param string $middle
+     * @internal param $first
+     * @internal param string $last
+     * @internal param string $middle
      */
     public function concatFullName()
     {

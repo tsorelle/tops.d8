@@ -244,6 +244,7 @@ class TClassPath
     {
         // D:\Projects\websites\tops\tops.root\lib\Tops\src\test\TDBSmokeTest.php
         if (file_exists($file)) {
+            /** @noinspection PhpIncludeInspection */
             require $file;
             return true;
         }

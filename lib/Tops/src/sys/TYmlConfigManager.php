@@ -94,8 +94,8 @@ class TYmlConfigManager implements IConfigManager {
 
     /**
      * @param $sectionPath
-     * @param bool $default
-     * @return boolean
+     * @return bool
+     * @internal param bool $default
      */
     public function IsTrue($sectionPath)
     {

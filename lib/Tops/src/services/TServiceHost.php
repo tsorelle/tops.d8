@@ -65,7 +65,7 @@ class TServiceHost {
     private function getFailureResponse() {
         if (!isset($this->failureResponse)) {
             $this->failureResponse = new TServiceResponse();
-            $this->failureResponse->Result = \Tops\services\ResultType::ServiceFailure;
+            $this->failureResponse->Result = ResultType::ServiceFailure;
             $message = new TServiceMessage();
             $message->MessageType = MessageType::Error;
             $message->Text = 'Service failed. If the problem persists contact the site administrator.';
@@ -83,7 +83,7 @@ class TServiceHost {
     }
 
     /**
-     * @param null $request
+     * @param Request $request
      * @return TServiceResponse
      * @throws \Exception
      */

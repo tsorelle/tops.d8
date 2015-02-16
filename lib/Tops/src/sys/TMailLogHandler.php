@@ -7,13 +7,14 @@
  */
 
 namespace Tops\sys;
+use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
 
 /**
  * Class TMailLogHandler
  * @package Tops\sys
  */
-class TMailLogHandler extends \Monolog\Handler\AbstractProcessingHandler  {
+class TMailLogHandler extends AbstractProcessingHandler  {
 
     /**
      * @var IMailer

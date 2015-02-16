@@ -115,7 +115,7 @@ class TObjectContainer {
 
 
     /**
-     * @param null $fileName
+     * @param null|string $fileName
      * @param null $configLocation
      */
     public static function LoadConfig($fileName = 'di.yml',$configLocation = null) {

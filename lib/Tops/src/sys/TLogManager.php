@@ -98,8 +98,8 @@ class TLogManager {
 
     /**
      * @param IConfiguration $handlerConfig
-     * @param IMailer $mailer
      * @return \Monolog\Handler\HandlerInterface
+     * @internal param IMailer $mailer
      */
     protected function createHandler(IConfiguration $handlerConfig)
     {
@@ -180,9 +180,9 @@ class TLogManager {
 
     /**
      * @param $logName
-     * @param $logConfig
-     * @param IMailer $mailer
+     * @param TConfigSection $logConfig
      * @return Logger
+     * @internal param IMailer $mailer
      */
     protected function createLogFromConfig($logName, TConfigSection $logConfig)
     {

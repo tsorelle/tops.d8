@@ -69,9 +69,10 @@ class TEntityManagers {
     /**
      * Build and initialize a Doctrine ORM entity manager based on database type key
      *
+     * @param IConfiguration $dbConfig
      * @param $typeKey
+     * @param null $isDevMode
      * @return EntityManager
-     * @throws \Doctrine\ORM\ORMException
      */
     private function createManager(IConfiguration $dbConfig, $typeKey,$isDevMode=null) {
         $databaseId = $dbConfig->Value("databases/type/$typeKey");

@@ -24,7 +24,8 @@ class TConfigFileLocator implements FileLocatorInterface {
     /**
      * Constructor.
      *
-     * @param string|array $paths A path or an array of paths where to look for resources
+     * @param null $basePath
+     * @internal param array|string $paths A path or an array of paths where to look for resources
      */
     public function __construct($basePath = null)
     {
