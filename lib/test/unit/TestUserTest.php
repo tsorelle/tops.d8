@@ -47,8 +47,8 @@ class TestUserTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testStaticUser() {
-        \Tops\sys\TObjectContainer::clear();
-        \Tops\sys\TObjectContainer::register('user','\Tops\test\TTestUser');
+        \Tops\sys\TObjectContainer::Clear();
+        \Tops\sys\TObjectContainer::Register('user','\Tops\test\TTestUser');
 
         TTestUser::addUser('testguy',2,'fools,rascals,angels');
         TTestUser::addUser('badguy',3,'fools,rascals');

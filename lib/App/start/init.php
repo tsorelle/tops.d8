@@ -9,4 +9,4 @@
 \Tops\sys\TObjectContainer::register('mailboxManager','\App\db\TScymMailboxManager','configManager');
 \Tops\sys\TObjectContainer::register('postOffice','\Tops\sys\TPostOffice',array('mailer','mailboxManager'));
 
-// \Tops\sys\TObjectContainer::loadConfig('di.yml');
+// \Tops\sys\TObjectContainer::LoadConfig('di.yml');

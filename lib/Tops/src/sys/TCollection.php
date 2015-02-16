@@ -20,6 +20,11 @@ class TCollection {
         }
     }
 
+    /**
+     * @param $callback
+     * @param null $arguments
+     * @return TCollection
+     */
     public function filter($callback, $arguments = null)
     {
         $result = array();

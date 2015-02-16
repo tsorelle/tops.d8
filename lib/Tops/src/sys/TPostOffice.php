@@ -23,7 +23,7 @@ class TPostOffice {
     public static function getInstance()
     {
         if (!isset(self::$instance)) {
-            self::$instance = TObjectContainer::get('postOffice');
+            self::$instance = TObjectContainer::Get('postOffice');
         }
         return self::$instance;
     }
@@ -178,6 +178,10 @@ class TPostOffice {
 
     public static function disableSend() {
         self::getInstance()->mailer->setSendEnabled(false);
+    }
+
+    public static function GetMailboxManager() {
+        return self::getInstance()->mailboxes;
     }
 
 

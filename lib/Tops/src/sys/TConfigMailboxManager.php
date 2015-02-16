@@ -78,4 +78,9 @@ class TConfigMailboxManager implements IMailBoxManager {
     {
         return TMailBox::Create($code, $name, $address, $description);
     }
+
+    public function saveChanges()
+    {
+        // not implemented
+    }
 }

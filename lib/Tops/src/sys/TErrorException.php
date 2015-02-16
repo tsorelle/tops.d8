@@ -10,7 +10,7 @@ namespace Tops\sys;
 
 
 class TErrorException extends \ErrorException implements IException {
-    public static function setErrorHandler($functionName = '\Tops\sys\TErrorException::errorHandler', $errorTypes = E_ALL) {
+    public static function SetErrorHandler($functionName = '\Tops\sys\TErrorException::errorHandler', $errorTypes = E_ALL) {
         set_error_handler($functionName,$errorTypes);
     }
 

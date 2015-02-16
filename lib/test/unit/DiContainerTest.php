@@ -10,24 +10,24 @@ use Tops\sys\TObjectContainer;
 
 class DiContainerTest extends PHPUnit_Framework_TestCase {
     function  testContainerInstance() {
-        $container = TObjectContainer::getContainer();
+        $container = TObjectContainer::GetContainer();
         $this->assertNotNull($container,'No container');
         $this->assertInstanceOf('\Symfony\Component\DependencyInjection\ContainerBuilder',$container);
     }
 
     function testRegistration() {
-        TObjectContainer::register('testObject','Tops\test\TDiTestClass');
-        $actual = TObjectContainer::get('testObject');
+        TObjectContainer::Register('testObject','Tops\test\TDiTestClass');
+        $actual = TObjectContainer::Get('testObject');
         $this->assertNotNull($actual,'No object instantiated');
         $this->assertInstanceOf('Tops\test\TDiTestClass',$actual);
     }
 
     function testLoggerConstruction() {
-        TObjectContainer::clear();
-        TObjectContainer::register('errorLog','Tops\sys\TLogger');
-        TObjectContainer::register('traceLog','Tops\sys\TLogger',':trace');
-        $errorLog = TObjectContainer::get('errorLog');
-        $traceLog = TObjectContainer::get('traceLog');
+        TObjectContainer::Clear();
+        TObjectContainer::Register('errorLog','Tops\sys\TLogger');
+        TObjectContainer::Register('traceLog','Tops\sys\TLogger',':trace');
+        $errorLog = TObjectContainer::Get('errorLog');
+        $traceLog = TObjectContainer::Get('traceLog');
         $this->assertNotNull($errorLog);
         $this->assertNotNull($traceLog);
         $this->assertEquals('default',$errorLog->getDefaultLogName());
@@ -36,9 +36,9 @@ class DiContainerTest extends PHPUnit_Framework_TestCase {
     }
 
     function testConstructorArgument() {
-        TObjectContainer::clear();
-        TObjectContainer::register('testObject','Tops\test\TDiTestClass3',':testing');
-        $actual = TObjectContainer::get('testObject');
+        TObjectContainer::Clear();
+        TObjectContainer::Register('testObject','Tops\test\TDiTestClass3',':testing');
+        $actual = TObjectContainer::Get('testObject');
         $this->assertNotNull($actual,'No object instantiated');
         $this->assertInstanceOf('Tops\test\TDiTestClass3',$actual);
         $value = $actual->getValue();
@@ -47,15 +47,15 @@ class DiContainerTest extends PHPUnit_Framework_TestCase {
     }
 
     function testConstructorInjection() {
-        TObjectContainer::clear();
-        TObjectContainer::register('argObject','Tops\test\TDiTestClass');
-        $actual = TObjectContainer::get('argObject');
+        TObjectContainer::Clear();
+        TObjectContainer::Register('argObject','Tops\test\TDiTestClass');
+        $actual = TObjectContainer::Get('argObject');
         $this->assertNotNull($actual,'No object instantiated');
         $this->assertInstanceOf('Tops\test\TDiTestClass',$actual);
 
 
-        TObjectContainer::register('testObject','Tops\test\TDiTestClass2','argObject');
-        $actual = TObjectContainer::get('testObject');
+        TObjectContainer::Register('testObject','Tops\test\TDiTestClass2','argObject');
+        $actual = TObjectContainer::Get('testObject');
         $this->assertNotNull($actual,'No object instantiated');
         $this->assertInstanceOf('Tops\test\TDiTestClass2',$actual);
 
@@ -64,24 +64,24 @@ class DiContainerTest extends PHPUnit_Framework_TestCase {
     }
 
     function testDiConfigYml() {
-        TObjectContainer::clear();
+        TObjectContainer::Clear();
 
-        TObjectContainer::register('testObject2','Tops\test\TSmokeTest');
-        TObjectContainer::loadConfig("testDiConfig.yml",__DIR__);
-        // TObjectContainer::loadConfig("di.yml");
-        $actual = TObjectContainer::get('argObject');
+        TObjectContainer::Register('testObject2','Tops\test\TSmokeTest');
+        TObjectContainer::LoadConfig("testDiConfig.yml",__DIR__);
+        // TObjectContainer::LoadConfig("di.yml");
+        $actual = TObjectContainer::Get('argObject');
         $this->assertNotNull($actual,'No object instantiated');
         $this->assertInstanceOf('Tops\test\TDiTestClass',$actual);
 
 
-        $actual = TObjectContainer::get('testObject');
+        $actual = TObjectContainer::Get('testObject');
         $this->assertNotNull($actual,'No object instantiated');
         $this->assertInstanceOf('Tops\test\TDiTestClass2',$actual);
 
         $this->assertNotNull($actual->testClass, 'No injected class.');
         $this->assertInstanceOf('Tops\test\TDiTestClass',$actual->testClass);
 
-        $actual = TObjectContainer::get('testObject2');
+        $actual = TObjectContainer::Get('testObject2');
         $this->assertNotNull($actual,'No object instantiated');
         $this->assertInstanceOf('Tops\test\TSmokeTest',$actual);
 
@@ -89,9 +89,9 @@ class DiContainerTest extends PHPUnit_Framework_TestCase {
     }
 
     function testConfigManager() {
-        TObjectContainer::clear();
-        TObjectContainer::register('configManager','Tops\sys\TYmlConfigManager');
-        $actual = TObjectContainer::get('configManager');
+        TObjectContainer::Clear();
+        TObjectContainer::Register('configManager','Tops\sys\TYmlConfigManager');
+        $actual = TObjectContainer::Get('configManager');
         $this->assertNotNull($actual,'No object instantiated');
         $this->assertInstanceOf('Tops\sys\TYmlConfigManager',$actual);
 

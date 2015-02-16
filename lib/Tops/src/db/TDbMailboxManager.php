@@ -93,7 +93,7 @@ abstract class TDbMailboxManager implements IMailBoxManager {
 
     /**
      * @param null $filter
-     * @return IMailBox
+     * @return IMailBox[]
      */
     public function getMailboxes($filter = null)
     {
@@ -141,7 +141,6 @@ abstract class TDbMailboxManager implements IMailBoxManager {
             $current->setDescription($mailbox->getDescription());
             $current->setEmail($mailbox->getEmail());
         }
-
         $em->flush();
     }
 
@@ -166,4 +165,8 @@ abstract class TDbMailboxManager implements IMailBoxManager {
      * @return IMailbox
      */
     protected abstract function createMailBoxEntity();
+
+    public function saveChanges() {
+        // not implemented
+    }
 }

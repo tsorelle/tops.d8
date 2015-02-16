@@ -29,23 +29,23 @@ abstract class TServiceCommand {
 
     abstract protected function run();
 
-    protected function AddErrorMessage($text) {
+    protected function addErrorMessage($text) {
         $this->context->AddErrorMessage($text);
     }
 
-    public function AddInfoMessage($text) {
+    public function addInfoMessage($text) {
         $this->context->AddInfoMessage($text);
     }
 
-    public function AddWarningMessage($text) {
+    public function addWarningMessage($text) {
         $this->context->AddWarningMessage($text);
     }
 
-    public function SetReturnValue($value) {
+    public function setReturnValue($value) {
         $this->context->SetReturnValue($value);
     }
 
-    public function GetRequest() {
+    public function getRequest() {
 
         return $this->request;
     }
@@ -66,7 +66,7 @@ abstract class TServiceCommand {
     }
 
 
-    public function IsAuthorized() {
+    public function isAuthorized() {
         if (empty($this->authorizations))
             return true;
         $user = $this->getUser();
@@ -89,13 +89,13 @@ abstract class TServiceCommand {
      * @param $request
      * @return TServiceResponse
      */
-    public function Execute($request) {
+    public function execute($request) {
         $this->context = new TServiceContext();
         $this->request = $request;
-        if ($this->IsAuthorized())
+        if ($this->isAuthorized())
             $this->run();
         else
-            $this->AddErrorMessage("Sorry, you are not authorized to use this service.");
+            $this->addErrorMessage("Sorry, you are not authorized to use this service.");
         return $this->context->GetResponse();
     }
 }

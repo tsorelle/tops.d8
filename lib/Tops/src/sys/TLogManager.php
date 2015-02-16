@@ -43,8 +43,8 @@ class TLogManager {
     public static function GetInstance()
     {
         if (!isset(self::$instance)) {
-            if (TObjectContainer::hasDefinition("logManager")) {
-                self::$instance = TObjectContainer::get('logManager');
+            if (TObjectContainer::HasDefinition("logManager")) {
+                self::$instance = TObjectContainer::Get('logManager');
             }
             else {
                 self::$instance = new TLogManager();

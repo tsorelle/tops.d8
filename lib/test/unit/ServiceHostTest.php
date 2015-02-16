@@ -19,10 +19,10 @@ class ServiceHostTest extends PHPUnit_Framework_TestCase {
         TTestUser::addUser("superman",1,"superuser");
         TTestUser::addUser("jdoe",2,"member");
 
-        \Tops\sys\TObjectContainer::clear();
-        \Tops\sys\TObjectContainer::register('configManager','\Tops\sys\TYmlConfigManager');
-        \Tops\sys\TObjectContainer::register('serviceFactory','\Tops\services\TServiceFactory','configManager');
-        \Tops\sys\TObjectContainer::register('serviceHost','\Tops\services\TServiceHost','serviceFactory');
+        \Tops\sys\TObjectContainer::Clear();
+        \Tops\sys\TObjectContainer::Register('configManager','\Tops\sys\TYmlConfigManager');
+        \Tops\sys\TObjectContainer::Register('serviceFactory','\Tops\services\TServiceFactory','configManager');
+        \Tops\sys\TObjectContainer::Register('serviceHost','\Tops\services\TServiceHost','serviceFactory');
 
 
 

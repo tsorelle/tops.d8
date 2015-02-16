@@ -20,7 +20,7 @@ class TUser {
      */
     public static function getCurrent() {
         if (!isset(self::$currentUser)) {
-            self::$currentUser = TObjectContainer::get('user');
+            self::$currentUser = TObjectContainer::Get('user');
             self::$currentUser->loadCurrentUser();
         }
         return self::$currentUser;
@@ -36,7 +36,7 @@ class TUser {
     public static function setCurrent($userName)
     {
         if (!(isset(self::$currentUser) && self::$currentUser->getUserName() == $userName)) {
-            self::$currentUser = TObjectContainer::get('user');
+            self::$currentUser = TObjectContainer::Get('user');
             self::$currentUser->loadByUserName($userName);
         }
         return self::$currentUser;

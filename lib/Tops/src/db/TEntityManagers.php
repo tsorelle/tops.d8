@@ -28,7 +28,7 @@ class TEntityManagers {
 
     private static $instance;
 
-    public static function create(IConfigManager $configManager) {
+    public static function Create(IConfigManager $configManager) {
         self::$instance = new TEntityManagers($configManager);
     }
 
@@ -50,7 +50,7 @@ class TEntityManagers {
     public static function Get($key='application')
     {
         if (!isset(self::$instance)) {
-            $configManager = TObjectContainer::get("configManager");
+            $configManager = TObjectContainer::Get("configManager");
             self::$instance = new TEntityManagers($configManager);
         }
         return self::$instance->_get($key);

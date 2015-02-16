@@ -89,8 +89,8 @@ class TTracer
     public static function On($traceId = 'default')
     {
         if (!isset(self::$tracer)) {
-            if (TObjectContainer::hasDefinition("tracer")) {
-                self::$tracer = TObjectContainer::get("tracer");
+            if (TObjectContainer::HasDefinition("tracer")) {
+                self::$tracer = TObjectContainer::Get("tracer");
             } else {
                 self::$tracer = null;
                 return;

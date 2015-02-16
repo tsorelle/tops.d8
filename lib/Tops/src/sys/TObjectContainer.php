@@ -28,7 +28,7 @@ class TObjectContainer {
      *  Release container so a new one will be created on next get container call.
      *  Used primarily for unit tests.
      */
-    public static function clear() {
+    public static function Clear() {
         self::$container = null;
     }
 
@@ -37,7 +37,7 @@ class TObjectContainer {
      *
      * Get container instance, create instance if null
      */
-    public static function getContainer() {
+    public static function GetContainer() {
         if (!(self::$container)) {
             self::$container = new ContainerBuilder();
         }
@@ -50,7 +50,7 @@ class TObjectContainer {
      *
      * Retrieve instance from the container.
      */
-    public static function get($key) {
+    public static function Get($key) {
         return self::$container->get($key);
     }
 
@@ -58,8 +58,8 @@ class TObjectContainer {
      * @param $id
      * @return bool
      */
-    public static function hasDefinition($id) {
-        return self::getContainer()->hasDefinition($id);
+    public static function HasDefinition($id) {
+        return self::GetContainer()->hasDefinition($id);
     }
 
     /**
@@ -68,21 +68,21 @@ class TObjectContainer {
      * @param null $arguments
      * @return \Symfony\Component\DependencyInjection\Definition
      */
-    public static function register($key,$className,$arguments = null) {
-        $definition = self::getContainer()->register($key,$className);
+    public static function Register($key,$className,$arguments = null) {
+        $definition = self::GetContainer()->register($key,$className);
 
         if ($arguments !== null) {
             if (!is_array($arguments)) {
                 $args = explode(',',$arguments);
                 $count = sizeof($args);
                 for ($i = 0; $i< $count; $i++) {
-                    self::addArgument($definition,$args[$i]);
+                    self::AddArgument($definition,$args[$i]);
                     // $definition->addArgument(New Reference($args[$i]));
                 }
             }
             else {
                 foreach($arguments as $arg ) {
-                    self::addArgument($definition,$arg);
+                    self::AddArgument($definition,$arg);
                     // $definition->addArgument(New Reference($arg));
                 }
             }
@@ -90,7 +90,7 @@ class TObjectContainer {
         return $definition;
     }
 
-    private static function addArgument(Definition $definition, $arg)
+    private static function AddArgument(Definition $definition, $arg)
     {
         if (empty($arg)) {
             return;
@@ -110,7 +110,7 @@ class TObjectContainer {
     }
 
     public static function SetParameter($name, $value) {
-        self::getContainer()->setParameter($name,$value);
+        self::GetContainer()->setParameter($name,$value);
     }
 
 
@@ -118,7 +118,7 @@ class TObjectContainer {
      * @param null $fileName
      * @param null $configLocation
      */
-    public static function loadConfig($fileName = 'di.yml',$configLocation = null) {
+    public static function LoadConfig($fileName = 'di.yml',$configLocation = null) {
 /*
         if ($configLocation === null) {
             $configLocation = TPath::GetConfigRoot();

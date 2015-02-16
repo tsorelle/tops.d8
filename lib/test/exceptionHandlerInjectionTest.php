@@ -11,7 +11,7 @@ require_once(__DIR__.'/../App/start/init.php');
 
 // use for ad hoc tests
 
-$handler = \Tops\sys\TObjectContainer::get('exceptionHandler');
+$handler = \Tops\sys\TObjectContainer::Get('exceptionHandler');
 
 function test(\Tops\sys\TExceptionHandler $handler, \Exception $ex) {
     $rethrow = $handler->handleException($ex);

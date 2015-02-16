@@ -17,6 +17,6 @@ class TestRestrictedServiceCommand extends \Tops\services\TServiceCommand {
 
     protected function run()
     {
-        $this->AddInfoMessage("Processed request");
+        $this->addInfoMessage("Processed request");
     }
 }

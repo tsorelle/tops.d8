@@ -24,7 +24,7 @@ class TServiceHost {
     private static $instance;
     private static function getInstance() {
         if (!isset(self::$instance)) {
-            self::$instance = TObjectContainer::get('serviceHost');
+            self::$instance = TObjectContainer::Get('serviceHost');
         }
         return self::$instance;
     }

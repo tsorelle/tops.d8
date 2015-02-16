@@ -33,7 +33,7 @@ interface IMailBoxManager {
     public function findByCode($mailboxCode);
 
     /**
-     * @return IMailBox
+     * @return IMailBox[]
      */
     public function getMailboxes($filter = null);
 
@@ -60,5 +60,7 @@ interface IMailBoxManager {
      * @return IMailBox
      */
     public function createMailBox($code, $name, $address, $description);
+
+    public function saveChanges();
 
 }

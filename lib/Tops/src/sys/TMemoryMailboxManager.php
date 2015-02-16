@@ -58,7 +58,7 @@ class TMemoryMailboxManager implements IMailBoxManager {
     }
 
     /**
-     * @return IMailBox
+     * @return IMailBox[]
      */
     public function getMailboxes($filter = null, $arguments = null)
     {
@@ -85,6 +85,7 @@ class TMemoryMailboxManager implements IMailBoxManager {
         $id = $this->boxes->getCount();
         $box->setMailBoxId($id);
         $this->boxes->add($box);
+        $this->boxes->setItem($id,$box);
         return $box;
     }
 
@@ -121,4 +122,14 @@ class TMemoryMailboxManager implements IMailBoxManager {
     public function getCount() {
         return $this->boxes->getCount();
     }
+
+    protected function clearMailboxes() {
+        $this->boxes->clear();
+    }
+
+    public function saveChanges() {
+        // not implemented
+    }
+
+
 }

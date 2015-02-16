@@ -13,19 +13,19 @@ class TestGetServiceCommand extends \Tops\services\TServiceCommand {
 
     protected function run()
     {
-        $id = $this->GetRequest();
+        $id = $this->getRequest();
         if (!$id) {
-            $this->AddErrorMessage('Expected request');
+            $this->addErrorMessage('Expected request');
         }
         if ($id == 3) {
-            $this->AddInfoMessage("Found item");
+            $this->addInfoMessage("Found item");
             $item = new \stdClass();
             $item->name = "TestItem";
             $item->id = 3;
-            $this->SetReturnValue($item);
+            $this->setReturnValue($item);
         }
         else {
-            $this->AddWarningMessage("id not found");
+            $this->addWarningMessage("id not found");
         }
 
     }
