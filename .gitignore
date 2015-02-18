@@ -7,9 +7,6 @@ lib/vendor/*
 # Ignore data files
 lib/data/*
 
-lib/test/quicktest.php
-lib/test/temp/*
+assets/js/bower/bower_components
 
-assets/js/bower/bower_components/
-assets/js/bower/bower_components/*.*
-assets/js/bower/bower_components/**.*
+lib/test/temp
