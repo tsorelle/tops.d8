@@ -22,5 +22,7 @@ core\vendor directory
     
     In PHPStorm the phpunit.phar file must be the same version as the phpunit shipped in Drupal core.
     Currently 4.4.*, see core\composer.json
-    
+
+assets\js\bower directory
+    Contains bower JavaScript dependency managment components.
     
