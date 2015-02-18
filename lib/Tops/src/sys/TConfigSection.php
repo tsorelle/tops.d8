@@ -9,14 +9,15 @@
 namespace Tops\sys;
 
 
-class TConfigSection implements IConfiguration {
+class TConfigSection implements IConfiguration
+{
     private $configData;
 
-    public function __construct($configData = null) {
+    public function __construct($configData = null)
+    {
         if ($configData !== null) {
             $this->configData = $configData;
-        }
-        else {
+        } else {
             $this->configData = array();
         }
     }
@@ -44,7 +45,8 @@ class TConfigSection implements IConfiguration {
      * Set config data source from a memory array.
      * Typically used in unit testing.
      */
-    public function setConfig(Array $configData,$subSection = '') {
+    public function setConfig(Array $configData, $subSection = '')
+    {
         if (!empty($subSection)) {
             $configData = $this->getValue($configData[$subSection]);
         }
@@ -57,11 +59,13 @@ class TConfigSection implements IConfiguration {
      * @param null $default
      * @return null
      */
-    public function Value($sectionPath='',$default=null) {
-        $result = $this->getValue($sectionPath,$this->configData);
+    public function Value($sectionPath = '', $default = null)
+    {
+        $result = $this->getValue($sectionPath, $this->configData);
         if ($result === null) {
             return $default;
         }
+
         return $result;
     }
 
@@ -69,11 +73,13 @@ class TConfigSection implements IConfiguration {
      * @param $sectionPath
      * @return array|TConfigSection
      */
-    public function GetSection($sectionPath) {
-        $result = $this->getValue($sectionPath,$this->configData);
+    public function GetSection($sectionPath)
+    {
+        $result = $this->getValue($sectionPath, $this->configData);
         if ($result === null) {
             return new TConfigSection();
         }
+
         return new TConfigSection($result);
     }
 
@@ -82,18 +88,20 @@ class TConfigSection implements IConfiguration {
      * @param $result
      * @return mixed
      */
-    protected function getValue($sectionPath='',$result) {
+    protected function getValue($sectionPath = '', $result)
+    {
         if (!empty($sectionPath)) {
             $keys = explode('/', $sectionPath);
             $count = count($keys);
             for ($i = 0; $i < $count; $i++) {
-                $result = $this->getConfig($result,$keys[$i]);
+                $result = $this->getConfig($result, $keys[$i]);
             }
         }
+
         return $result;
     }
 
-    protected function getConfig($source, $keyName='')
+    protected function getConfig($source, $keyName = '')
     {
         $length = is_array($source) ? count($source) : 0;
         if ($length > 0) {
@@ -104,17 +112,22 @@ class TConfigSection implements IConfiguration {
                 return $source[$keyName];
             }
         }
+
         return null;
     }
 
-    public function clearConfigData() {
+    public function clearConfigData()
+    {
         $this->configData = array();
     }
 
-    public function CrossReferenceSection($referencePath) {
+    public function CrossReferenceSection($referencePath)
+    {
         $realKey = $this->Value($referencePath);
-        if (!$realKey)
+        if (!$realKey) {
             return null;
+        }
+
         return $this->Value($realKey);
     }
 
@@ -123,12 +136,13 @@ class TConfigSection implements IConfiguration {
      * @param bool $default
      * @return boolean
      */
-    public function IsTrue($sectionPath, $default=false)
+    public function IsTrue($sectionPath, $default = false)
     {
         $value = $this->Value($sectionPath);
         if ($value === null) {
             return $default;
         }
+
         return !empty($value);
     }
 }

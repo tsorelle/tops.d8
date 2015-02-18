@@ -8,3 +8,5 @@ lib/vendor/*
 lib/data/*
 
 lib/test/quicktest.php
+assets/js/bower/bower_components/
+
