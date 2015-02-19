@@ -10,3 +10,4 @@ lib/data/*
 assets/js/bower/bower_components
 
 lib/test/temp
+assets/js/typings
