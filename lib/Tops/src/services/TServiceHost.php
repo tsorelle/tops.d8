@@ -89,11 +89,24 @@ class TServiceHost {
      */
     public static function ExecuteRequest(Request $request = null)
     {
-        return self::getInstance()->_executeRequest($request);
+        $instance = self::getInstance();
+        try {
+            return $instance->_executeRequest($request);
+
+        }
+        catch (\Exception $ex) {
+            $rethrow = $instance->handleException($ex);
+            if ($rethrow) {
+                throw $ex;
+            }
+            return $instance->getFailureResponse();
+        }
+
     }
 
     private function _executeRequest(Request $request = null) {
-        try {
+
+        // try {
             if (empty($request)) {
                 $request = Request::createFromGlobals();
             }
@@ -119,7 +132,7 @@ class TServiceHost {
                 throw new \Exception('Unsupported request method: ' . $request->getMethod());
 
             return $this->_execute($commandId, $input);
-        }
+/*        }
         catch (\Exception $ex) {
             $rethrow = $this->handleException($ex);
             if ($rethrow) {
@@ -127,6 +140,7 @@ class TServiceHost {
             }
             return $this->getFailureResponse();
         }
+*/
     }
 
 

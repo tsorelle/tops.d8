@@ -6,6 +6,7 @@
  * Time: 1:15 PM
  */
 namespace Tops\services;
+use SebastianBergmann\Exporter\Exception;
 use Tops\sys\IConfigManager;
 
 /**
@@ -57,6 +58,9 @@ class TServiceFactory implements IServiceFactory {
     function CreateService($serviceId)
     {
         $className = $this->namespace.'\\'.$serviceId.'Command';
-         return new $className();
+        if (!class_exists($className)) {
+            throw new \Exception("Cannot instatiate service '$className'.");
+        }
+        return new $className();
     }
 }

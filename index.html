@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>Tops Test Site</h1>
+<p>
+<!--
+    $request->request->set('serviceCode','TestGetService');
+    $request->request->set( 'request', 3);
+-->
+    <a href="topsService.php?serviceCode=TestGetService&request=3">Test Hello World</a>
+
+</p>
+<div>
+    <form id="getserviceform" method="get" action="topsService.php" style="border: 1px solid black">
+        <h2>Get</h2>
+        <p>Command: <input id="serviceCode" name="serviceCode"></p>
+        <p>Request: <input id="request" name="request"></p>
+        <input type="submit" value="Go" />
+
+    </form>
+<br>
+    <form id="postserviceform" method="post" action="topsService.php" style="border: 1px solid black">
+        <h2>Post</h2>
+        <p>Command: <input id="serviceCode" name="serviceCode"></p>
+        <p>Request: <input id="request" name="request" style="width: 90%" value='{"":"","":""}'></p>
+        <input type="submit" value="Go" />
+    </form>
+
+</div>
+
+</body>
+</html>

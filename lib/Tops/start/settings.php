@@ -9,15 +9,9 @@
  */
 $timezone = 'America/Chicago';
 $includesPath = '';
-
 date_default_timezone_set( $timezone ) ;
 if (!empty($includesPath)) {
     ini_set('include_path', ini_get('include_path') . $includesPath);
 }
-
-// Load error handling
-// todo: review this
-// require_once("tops_lib/sys/errorHandling.php");
-
 unset($includesPath);
 unset($timezone);
