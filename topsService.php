@@ -13,4 +13,5 @@ require_once __DIR__ . '/lib/test/temp/serviceSetup.php';
 header('Content-Type: text/html; charset=ISO-8859-1');
 
 $response =  \Tops\services\TServiceHost::ExecuteRequest();
+$testLog = \Tops\sys\TLogManager::GetTestLog();
 print json_encode($response);

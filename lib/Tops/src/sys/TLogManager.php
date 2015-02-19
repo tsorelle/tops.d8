@@ -35,6 +35,11 @@ class TLogManager {
      */
     private static $instance;
 
+    private static $testlog;
+    public static function GetTestLog() {
+        return self::$testlog;
+    }
+
     public static function CreateInstance() {
         self::$instance = new TLogManager();
         return self::$instance;
@@ -130,7 +135,8 @@ class TLogManager {
                 $handler = new TMailLogHandler($this->mailer, $sender, $recipient, $level,$bubble);
                 return $handler;
             case 'testlog' :
-                return new TestHandler($level,$bubble);
+                self::$testlog = new TestHandler($level,$bubble);
+                return self::$testlog;
             case 'chromelog' :
                 return new ChromePHPHandler($level,$bubble);
             case 'streamlog' :
