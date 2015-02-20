@@ -19,7 +19,8 @@
 \Tops\sys\TObjectContainer::Register('exceptionHandler','\Tops\sys\TExceptionHandler','errorLogger,configManager');
 \Tops\sys\TObjectContainer::Register('serviceFactory','\Tops\services\TServiceFactory','configManager');
 \Tops\sys\TObjectContainer::Register('serviceHost','\Tops\services\TServiceHost','serviceFactory,user,exceptionHandler');
-// \Tops\sys\TObjectContainer::Register('mailboxManager','\Tops\sys\T','serviceFactory,user,exceptionHandler');
+// \Tops\sys\TObjectContainer::Register('mailboxManager','\Tops\sys\TestMailBoxManager');
+//  \Tops\sys\TObjectContainer::Register('postoffice','\Tops\services\TPostOffice','mailer,mailboxManager');
 
 // Application specific objects should be registered in /App/start/init.php (or corresponding directory)
 // e.g.

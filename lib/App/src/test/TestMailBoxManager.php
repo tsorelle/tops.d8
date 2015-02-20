@@ -9,6 +9,7 @@
 namespace App\test;
 use Tops\sys\TMemoryMailboxManager;
 use Tops\sys\TPath;
+use Tops\sys\TPostOffice;
 
 
 class TestMailBoxManager extends TMemoryMailboxManager
@@ -45,7 +46,6 @@ class TestMailBoxManager extends TMemoryMailboxManager
 
         }
         fclose($f);
-
     }
 
     private function formatForSave($value) {
@@ -74,5 +74,27 @@ class TestMailBoxManager extends TMemoryMailboxManager
         fclose($f);
 
     }
+
+    private static function writeTestRecord($f,$code,$name,$address,$description)
+    {
+        fwrite($f,"$code,$name,$address,$description\n");
+    }
+
+    public static function setTestData() {
+        TPostOffice::setInstance(null);
+        $filePath = TPath::FromLib('data');
+        $filePath .= '\testmailboxes.csv';
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+        $f = fopen($filePath,"w");
+
+        self::writeTestRecord($f,'ADMIN','Terry SoRelle','tls@2quakers.net','Administrator address');
+        self::writeTestRecord($f,'LIZ','Elizabeth Yeats','liz@2quakers.net','Liz address');
+
+        fclose($f);
+
+    }
+
 
 }

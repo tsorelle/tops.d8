@@ -84,9 +84,9 @@ class TMemoryMailboxManager implements IMailBoxManager {
     public function addMailbox($code, $name, $address, $description)
     {
         $box = $this->createMailBox($code, $name, $address, $description);
-        $id = $this->boxes->getCount();
+        $id = $this->boxes->getCount() + 1;
         $box->setMailBoxId($id);
-        $this->boxes->add($box);
+//        $this->boxes->add($box);
         $this->boxes->setItem($id,$box);
         return $box;
     }

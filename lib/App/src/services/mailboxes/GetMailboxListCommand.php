@@ -6,11 +6,12 @@
  * Time: 10:59 AM
  */
 
-namespace App\services;
+namespace App\services\mailboxes;
 use Tops\services;
+use Tops\services\TServiceCommand;
 use Tops\sys\TPostOffice;
 
-class GetMailboxListCommand extends services\TServiceCommand {
+class GetMailboxListCommand extends TServiceCommand {
 
     protected function run()
     {
