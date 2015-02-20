@@ -10,7 +10,8 @@ require_once __DIR__ . '/lib/Tops/start/settings.php';
 require_once __DIR__ . '/lib/Tops/start/init.php';
 require_once __DIR__ . '/lib/test/temp/serviceSetup.php';
 
-header('Content-Type: text/html; charset=ISO-8859-1');
+header('Content-type: application/json');
+// header('Content-Type: text/html; charset=ISO-8859-1');
 
 $response =  \Tops\services\TServiceHost::ExecuteRequest();
 $testLog = \Tops\sys\TLogManager::GetTestLog();
