@@ -12,7 +12,7 @@ use Tops\sys\TPath;
 use Tops\sys\TPostOffice;
 
 
-class TestMailBoxManager extends TMemoryMailboxManager
+class TestMailboxManager extends TMemoryMailboxManager
 {
     public function __construct()
     {
@@ -64,7 +64,7 @@ class TestMailBoxManager extends TMemoryMailboxManager
         $f = fopen($filePath,"w");
         $boxes = $this->getMailboxes();
         foreach($boxes as $box) {
-            $code = $this->formatForSave($box->getMailBoxCode());
+            $code = $this->formatForSave($box->getMailboxCode());
             $name = $this->formatForSave($box->getName());
             $address = $this->formatForSave($box->getEmail());
             $description = $this->formatForSave($box->getDescription());
