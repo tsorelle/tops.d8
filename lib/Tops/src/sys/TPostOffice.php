@@ -39,11 +39,11 @@ class TPostOffice {
      */
     private $mailer;
     /**
-     * @var IMailBoxManager
+     * @var IMailboxManager
      */
     private $mailboxes;
 
-    public function __construct(IMailer $mailer, IMailBoxManager $mailboxes) {
+    public function __construct(IMailer $mailer, IMailboxManager $mailboxes) {
         $this->mailboxes = $mailboxes;
         $this->mailer = $mailer;
     }

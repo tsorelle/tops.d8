@@ -9,12 +9,12 @@
 namespace Tops\sys;
 
 
-class TConfigMailboxManager implements IMailBoxManager {
+class TConfigMailboxManager implements IMailboxManager {
 
     /**
      *
      * @param $id
-     * @return IMailBox
+     * @return IMailbox
      */
     public function find($id)
     {
@@ -31,7 +31,7 @@ class TConfigMailboxManager implements IMailBoxManager {
 
     /**
      * @param $mailboxCode
-     * @return IMailBox
+     * @return IMailbox
      */
     public function findByCode($mailboxCode)
     {
@@ -40,7 +40,7 @@ class TConfigMailboxManager implements IMailBoxManager {
 
     /**
      * @param null $filter
-     * @return IMailBox[]
+     * @return IMailbox[]
      */
     public function getMailboxes($filter = null)
     {
@@ -52,7 +52,7 @@ class TConfigMailboxManager implements IMailBoxManager {
      * @param $name
      * @param $address
      * @param $description
-     * @return IMailBox
+     * @return IMailbox
      */
     public function addMailbox($code, $name, $address, $description)
     {
@@ -60,10 +60,10 @@ class TConfigMailboxManager implements IMailBoxManager {
     }
 
     /**
-     * @param IMailBox $mailbox
+     * @param IMailbox $mailbox
      * @return int
      */
-    public function updateMailbox(IMailBox $mailbox)
+    public function updateMailbox(IMailbox $mailbox)
     {
         // TODO: Implement updateMailbox() method.
     }
@@ -73,11 +73,11 @@ class TConfigMailboxManager implements IMailBoxManager {
      * @param $name
      * @param $address
      * @param $description
-     * @return IMailBox
+     * @return IMailbox
      */
-    public function createMailBox($code, $name, $address, $description)
+    public function createMailbox($code, $name, $address, $description)
     {
-        return TMailBox::Create($code, $name, $address, $description);
+        return TMailbox::Create($code, $name, $address, $description);
     }
 
     public function saveChanges()

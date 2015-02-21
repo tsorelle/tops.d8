@@ -8,7 +8,7 @@
 
 class MailboxManagerTest extends PHPUnit_Framework_TestCase {
 
-    public function testMemoryMailBox() {
+    public function testMemoryMailbox() {
         $mgr = new \Tops\sys\TMemoryMailboxManager();
         $box = $mgr->addMailbox("TEST","Test box","test@mailboxes.org","Test Mail box");
         $this->assertNotNull($box);
@@ -17,14 +17,14 @@ class MailboxManagerTest extends PHPUnit_Framework_TestCase {
         $mgr->addMailbox("TEST3","Test box 3","test3@mailboxes.org","Test Mail box three");
         $this->assertEquals(3,$mgr->getCount());
 
-        $mgr->drop($box2->getMailBoxId());
+        $mgr->drop($box2->getMailboxId());
         $this->assertEquals(2,$mgr->getCount());
 
 
 
     }
 
-    public function testDbMailBox() {
+    public function testDbMailbox() {
         $mgr = new \App\db\TScymMailboxManager();
         $box = $mgr->addMailbox("TEST","Test box","test@mailboxes.org","Test Mail box");
         $this->assertNotNull($box);
@@ -37,7 +37,7 @@ class MailboxManagerTest extends PHPUnit_Framework_TestCase {
         $this->assertNotNull($found);
 
 
-        $mgr->drop($box->getMailBoxId());
+        $mgr->drop($box->getMailboxId());
 
 
 

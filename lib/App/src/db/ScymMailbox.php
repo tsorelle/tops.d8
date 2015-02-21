@@ -3,17 +3,17 @@
 namespace App\db;
 
 use Doctrine\ORM\Mapping as ORM;
-use Tops\sys\IMailBox;
+use Tops\sys\IMailbox;
 
 /**
  * Mailboxes
  *
- * A doctrine entity object that maps the SCYM mailboxes table to the IMailBox interface.
+ * A doctrine entity object that maps the SCYM mailboxes table to the IMailbox interface.
  *
  * @Table(name="mailboxes", uniqueConstraints={@UniqueConstraint(name="boxIndex", columns={"box"})})
  * @Entity
  */
-class ScymMailbox implements IMailBox
+class ScymMailbox implements IMailbox
 {
     /**
      * @var integer
@@ -60,7 +60,7 @@ class ScymMailbox implements IMailBox
      *
      * @return integer 
      */
-    public function getMailBoxId()
+    public function getMailboxId()
     {
         if ($this->isNew) {
             return 0;
@@ -74,7 +74,7 @@ class ScymMailbox implements IMailBox
      *
      * @param int $mailBoxId
      */
-    public function setMailBoxId($mailBoxId) {
+    public function setMailboxId($mailBoxId) {
         if ($mailBoxId === 0) {
             $this->isNew = true;
         }

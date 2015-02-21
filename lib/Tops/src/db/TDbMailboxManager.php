@@ -7,11 +7,11 @@
  */
 
 namespace Tops\db;
-use \Tops\sys\IMailBoxManager;
-use \Tops\sys\IMailBox;
+use \Tops\sys\IMailboxManager;
+use \Tops\sys\IMailbox;
 
 
-abstract class TDbMailboxManager implements IMailBoxManager {
+abstract class TDbMailboxManager implements IMailboxManager {
 
     /**
      * @return \Doctrine\ORM\EntityRepository The repository class.
@@ -56,7 +56,7 @@ abstract class TDbMailboxManager implements IMailBoxManager {
     /**
      *
      * @param $id
-     * @return IMailBox
+     * @return IMailbox
      */
     public function find($id)
     {
@@ -80,7 +80,7 @@ abstract class TDbMailboxManager implements IMailBoxManager {
 
     /**
      * @param $mailboxCode
-     * @return IMailBox
+     * @return IMailbox
      */
     public function findByCode($mailboxCode)
     {
@@ -93,7 +93,7 @@ abstract class TDbMailboxManager implements IMailBoxManager {
 
     /**
      * @param null $filter
-     * @return IMailBox[]
+     * @return IMailbox[]
      */
     public function getMailboxes($filter = null)
     {
@@ -106,11 +106,11 @@ abstract class TDbMailboxManager implements IMailBoxManager {
      * @param $name
      * @param $address
      * @param $description
-     * @return IMailBox
+     * @return IMailbox
      */
     public function addMailbox($code, $name, $address, $description)
     {
-        $newBox = $this->createMailBox($code, $name, $address, $description);
+        $newBox = $this->createMailbox($code, $name, $address, $description);
         $em = $this->getEntityManager();
         $em->persist($newBox);
         $em->flush();
@@ -120,15 +120,15 @@ abstract class TDbMailboxManager implements IMailBoxManager {
     }
 
     /**
-     * @param IMailBox $mailbox
+     * @param IMailbox $mailbox
      * @return int
      */
-    public function updateMailbox(IMailBox $mailbox)
+    public function updateMailbox(IMailbox $mailbox)
     {
         $current = null;
         $em = $this->getEntityManager();
-        if ($mailbox->getMailBoxId() > 0) {
-            $current = $this->find($mailbox->getMailBoxId());
+        if ($mailbox->getMailboxId() > 0) {
+            $current = $this->find($mailbox->getMailboxId());
         }
 
         if ($current == null) {
@@ -136,7 +136,7 @@ abstract class TDbMailboxManager implements IMailBoxManager {
         }
         else {
             $current->setDescription($mailbox->getDescription());
-            $current->setMailBoxCode($mailbox->getMailBoxCode());
+            $current->setMailboxCode($mailbox->getMailboxCode());
             $current->setName($mailbox->getName());
             $current->setDescription($mailbox->getDescription());
             $current->setEmail($mailbox->getEmail());
@@ -150,11 +150,11 @@ abstract class TDbMailboxManager implements IMailBoxManager {
      * @param $name
      * @param $address
      * @param $description
-     * @return IMailBox
+     * @return IMailbox
      */
-    public function createMailBox($code, $name, $address, $description) {
-        $result = $this->createMailBoxEntity();
-        $result->setMailBoxCode($code);
+    public function createMailbox($code, $name, $address, $description) {
+        $result = $this->createMailboxEntity();
+        $result->setMailboxCode($code);
         $result->setEmail($address);
         $result->setDescription($description);
         $result->setName($name);
@@ -164,7 +164,7 @@ abstract class TDbMailboxManager implements IMailBoxManager {
     /**
      * @return IMailbox
      */
-    protected abstract function createMailBoxEntity();
+    protected abstract function createMailboxEntity();
 
     public function saveChanges() {
         // not implemented

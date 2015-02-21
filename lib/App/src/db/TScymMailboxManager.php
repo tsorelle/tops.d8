@@ -8,9 +8,9 @@
 
 namespace App\db;
 use \Tops\db\TDbMailboxManager;
-use Tops\sys\IMailBoxManager;
+use Tops\sys\IMailboxManager;
 
-class TScymMailboxManager extends TDbMailboxManager implements IMailBoxManager {
+class TScymMailboxManager extends TDbMailboxManager implements IMailboxManager {
 
 
     protected function getCodeColumn()
@@ -23,7 +23,7 @@ class TScymMailboxManager extends TDbMailboxManager implements IMailBoxManager {
         return 'App\db\ScymMailbox';
     }
 
-    protected function createMailBoxEntity()
+    protected function createMailboxEntity()
     {
         return new ScymMailbox();
     }

@@ -8,10 +8,10 @@
 
 namespace Tops\sys;
 
-class TMemoryMailboxManager implements IMailBoxManager {
+class TMemoryMailboxManager implements IMailboxManager {
 
     /**
-     * @var IMailBox
+     * @var IMailbox
      */
     private $boxes;
     private $compareByIdCallBack;
@@ -20,11 +20,11 @@ class TMemoryMailboxManager implements IMailBoxManager {
 
     public function __construct(array $boxes = null) {
         $this->boxes = new TCollection($boxes);
-        $this->compareByIdCallBack = function (IMailBox $mailBox, $idValue) {
-            return $mailBox->getMailBoxId() == $idValue;
+        $this->compareByIdCallBack = function (IMailbox $mailBox, $idValue) {
+            return $mailBox->getMailboxId() == $idValue;
         };
-        $this->compareByCodeCallBack = function (IMailBox $mailBox, $code) {
-            return $mailBox->getMailBoxCode() == $code;
+        $this->compareByCodeCallBack = function (IMailbox $mailBox, $code) {
+            return $mailBox->getMailboxCode() == $code;
         };
     }
 
@@ -33,7 +33,7 @@ class TMemoryMailboxManager implements IMailBoxManager {
      * Use with unit test
      *
      * @param $id
-     * @return IMailBox
+     * @return IMailbox
      */
     public function find($id)
     {
@@ -50,7 +50,7 @@ class TMemoryMailboxManager implements IMailBoxManager {
 
     /**
      * @param $mailboxCode
-     * @return IMailBox
+     * @return IMailbox
      */
     public function findByCode($mailboxCode)
     {
@@ -60,7 +60,7 @@ class TMemoryMailboxManager implements IMailBoxManager {
     /**
      * @param null $filter
      * @param null $arguments
-     * @return IMailBox[]
+     * @return IMailbox[]
      */
     public function getMailboxes($filter = null, $arguments = null)
     {
@@ -79,13 +79,13 @@ class TMemoryMailboxManager implements IMailBoxManager {
      * @param $name
      * @param $address
      * @param $description
-     * @return IMailBox
+     * @return IMailbox
      */
     public function addMailbox($code, $name, $address, $description)
     {
-        $box = $this->createMailBox($code, $name, $address, $description);
+        $box = $this->createMailbox($code, $name, $address, $description);
         $id = $this->boxes->getCount() + 1;
-        $box->setMailBoxId($id);
+        $box->setMailboxId($id);
 //        $this->boxes->add($box);
         $this->boxes->setItem($id,$box);
         return $box;
@@ -94,21 +94,21 @@ class TMemoryMailboxManager implements IMailBoxManager {
     /**
      * @inheritdoc
      */
-    public function createMailBox($code, $name, $address, $description) {
-        return TMailBox::Create($code,$name,$address,$description);
+    public function createMailbox($code, $name, $address, $description) {
+        return TMailbox::Create($code,$name,$address,$description);
     }
 
     /**
-     * @param IMailBox $mailbox
+     * @param IMailbox $mailbox
      * @return int
      */
-    public function updateMailbox(IMailBox $mailbox)
+    public function updateMailbox(IMailbox $mailbox)
     {
-        if ($mailbox->getMailBoxId() < 1) {
+        if ($mailbox->getMailboxId() < 1) {
             $this->boxes->add($mailbox);
         }
         else {
-            $code = $mailbox->getMailBoxCode();
+            $code = $mailbox->getMailboxCode();
             $key = $this->boxes->findKey($this->compareByCodeCallBack, $code);
             if ($key == null) {
                 return false;

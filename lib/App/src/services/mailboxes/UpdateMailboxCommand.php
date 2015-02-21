@@ -9,8 +9,8 @@
 namespace App\services\mailboxes;
 use Tops\services;
 use Tops\services\TServiceCommand;
-use Tops\sys\IMailBox;
-use Tops\sys\IMailBoxManager;
+use Tops\sys\IMailbox;
+use Tops\sys\IMailboxManager;
 use Tops\sys\TPostOffice;
 
 
@@ -44,9 +44,9 @@ class UpdateMailboxCommand extends TServiceCommand {
         return $result;
     }
 
-    private function updateBox($dto, IMailBoxManager $mgr,  IMailBox $box)
+    private function updateBox($dto, IMailboxManager $mgr,  IMailbox $box)
     {
-        $box->setMailBoxCode($dto->code);
+        $box->setMailboxCode($dto->code);
         $box->setName($dto->name);
         $box->setEmail($dto->email);
         $box->setDescription($dto->description);
@@ -79,9 +79,9 @@ class UpdateMailboxCommand extends TServiceCommand {
                 $this->addErrorMessage("Cannot find mail box for id #$id");
                 return;
             }
-            if ($box->getMailBoxCode() != $dto->code) {
+            if ($box->getMailboxCode() != $dto->code) {
                 $existing = $mgr->findByCode($dto->code);
-                if ($existing !== null && $existing->getMailBoxId() != $id) {
+                if ($existing !== null && $existing->getMailboxId() != $id) {
                     $this->addErrorMessage("Duplicate record found for mailbox code $dto->code");
                     return;
                 }
@@ -89,7 +89,7 @@ class UpdateMailboxCommand extends TServiceCommand {
             $this->updateBox($dto,$mgr,$box);
         }
 
-        $this->addInfoMessage("Updated mailbox " . $box->getMailBoxCode());
+        $this->addInfoMessage("Updated mailbox " . $box->getMailboxCode());
         $this->setReturnValue($box);
     }
 
