@@ -2,7 +2,12 @@ TOPS Library
 ================
 Description
 ----------------
-TOPS (Terry's Old PHP Scripts) is a library of helper classes that may be used with PHP applications, Symphony 2 or Drupal 7 & 8.
+TOPS is a library of helper classes that may be used with PHP and JavaScript applications, 
+Symphony 2 or Drupal 7 & 8.
+
+This code is intended for non-commercial use by Friends Meetings and other socially progressive non-profit organizations.
+It is released as an open-source project under an MIT/X11 License as detailed in tops_license.html.  This file should be included
+on every site where tops components are deployed.
 
 
 Added to GitHub: https://github.com/tsorelle/tops.core
