@@ -19,6 +19,5 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="jQuery-2.0.0" level="application" />
-    <orderEntry type="library" name="Jasmine" level="application" />
   </component>
 </module>

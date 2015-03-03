@@ -2,28 +2,32 @@
  * Created by Terry on 2/19/2015.
  */
 ///<reference path='../typings/knockout/knockout.d.ts' />
-///<reference path='../typings/jquery/jquery.d.ts' />
 /// <reference path="./App.ts" />
 /// <reference path="../Tops.Peanut/Peanut.ts" />
+///<reference path='../Tops.Peanut/Peanut.d.ts' />
 // Module
 module Tops {
     // replace all occurances of 'yourVmName' with the name of your model
     //  e.g.  yourVmName -> billingConfiguration  produces billingConfigurationViewModel
-    export class TestPageViewModel {
+    export class TestPageViewModel implements IMainViewModel {
         static instance: Tops.TestPageViewModel;
-        private application: Tops.Application;
+        private application: Tops.IPeanutClient;
         private peanut: Tops.Peanut;
+
 
         // Constructor
         constructor() {
             var me = this;
-
             Tops.TestPageViewModel.instance = me;
             me.application = new Tops.Application(me);
             me.peanut = me.application.peanut;
+
         }
 
-        person: KnockoutObservable<any> = ko.observable();
+
+        messageText = ko.observable('');
+
+        // person: KnockoutObservable<any> = ko.observable();
         // Declarations
         // Examples:
         //  templateList: KnockoutObservableArray = ko.observableArray([]);
@@ -31,15 +35,69 @@ module Tops {
 
 
         // Methods
-
         // test() { alert("hello"); }
 
-        init(applicationPath: string) {
+        // call this funtions at end of page
+        init(applicationPath: string, successFunction?: () => void) {
             var me = this;
-            me.application.setApplicationPath(applicationPath);
-            me.clearPerson();
+
+            // setup messaging and other application initializations
+            me.application.initialize(applicationPath,
+            function() {
+                    // me.clearPerson();
+                    me.messageText('initialized.');
+                    if (successFunction) {
+                        successFunction();
+                    }
+                }
+            );
         }
 
+        onAddMessageClick() {
+            var me = this;
+            var msg = me.messageText();
+            me.application.showMessage(msg);
+            me.messageText('');
+        }
+
+        onShowSpinWaiter() {
+            var count = 0;
+            Tops.waitMessage.show("Hello " + (new Date()).toISOString());
+            var t = window.setInterval(function() {
+                if (count > 100) {
+                    clearInterval(t);
+                    Tops.waitMessage.hide();
+                }
+                else {
+                    Tops.waitMessage.setMessage('Counting ' + count);
+                    // Tops.waitMessage.setProgress(count,true);
+                }
+                count += 1;
+            }, 100);
+
+        }
+
+        onShowWaiter() {
+            var count = 0;
+            Tops.waitMessage.show("Hello " + (new Date()).toISOString(), 'progress-waiter');
+            var t = window.setInterval(function() {
+                if (count > 100) {
+                    clearInterval(t);
+                    Tops.waitMessage.hide();
+                }
+                else {
+                    Tops.waitMessage.setMessage('Counting ' + count);
+                    Tops.waitMessage.setProgress(count,true);
+                }
+                count += 1;
+            }, 100);
+        }
+
+        onHideWaiter() {
+            Tops.waitMessage.hide();
+
+        }
+/*
         clearPerson() {
             var me = this;
             var initPerson =
@@ -94,9 +152,8 @@ module Tops {
                         me.clearPerson();
                     }
                 });
-
-
         }
+        */
     }
 }
 

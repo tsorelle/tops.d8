@@ -3,40 +3,12 @@
  */
 ///<reference path='../typings/knockout/knockout.d.ts' />
 ///<reference path='../typings/jquery/jquery.d.ts' />
+///<reference path='Peanut.d.ts' />
 module Tops {
-    export interface IPeanutClient {
-        showServiceMessages(messages: IServiceMessage[]): void;
-        hideServiceMessages(): void;
-        showError(errorMessage: string): void;
-        showMessage(messageText: string): void;
-        peanut: Tops.Peanut;
-        viewModel: any;
-        serviceUrl: string;
-        applicationPath: string;
-    }
-
-    export interface IServiceMessage {
-        MessageType: number;
-        Text: string;
-    }
-
-    export interface IServiceResponse {
-        Messages: IServiceMessage[];
-        Result: number;
-        Value: any;
-        Data: any;
-    }
-
-    export interface INameValuePair {
-        Name: string;
-        Value: string;
-    }
-
     export class KeyValueDTO implements Tops.INameValuePair {
         public Name: string;
         public Value: string;
     }
-
 
 
     export class Peanut {
@@ -128,67 +100,6 @@ module Tops {
         }
 
 
-        getErrorMessagesWithBR(messages: IServiceMessage[]): string {
-            var me = this;
-            var errors = me.getErrorMessages(messages);
-            var errorString = "";
-            if (errors.length > 0) {
-                for (var i = 0; i < errors.length; i++) {
-                    errorString = errorString + (i > 0 ? "<br>" : "") + errors[i];
-                }
-            }
-            return errorString;
-        }
-
-        getNonErrorMessagesWithBr(messages: IServiceMessage[]): string {
-            var me = this;
-            var infos = me.getInfoMessages(messages);
-            var infoString = "";
-            if (infos.length > 0) {
-                for (var i = 0; i < infos.length; i++) {
-                    infoString = infoString + (i > 0 ? "<br>" : "") + infos[i];
-                }
-            }
-            return infoString;
-        }
-
-
-        getErrorMessagesAsUL(messages: IServiceMessage[]): string {
-            var me = this;
-            var errors = me.getErrorMessages(messages);
-            var errString = me.messagesToUL(errors);
-            return errString;
-        }
-
-        getInfoMessagesAsUL(messages: IServiceMessage[]): string {
-            var me = this;
-            var infos = me.getInfoMessages(messages);
-            var infoString = me.messagesToUL(infos);
-            return infoString;
-        }
-
-
-        getMessagesAsUL(messages: IServiceMessage[], errClass: string, infoClass: string, warningClass?: string): string {
-            // Use this if all messages in a single block with class types
-            var me = this;
-            if (!messages)
-                return "";
-            if (!warningClass)
-                warningClass = infoClass;
-            var result = "<ul>";
-            for (var i = 0; i < messages.length; i++) {
-                var message = messages[i];
-                var className = errClass;
-                if (message.MessageType == Peanut.infoMessageType)
-                    className = infoClass;
-                else if (message.MessageType == Peanut.warningMessageType)
-                    className = warningClass;
-                result = result + "<li class='" + className + "'>" + message.Text + "</li>";
-            }
-
-            return result + "</ul>";
-        }
-
         getMessagesText(messages: IServiceMessage[]): string[] {
             var result = new Array<string>();
             var j = 0;
@@ -244,24 +155,6 @@ module Tops {
             return errorMessage;
         }
 
-        messagesToUL(messages: string[]): string {
-            if (messages.length > 0) {
-                if (messages.length == 1) {
-                    return messages[0];
-                }
-                else {
-                    var i = 0;
-                    var resultString = "<ul>";
-                    while (i < messages.length) {
-                        resultString = resultString + "<li>" + messages[i] + "</li>";
-                        i++;
-                    }
-                    resultString = resultString + "</ul>";
-                    return resultString;
-                }
-            }
-            return "";
-        }
 
         // Execute a peanut service and handle Service Response.
         executeService(serviceName: string, parameters: any = "",
