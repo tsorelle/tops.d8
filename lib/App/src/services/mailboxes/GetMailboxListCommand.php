@@ -21,6 +21,18 @@ class GetMailboxListCommand extends TServiceCommand {
         $count = sizeof($result);
         if ($count) {
             $this->addInfoMessage("Found $count mailboxes.");
+            $list = Array();
+            foreach ($result as $box) {
+                $dto = new \stdClass();
+                $dto->name = $box->getName();
+                $dto->description = $box->getDescription();
+                $dto->email = $box->getEmail();
+                $dto->code = $box->getMailboxCode();
+                $dto->id = $box->getMailboxId();
+                array_push($list,$dto);
+            }
+            $this->setReturnValue($list);
+
         } else {
             $this->addWarningMessage("No mailboxes found.");
         }

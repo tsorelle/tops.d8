@@ -51,6 +51,7 @@ class UpdateMailboxCommand extends TServiceCommand {
         $box->setEmail($dto->email);
         $box->setDescription($dto->description);
         $mgr->updateMailbox($box);
+        $mgr->saveChanges();
     }
 
 
@@ -68,6 +69,7 @@ class UpdateMailboxCommand extends TServiceCommand {
             $box = $mgr->findByCode($dto->code);
             if ($box === null) {
                 $box = $mgr->addMailbox($dto->code, $dto->name, $dto->email, $dto->description);
+                $mgr->saveChanges();
             }
             else {
                 $this->updateBox($dto, $mgr, $box);

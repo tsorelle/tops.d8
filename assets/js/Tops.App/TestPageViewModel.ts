@@ -7,8 +7,9 @@
 ///<reference path='../Tops.Peanut/Peanut.d.ts' />
 // Module
 module Tops {
-    // replace all occurances of 'yourVmName' with the name of your model
-    //  e.g.  yourVmName -> billingConfiguration  produces billingConfigurationViewModel
+
+
+    // view model
     export class TestPageViewModel implements IMainViewModel {
         static instance: Tops.TestPageViewModel;
         private application: Tops.IPeanutClient;

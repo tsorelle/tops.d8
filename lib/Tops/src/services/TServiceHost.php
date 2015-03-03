@@ -116,6 +116,8 @@ class TServiceHost {
                 throw new \Exception('No service command id was in request');
             }
 
+            $commandId = str_replace('.','\\',$commandId);
+
             $input = null;
             $serviceRequest = $request->get('request');
             $requestMethod = $request->getMethod();
