@@ -16,12 +16,14 @@ class TestServiceCommand extends services\TServiceCommand
     {
         $req = $this->getRequest();
         if ($req) {
+            $reqString = $req->testMessageText;
             $req->testMessageText = "Processed";
             $this->setReturnValue($req);
             $this->addInfoMessage("Processed request");
+            $this->addInfoMessage("Requested: ".$reqString);
         }
         else {
-            $this->addErrorMessage('Expected as request');
+            $this->addErrorMessage('Expected a request');
         }
     }
 }

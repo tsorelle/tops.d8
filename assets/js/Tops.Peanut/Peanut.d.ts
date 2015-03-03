@@ -1,10 +1,14 @@
 declare module Tops {
     export interface IPeanutClient {
-        showServiceMessages(messages: IServiceMessage[]): void;
+        showServiceMessages(messages:IServiceMessage[]): void;
         hideServiceMessages(): void;
-        showError(errorMessage: string): void;
-        showMessage(messageText: string): void;
-        initialize(applicationPath: string, successFunction?: () => void);
+        showError(errorMessage:string): void;
+        showMessage(messageText:string): void;
+        initialize(applicationPath:string, successFunction?:() => void);
+        showWaiter(message:string) : void;
+        hideWaiter() : void;
+        showProgress(message: string) : void;
+        setProgress(count: number) : void;
 
         peanut: Tops.Peanut;
         viewModel: any;

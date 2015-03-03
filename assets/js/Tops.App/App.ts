@@ -156,9 +156,9 @@ module Tops {
         }
 
         private registerComponent(name: string, vm: any, successFunction?: () => void) {
-            var self = this;
+            var me = this;
 
-            self.getHtmlTemplate(name, function (htmlSource: string) {
+            me.getHtmlTemplate(name, function (htmlSource: string) {
                 ko.components.register(name, {
                     viewModel: {instance: vm}, // testComponentVm,
                     template: htmlSource
@@ -177,13 +177,13 @@ module Tops {
         }
 
         public initialize(applicationPath: string, successFunction?: () => void) {
-            var self = this;
-            self.setApplicationPath(applicationPath);
-            self.serviceUrl = this.applicationPath + this.serviceUrl;
+            var me = this;
+            me.setApplicationPath(applicationPath);
+            me.serviceUrl = this.applicationPath + this.serviceUrl;
             messageManager.instance = new messageManager();
-            self.registerComponent('messages-component', messageManager.instance, function () {
-                self.loadWaitMessageTemplate('spin-waiter', function () {
-                    self.loadWaitMessageTemplate('progress-waiter', function () {
+            me.registerComponent('messages-component', messageManager.instance, function () {
+                me.loadWaitMessageTemplate('spin-waiter', function () {
+                    me.loadWaitMessageTemplate('progress-waiter', function () {
                         if (successFunction) {
                             successFunction();
                         }
@@ -256,11 +256,17 @@ module Tops {
             waitMessage.show(message);
         }
 
-        public hideWaiter(timeout: number = 0) {
+        public hideWaiter() {
             waitMessage.hide();
         }
 
+        public showProgress(message: string = "Please wait . . .") {
+            waitMessage.show(message, 'progress-waiter');
+        }
 
+        public setProgress(count: number) {
+            waitMessage.setProgress(count);
+        }
 
         /*
         // static wait message example

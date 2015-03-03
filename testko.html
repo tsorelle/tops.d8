@@ -22,6 +22,8 @@
 </head>
 <body>
 
+<div class="container">
+
 <messages-component></messages-component>
 <div>
 <input data-bind="value: messageText" />
@@ -32,10 +34,28 @@
     <button data-bind="click: onShowSpinWaiter">Show Spin Waiter</button><br>
 </div>
 
+<div>
+    <h1>Test form</h1>
+    <form>
+        <div class="form-group">
+            <label for="inputId">Id</label>
+            <input data-bind="value: itemId" type="text" class="form-control" id="inputId" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+            <label for="inputName">Name</label>
+            <input data-bind="value: itemName" type="text" class="form-control" id="inputName" placeholder="Enter item name">
+        </div>
+        <button data-bind="click: onGetItem" class="btn btn-primary">Get</button><br/>
+        <button data-bind="click: onPostItem" class="btn btn-primary">Post</button><br/>
+    </form>
 
+</div> <!-- end form -->
+</div> <!-- end container -->
 </body>
 <script>
-    ViewModel.init('/Tops.core', function() {
+    var root = '/';
+    var root = '/Tops.core';
+    ViewModel.init(root, function() {
        ko.applyBindings(ViewModel);
     });
 </script>

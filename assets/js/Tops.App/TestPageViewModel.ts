@@ -27,6 +27,48 @@ module Tops {
 
         messageText = ko.observable('');
 
+        itemName = ko.observable('');
+        itemId = ko.observable(1);
+
+        onGetItem() {
+            var me = this;
+            var request = {
+                testMessageText : "Hello world"
+            };
+
+            me.application.showWaiter('Please wait...');
+            me.peanut.getFromService( 'TestGetService',3, function (serviceResponse: Tops.IServiceResponse) {
+                    if (serviceResponse.Result == Tops.Peanut.serviceResultSuccess) {
+                        me.itemName(serviceResponse.Value.name);
+                        me.itemId(serviceResponse.Value.id);
+                    }
+                    else {
+                        alert("Service failed");
+                    }
+                }
+            ).always(function() {
+                    me.application.hideWaiter();
+                });
+
+        }
+
+        onPostItem() {
+            var me = this;
+            var request = {
+                testMessageText : me.itemName()
+            };
+
+            me.application.showWaiter('Please wait...');
+            me.peanut.executeService( 'TestService',request)
+                .always(function() {
+                    me.application.hideWaiter();
+                });
+
+        }
+
+
+
+
         // person: KnockoutObservable<any> = ko.observable();
         // Declarations
         // Examples:
@@ -45,7 +87,7 @@ module Tops {
             me.application.initialize(applicationPath,
             function() {
                     // me.clearPerson();
-                    me.messageText('initialized.');
+                    me.application.showMessage("initialized");
                     if (successFunction) {
                         successFunction();
                     }
