@@ -18,7 +18,7 @@ module Tops {
 
     export class MailboxesViewModel implements IMainViewModel {
         static instance: Tops.MailboxesViewModel;
-        private application: Tops.IPeanutClient;
+        private application: Tops.Application;
         private peanut: Tops.Peanut;
 
         // Constructor

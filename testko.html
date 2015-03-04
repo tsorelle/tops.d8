@@ -27,7 +27,9 @@
 <messages-component></messages-component>
 <div>
 <input data-bind="value: messageText" />
-<button data-bind="click: onAddMessageClick">Add message</button>
+<button data-bind="click: onAddMessageClick">Add info message</button>
+    <button data-bind="click: onAddErrorMessageClick">Add error message</button>
+    <button data-bind="click: onAddWarningMessageClick">Add warning message</button>
 </div>
 <div>
     <button data-bind="click: onShowWaiter">Show Progress Waiter</button><br>

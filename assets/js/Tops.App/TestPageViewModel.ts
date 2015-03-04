@@ -12,7 +12,7 @@ module Tops {
     // view model
     export class TestPageViewModel implements IMainViewModel {
         static instance: Tops.TestPageViewModel;
-        private application: Tops.IPeanutClient;
+        private application: Tops.Application;
         private peanut: Tops.Peanut;
 
 
@@ -33,10 +33,6 @@ module Tops {
 
         onGetItem() {
             var me = this;
-            var request = {
-                testMessageText : "Hello world"
-            };
-
             me.application.showWaiter('Please wait...');
             me.peanut.getFromService( 'TestGetService',3, function (serviceResponse: Tops.IServiceResponse) {
                     if (serviceResponse.Result == Tops.Peanut.serviceResultSuccess) {
@@ -102,6 +98,21 @@ module Tops {
             me.application.showMessage(msg);
             me.messageText('');
         }
+
+        onAddErrorMessageClick() {
+            var me = this;
+            var msg = me.messageText();
+            me.application.showError(msg);
+            me.messageText('');
+        }
+        onAddWarningMessageClick() {
+            var me = this;
+            var msg = me.messageText();
+            me.application.showWarning(msg);
+            me.messageText('');
+        }
+
+
 
         onShowSpinWaiter() {
             var count = 0;

@@ -4,6 +4,7 @@ declare module Tops {
         hideServiceMessages(): void;
         showError(errorMessage:string): void;
         showMessage(messageText:string): void;
+        showWarning(messageText:string): void;
         initialize(applicationPath:string, successFunction?:() => void);
         showWaiter(message:string) : void;
         hideWaiter() : void;

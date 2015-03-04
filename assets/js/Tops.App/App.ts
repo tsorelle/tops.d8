@@ -107,6 +107,17 @@ module Tops {
             }
         };
 
+        public clearInfoMessages = () : void => {
+            this.infoMessages([]);
+        };
+
+        public clearErrorMessages = () : void => {
+            this.errorMessages([]);
+        };
+        public clearWarningMessages = () : void => {
+            this.warningMessages([]);
+        };
+
         public setServiceMessages = (messages:Tops.IServiceMessage[]):void => {
             var count = messages.length;
             var errorArray = [];
@@ -233,8 +244,17 @@ module Tops {
             }
         }
 
+        showWarning(messageText: string): void {
+        if (messageText) {
+            messageManager.instance.addMessage(messageText,Peanut.warningMessageType);
+        }
+        else {
+            messageManager.instance.clearMessages(Peanut.warningMessageType);
+        }
+}
+
         // Application level message display functions
-        showErrorMessage(messageText: string): void {
+        setErrorMessage(messageText: string): void {
             if (messageText) {
                 messageManager.instance.setMessage(messageText,Peanut.errorMessageType);
             }
@@ -243,7 +263,7 @@ module Tops {
             }
         }
 
-        showInfoMessage(messageText: string): void {
+        setInfoMessage(messageText: string): void {
             if (messageText) {
                 messageManager.instance.setMessage(messageText,Peanut.infoMessageType);
             }
@@ -251,6 +271,16 @@ module Tops {
                 messageManager.instance.clearMessages(Peanut.infoMessageType);
             }
         }
+
+        setWarningMessage(messageText: string): void {
+            if (messageText) {
+                messageManager.instance.setMessage(messageText,Peanut.warningMessageType);
+            }
+            else {
+                messageManager.instance.clearMessages(Peanut.infoMessageType);
+            }
+        }
+
 
         public showWaiter(message: string = "Please wait . . .") {
             waitMessage.show(message);
