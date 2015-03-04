@@ -168,7 +168,6 @@ module Tops {
             else  {
                 parameters = JSON.stringify(parameters);
             }
-            var serviceResponse: IServiceResponse;
             var serviceRequest = { "serviceCode" : serviceName, "request" : parameters};
             var serviceUrl =  _peanut.clientApp.serviceUrl; // 'topsService.php';
 
@@ -204,12 +203,9 @@ module Tops {
                        errorFunction?: (errorMessage: string) => void) : JQueryPromise<any> {
             var _peanut = this;
 
-            // peanut controller requires parameter as a string.
             if (!parameters)
                 parameters = "";
 
-            var serviceResponse: IServiceResponse;
-            var serviceParameters = {"request" :  parameters};
             var serviceRequest = { "serviceCode" : serviceName, "request" : parameters};
             var serviceUrl =  _peanut.clientApp.serviceUrl; // 'topsService.php';
 
