@@ -10,24 +10,70 @@ namespace Tops\drupal;
 
 
 
-use Drupal\Core\Session\AccountProxyInterface;
-use Tops\sys\TUser;
+use Drupal\Core\Session\AccountInterface;
 use Tops\sys;
 use Drupal;
+use Tops\sys\TAbstractUser;
 
-class TDrupalUser extends TUser {
+class TDrupalUser extends TAbstractUser  {
 
-    function __construct(AccountProxyInterface $user = null) {
+    function __construct(AccountInterface $user = null) {
         if (isset($user)) {
             $this->loadDrupalUser($user);
         }
     }
 
     /**
-     * @var AccountProxyInterface
+     * @var AccountInterface
      */
     private   $drupalUser;
 
+
+    protected function loadDrupalUser(AccountInterface $user = null)
+    {
+        // todo: this may not work in Drupal 8
+        if ($_SERVER['SCRIPT_NAME'] === '/cron.php') {
+            $this->authenticated = true;
+            $this->userName = 'cron';
+            $this->isCurrentUser = true;
+            return;
+        }
+
+        if ($user == null) {
+            $user = Drupal::currentUser();
+            $this->isCurrentUser = true;
+        } else {
+            $this->isCurrentUser = $user->id() == Drupal::currentUser()->id();
+        }
+
+        if (!$user->isAuthenticated()) {
+            $this->email = $user->getEmail();
+            $this->userName = $user->getUsername();
+            $this->id = $user->id();
+            $this->loadDrupalProfile($user);
+        }
+    }
+
+    /**
+     * @param AccountInterface $user
+     *
+     * Assign firstName, lastName, middleName and pictureFile
+     */
+    protected function loadDrupalProfile(AccountInterface $user) {
+        // todo:implement this for drupal 8
+
+        /* profile_load_profile not available after drupal 6
+        may be better to just delegate profile storage to the custom database, would save the synchronization
+        need to see how to find the user picture anyway
+        */
+
+        $field_definitions = \Drupal::entityManager()->getFieldDefinitions('user', 'user');
+        if (isset($field_definitions['user_picture'])) {
+
+
+        }
+
+    }
 
     /**
      * @param $id
@@ -35,6 +81,8 @@ class TDrupalUser extends TUser {
      */
     public function loadById($id)
     {
+        $user = \Drupal\user\Entity\User::load($id);
+        $this->loadDrupalUser($user);
     }
 
     /**
@@ -43,7 +91,11 @@ class TDrupalUser extends TUser {
      */
     public function loadByUserName($userName)
     {
-        // TODO: Implement loadByUserName() method.
+        // todo: is this deprecated? doesn't seem right
+        $users = user_load_by_name($userName);
+        if (!empty($users)) {
+            $this->loadDrupalUser($users[0]);
+        }
     }
 
     /**
@@ -51,7 +103,29 @@ class TDrupalUser extends TUser {
      */
     public function loadCurrentUser()
     {
-        // TODO: Implement loadCurrentUser() method.
+        $this->loadDrupalUser();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        if ($this->drupalUser) {
+            return ($this->drupalUser->id() == 1 || $this->isMemberOf('Administator'));
+        }
+        return false;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getRoles()
+    {
+        if ($this->drupalUser) {
+            return $this->drupalUser->getRoles();
+        }
+        return array();
     }
 
     /**
@@ -60,23 +134,11 @@ class TDrupalUser extends TUser {
      */
     public function isMemberOf($roleName)
     {
-        // TODO: Implement isMemberOf() method.
-    }
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        // TODO: Implement getId() method.
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAuthenticated()
-    {
-        // TODO: Implement isAuthenticated() method.
+        if ($this->drupalUser) {
+            $roles = $this->drupalUser->getRoles();
+            return in_array($roleName,$roles);
+        }
+        return false;
     }
 
     /**
@@ -85,125 +147,20 @@ class TDrupalUser extends TUser {
      */
     public function isAuthorized($value = '')
     {
-        // TODO: Implement isAuthorized() method.
-    }
-
-    /**
-     * @return string
-     */
-    public function getFirstName()
-    {
-        // TODO: Implement getFirstName() method.
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastName()
-    {
-        // TODO: Implement getLastName() method.
-    }
-
-    /**
-     * @return string
-     */
-    public function getUserName()
-    {
-        // TODO: Implement getUserName() method.
-    }
-
-    /**
-     * @param bool $defaultToUsername
-     * @return string
-     */
-    public function getFullName($defaultToUsername = true)
-    {
-        // TODO: Implement getFullName() method.
-    }
-
-    /**
-     * @param bool $defaultToUsername
-     * @return string
-     */
-    public function getUserShortName($defaultToUsername = true)
-    {
-        // TODO: Implement getUserShortName() method.
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        // TODO: Implement getEmail() method.
+        if ($this->drupalUser) {
+            return $this->drupalUser->hasPermission($value);
+        }
+        return false;
     }
 
     /**
      * @return bool
      */
-    public function isAdmin()
+    public function isAuthenticated()
     {
-        // TODO: Implement isAdmin() method.
-    }
-
-    /**
-     * @return bool
-     */
-    public function isCurrent()
-    {
-        // TODO: Implement isCurrent() method.
-    }
-
-    protected function loadDrupalUser(Drupal\user\Entity\User $user) {
-        $this->userName = 'guest';
-
-        if ($_SERVER['SCRIPT_NAME'] === '/cron.php') {
-            $this->authenticated = true;
-            $this->userName = 'cron';
-            return;
+        if ($this->drupalUser) {
+            return $this->drupalUser->isAuthenticated();
         }
-
-            $user = Drupal::currentUser();
-        // $this->uid = $user->get
-        $roles = $user->getRoles();
-
-        // todo:implement user role loading
-        /*
-        if (isset ($user->roles)) {
-            if (!in_array('anonymous user', $user->roles)) {
-                $this->authenticated = true;
-                $this->roles = $user->roles;
-            }
-        }
-        if ($this->isAuthenticated()) {  // || $offLine) {
-            $this->userName = $user->getUsername();
-                $this->email = $user->getEmail();
-          */
-
-            // todo: need drupal 8 way to determine admin
-            /*
-            if ($user->uid == 1)
-                array_push($this->roles,$this->adminRole);
-            */
-
-            $this->loadDrupalProfile($user);
-
-        }
-
-    protected function loadDrupalProfile($user) {
-        // todo:implement this for drupal 8
-        /*
-        if (function_exists('profile_load_profile')) {
-            // TTracer::Trace('Loading profile');
-            profile_load_profile($user);
-            if (!empty($user->profile_firstname))
-                $this->firstName = $user->profile_firstname;
-            if (!empty($user->profile_lastname))
-                $this->lastName = $user->profile_lastname;
-            if (!empty($user->picture))
-                $this->pictureFile = $user->picture;
-        }
-        // else            TTracer::Trace('Not loading profile');
-        */
+        return false;
     }
 }

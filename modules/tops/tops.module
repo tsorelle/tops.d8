@@ -8,7 +8,7 @@
  */
 $drupalAutoloader = require_once(__DIR__.'/../../lib/Tops/start/autoload.php');
 require_once(__DIR__.'/../../lib/Tops/start/init.php');
-require_once(__DIR__.'/../../lib/App/start/init.php');
+// require_once(__DIR__.'/../../lib/App/start/init.php');
 
 
 function tops_help($route_name, \Drupal\Core\Routing\RouteMatchInterface $route_match)

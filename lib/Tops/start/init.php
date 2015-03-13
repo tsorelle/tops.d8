@@ -7,10 +7,15 @@
  * Date: 11/8/2014
  * Time: 6:02 PM
  */
+/*
+    Application specific objects should be registered in /App/start/init.php (or corresponding directory)
+    e.g.
+     \Tops\sys\TObjectContainer::Register('mailbox','\App\db\ScymMailbox');
+*/
 
+require_once(__DIR__.'/../../App/start/init.php');
 \Tops\sys\TErrorException::SetErrorHandler();
 \Tops\sys\TObjectContainer::Register('configManager','\Tops\sys\TYmlConfigManager');
-\Tops\sys\TObjectContainer::Register('user','\Tops\test\TTestUser');
 \Tops\sys\TObjectContainer::Register('mailer','\Tops\sys\TSwiftMailer','configManager');
 \Tops\sys\TObjectContainer::Register('logManager','\Tops\sys\TLogManager','configManager,mailer');
 \Tops\sys\TObjectContainer::Register('errorLogger','\Tops\sys\TLogger');
@@ -22,10 +27,4 @@
 \Tops\sys\TObjectContainer::Register('mailboxManager','\App\test\TestMailboxManager');
 \Tops\sys\TObjectContainer::Register('postoffice','\Tops\sys\TPostOffice','mailer,mailboxManager');
 
-// Application specific objects should be registered in /App/start/init.php (or corresponding directory)
-// e.g.
-/*
-     \Tops\sys\TObjectContainer::Register('mailbox','\App\db\ScymMailbox');
-     \Tops\sys\TObjectContainer::LoadConfig('di.yml');
-*/
 

@@ -19,7 +19,7 @@ abstract class TAbstractUser implements IUser
     protected $fullName = '';
     protected $email  = '';
 
-    private $isCurrentUser = false;
+    protected $isCurrentUser = false;
 
 
     /**
