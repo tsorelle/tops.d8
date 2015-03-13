@@ -1,0 +1,32 @@
+<?php
+/**
+ * @file
+ * This module integrates tops features with Drupal 8
+ */
+/**
+ * Implements hook_help().
+ */
+$drupalAutoloader = require_once(__DIR__.'/../../lib/Tops/start/autoload.php');
+require_once(__DIR__.'/../../lib/Tops/start/init.php');
+require_once(__DIR__.'/../../lib/App/start/init.php');
+
+
+function tops_help($route_name, \Drupal\Core\Routing\RouteMatchInterface $route_match)
+{
+    $user = Drupal::currentUser();
+    $roles = $user->getRoles();
+    $user->isAnonymous();
+    $user->isAuthenticated();
+    $isadmin = false;
+    foreach($roles as $role) {
+        $entity = \Drupal\user\Entity\Role::load($role);
+        if ($entity != null) {
+
+        }
+    }
+
+
+
+    return 'Help from tops';
+}
+

@@ -9,7 +9,7 @@
  * Time: 6:05 PM
  */
 // Composer generated autoloader in Drupal core directory
-require_once __DIR__ . '/../../../core/vendor/autoload.php';
+$drupalAutoloader = require_once __DIR__ . '/../../../core/vendor/autoload.php';
 
 $libPath = realpath(__DIR__."/../..");
 
@@ -30,4 +30,6 @@ require_once($libPath . "/Tops/src/sys/TClassPath.php");
 
 
 unset($libPath);
+
+return $drupalAutoloader;
 

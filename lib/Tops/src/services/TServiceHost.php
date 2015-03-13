@@ -56,9 +56,6 @@ class TServiceHost {
         }
     }
 
-
-
-
     /**
      * @return TServiceResponse
      */
@@ -87,12 +84,11 @@ class TServiceHost {
      * @return TServiceResponse
      * @throws \Exception
      */
-    public static function ExecuteRequest(Request $request = null)
+    public static function ExecuteRequest(Request $request = null, $serviceCode = null, $serviceRequest = null)
     {
         $instance = self::getInstance();
         try {
-            return $instance->_executeRequest($request);
-
+            return $instance->_executeRequest($request, $serviceCode, $serviceRequest);
         }
         catch (\Exception $ex) {
             $rethrow = $instance->handleException($ex);
@@ -104,62 +100,71 @@ class TServiceHost {
 
     }
 
-    private function _executeRequest(Request $request = null) {
+    private function _executeRequest(Request $request = null, $serviceCode = null, $serviceRequest = null)
+    {
 
         // try {
-            if (empty($request)) {
-                $request = Request::createFromGlobals();
-            }
+        if (empty($request)) {
+            $request = Request::createFromGlobals();
+        }
 
-            $commandId = $request->get('serviceCode');
-            if (empty($commandId)) {
-                throw new \Exception('No service command id was in request');
-            }
+        if ($serviceCode == null) {
+            $serviceCode = $request->get('serviceCode');
+        }
+        if (empty($serviceCode)) {
+            throw new \Exception('No service command id was in request');
+        }
 
-            $commandId = str_replace('.','\\',$commandId);
+        $serviceCode = str_replace('.', '\\', $serviceCode);
 
-            $input = null;
+        $input = null;
+        if ($serviceRequest == null) {
             $serviceRequest = $request->get('request');
-            $requestMethod = $request->getMethod();
+        }
 
-            if ($requestMethod == 'POST') {
-                if ($serviceRequest != null) {
-                    $input = json_decode($serviceRequest);
-                }
-            } else if ($requestMethod == 'GET') {
+        $requestMethod = $request->getMethod();
+
+        if ($requestMethod == 'POST') {
+            if ($serviceRequest != null) {
+                $input = json_decode($serviceRequest);
+            }
+        } else {
+            if ($requestMethod == 'GET') {
                 if ($serviceRequest != null) {
                     $input = $serviceRequest;
                 }
-            } else
+            } else {
                 throw new \Exception('Unsupported request method: ' . $request->getMethod());
-
-            return $this->_execute($commandId, $input);
-/*        }
-        catch (\Exception $ex) {
-            $rethrow = $this->handleException($ex);
-            if ($rethrow) {
-                throw $ex;
             }
-            return $this->getFailureResponse();
         }
-*/
+
+        return $this->_execute($serviceCode, $input);
+        /*        }
+                catch (\Exception $ex) {
+                    $rethrow = $this->handleException($ex);
+                    if ($rethrow) {
+                        throw $ex;
+                    }
+                    return $this->getFailureResponse();
+                }
+        */
     }
 
 
     /**
-     * @param $commandId
+     * @param $serviceCode
      * @param $input
      * @return TServiceResponse
      * @throws \Exception
      */
-    public static function Execute($commandId, $input) {
-        return self::getInstance()->_execute($commandId, $input);
+    public static function Execute($serviceCode, $input) {
+        return self::getInstance()->_execute($serviceCode, $input);
     }
 
-    public function _execute($commandId, $input) {
-        $command = $this->serviceFactory->CreateService($commandId);
+    public function _execute($serviceCode, $input) {
+        $command = $this->serviceFactory->CreateService($serviceCode);
         if (empty($command))
-            throw new \Exception("Unable to create service command '$commandId'");
+            throw new \Exception("Unable to create service command '$serviceCode'");
         return $command->Execute($input);
     }
 

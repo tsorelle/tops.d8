@@ -1,0 +1,13 @@
+tops.service:
+  path: '/tops/service/{serviceCode}'
+  defaults:
+    _controller: '\Drupal\tops\Controller\TopsController::executeService'
+  requirements:
+    _permission: 'access content'
+tops.getservice:
+  path: '/tops/get/{serviceCode}/{serviceRequest}'
+  defaults:
+    _controller: '\Drupal\tops\Controller\TopsController::getFromService'
+  requirements:
+    _permission: 'access content'
+

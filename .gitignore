@@ -1,5 +1,21 @@
 # Ignore drupal files.
-core/vendor/*
+.htaccess
+.editorconfig
+.eslintignore
+.eslintrc
+.gitattributes
+composer.json
+core
+example.gitignore
+index.php
+LICENSE.txt
+profiles
+README.txt
+robots.txt
+sites
+themes
+web.config
+modules\README.txt
 
 # Ignore vendor files
 lib/vendor/*

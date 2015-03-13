@@ -1,0 +1,5 @@
+services:
+  tops_event_subscriber:
+    class: Drupal\tops\EventSubscriber\TopsSubscriber
+    tags:
+      - {name: event_subscriber}
