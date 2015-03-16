@@ -24,24 +24,39 @@ class TViewModel
         return false;
     }
 
-     public static function getNameFromRequest(Request $request)
+    public static function getNameFromRequest(Request $request)
     {
         $path = $request->getPathInfo();
         if ($path && $request->getMethod() == 'GET' && $request->getRequestFormat() == 'html') {
             $pathParts = explode('/', $path);
             $count = count($pathParts);
-            switch ($count) {
-                case 2 :
-                    return $pathParts[1];
-
-                case 3 :
-                    $path = $pathParts[1];
-                    if ($path == 'node') {
-                        $name = $path . '/' . $pathParts[2];
-                        return self::getAlias(Drupal::service('path.alias_manager'), $name);
-                    }
-                    break;
+            if ($count < 2) {
+                return null;
             }
+
+            $name = $pathParts[1];
+            $arg = '';
+            if ($name == 'node') {
+                if (!is_numeric($pathParts[2])) {
+                    return null;
+                }
+                if ($count > 3) {
+                    $arg = $pathParts[3];
+                }
+            } else {
+                if ($count > 2) {
+                    $arg = $pathParts[2];
+                }
+            }
+            if ($arg == 'add' || $arg == 'edit') {
+                return null;
+            }
+
+            if ($name == 'node') {
+                $name = $name . '/' . $pathParts[2];
+                return self::getAlias(Drupal::service('path.alias_manager'), $name);
+            }
+            return $name;
         }
         return null;
     }
@@ -61,7 +76,6 @@ class TViewModel
     }
 
     public static function Initialize(Request $request) {
-
         $name = self::getNameFromRequest($request);
         if ($name)
         {
@@ -69,12 +83,11 @@ class TViewModel
             $vmLocation = __DIR__.'/../../../../'.$vmPath;
             if (file_exists($vmLocation)) {
                 self::$vmPaths[$name] = $vmPath;
-                // self::addScripts();
                 self::$vmname = $name;
                 return true;
             }
             else if (array_key_exists($name,self::$vmPaths)) {
-                 unset(self::$vmPaths[$name]);
+                unset(self::$vmPaths[$name]);
             }
         }
         return false;
@@ -104,11 +117,11 @@ class TViewModel
         $vmPath = self::getVmPath();
         if ($vmPath)
         {
-                return '<script src="'.$vmPath.'"'."></script>\n".
-                       "<script>\n".
-                        "   ViewModel.init('/');\n".
-                        "   ko.applyBindings(ViewModel);\n".
-                        "</script>\n";
+            return '<script src="'.$vmPath.'"'."></script>\n".
+            "<script>\n".
+            "   ViewModel.init('/');\n".
+            "   ko.applyBindings(ViewModel);\n".
+            "</script>\n";
         }
         return '';
     }
