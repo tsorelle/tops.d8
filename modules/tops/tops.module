@@ -3,6 +3,8 @@
  * @file
  * This module integrates tops features with Drupal 8
  */
+use Tops\Drupal\TViewModel;
+
 /**
  * Implements hook_help().
  */
@@ -22,7 +24,7 @@ function tops_help($route_name, \Drupal\Core\Routing\RouteMatchInterface $route_
 function tops_preprocess(&$variables, $hook)
 {
     if ($hook == 'html') {
-        $vm = \Tops\drupal\TViewModel::getVmName();
+        $vm = TViewModel::getVmName();
         $variables['view_model_name'] = $vm;
     }
 }
