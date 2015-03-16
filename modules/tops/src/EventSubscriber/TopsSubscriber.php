@@ -9,11 +9,11 @@ namespace Drupal\tops\EventSubscriber;
 
 use Drupal\Core\Path\AliasManagerInterface;
 use Drupal\Core\Path\CurrentPathStack;
+use Tops\drupal\TViewModel;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Tops\drupal\TViewModel;
 
 class TopsSubscriber implements EventSubscriberInterface {
 
