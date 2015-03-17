@@ -16,10 +16,10 @@ class TViewModel
     private static $vmPaths = array();
     private static $vmname = null;
 
-    public static function getVmName()
+    public static function isVmPage()
     {
         if (self::$vmname && array_key_exists(self::$vmname,self::$vmPaths)) {
-            return self::$vmname;
+            return true;
         }
         return false;
     }
@@ -35,6 +35,9 @@ class TViewModel
             }
 
             $name = $pathParts[1];
+            if ($name == 'config' || $name == 'admin' || $name == 'user') {
+                return null;
+            }
             $arg = '';
             if ($name == 'node') {
                 if (!is_numeric($pathParts[2])) {

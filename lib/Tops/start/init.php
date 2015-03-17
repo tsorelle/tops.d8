@@ -14,7 +14,7 @@
 */
 
 require_once(__DIR__.'/../../App/start/init.php');
-\Tops\sys\TErrorException::SetErrorHandler();
+// \Tops\sys\TErrorException::SetErrorHandler();
 \Tops\sys\TObjectContainer::Register('configManager','\Tops\sys\TYmlConfigManager');
 \Tops\sys\TObjectContainer::Register('mailer','\Tops\sys\TSwiftMailer','configManager');
 \Tops\sys\TObjectContainer::Register('logManager','\Tops\sys\TLogManager','configManager,mailer');

@@ -1,0 +1,33 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/assets/js/typings/jquery/jquery-tests.js" />
+        <item url="file://$PROJECT_DIR$/assets/js/typings/knockout/tests/knockout-tests.js" />
+        <item url="file://$PROJECT_DIR$/assets/js/Tops.App/MailboxesViewModel.js" />
+        <item url="file://$PROJECT_DIR$/assets/js/typings/knockout/tests/knockout-templatingBehaviors-tests.js" />
+        <item url="file://$PROJECT_DIR$/assets/js/Tops.App/App.js" />
+        <item url="file://$PROJECT_DIR$/assets/js/typings/requirejs/require-tests.js" />
+        <item url="file://$PROJECT_DIR$/assets/js/Tops.Peanut/Peanut.js" />
+        <item url="file://$PROJECT_DIR$/assets/js/typings/knockout/all-tests.js" />
+        <item url="file://$PROJECT_DIR$/assets/js/Tops.App/TestPageViewModel.js" />
+        <item url="file://$PROJECT_DIR$/assets/js/Tops.App/TemplateViewModel.js" />
+        <item url="file://$PROJECT_DIR$/assets/js/typings/bootstrap/bootstrap-tests.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/assets/js/typings/jquery/jquery-tests.js" />
+      <root url="file://$PROJECT_DIR$/assets/js/Tops.App/MailboxesViewModel.js" />
+      <root url="file://$PROJECT_DIR$/assets/js/typings/knockout/tests/knockout-tests.js" />
+      <root url="file://$PROJECT_DIR$/assets/js/typings/requirejs/require-tests.js" />
+      <root url="file://$PROJECT_DIR$/assets/js/Tops.App/App.js" />
+      <root url="file://$PROJECT_DIR$/assets/js/typings/knockout/tests/knockout-templatingBehaviors-tests.js" />
+      <root url="file://$PROJECT_DIR$/assets/js/typings/knockout/all-tests.js" />
+      <root url="file://$PROJECT_DIR$/assets/js/Tops.Peanut/Peanut.js" />
+      <root url="file://$PROJECT_DIR$/assets/js/Tops.App/TestPageViewModel.js" />
+      <root url="file://$PROJECT_DIR$/assets/js/Tops.App/TemplateViewModel.js" />
+      <root url="file://$PROJECT_DIR$/assets/js/typings/bootstrap/bootstrap-tests.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,21 @@
+knockoutJs:
+  version: v3.3.0
+  js:
+    http://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js: { type: external }
+
+peanut:
+  version: 1.0
+  js:
+    ../../assets/js/Tops.Peanut/Peanut.js: {}
+  dependencies:
+    - core/jquery
+    - tops/knockoutJs
+
+peanut.app:
+  version: 1.0
+  js:
+    ../../assets/js/Tops.App/App.js: {}
+  dependencies:
+    - core/jquery
+    - tops/knockoutJs
+    - tops/peanut
