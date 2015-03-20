@@ -26,6 +26,22 @@ print "starting\n";
 $loader = require __DIR__.'/../Tops/start/autoload.php';
 Tops\test\TTestLoader::Create($loader,"tops");
 
+use Tops\sys\TSession;
+TSession::Initialize();
+$t = TSession::GetSecurityToken();
+
+if (!TSession::AuthenitcateSecurityToken($t)) {
+    print "Failed!/n";
+
+}
+else print "ok/n";
+/*
+for ($i=0; $i<20; $i++) {
+    print TSession::createToken()."\n";
+}
+*/
+
+/*
 print "loaded\n\n";
 if (class_exists('Drupal\tops\Controller\TopsController')) {
     print "found it\n";
@@ -39,7 +55,7 @@ if (class_exists('Drupal\tops\Controller\TopsController')) {
 else {
     print "foo!\n";
 }
-
+*/
 //
 
 // \Drupal\tops\sys\TDrupalTest::speak();

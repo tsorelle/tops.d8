@@ -96,19 +96,6 @@ class TViewModel
         return false;
     }
 
-    private static function addScripts() {
-        // assume jquery already added.
-        // drupal_add_js("topsJS/jquery-1.8.3.js");
-        // drupal_add_js("misc/jquery.js"); // must be  jquery-1.8.3.js or up
-        // todo:update for 8
-        /*
-        drupal_add_js("topsJS/json2.js");
-        drupal_add_js("topsJS/knockout-2.2.1.js");
-        drupal_add_js("topsJS/Tops.Peanut/Peanut.js");
-        drupal_add_js("topsJS/Tops.App/App.js");
-        */
-    }
-
     public static function RenderMessageElements() {
         if (self::getVmPath()) {
             return '<messages-component></messages-component>';
@@ -120,11 +107,13 @@ class TViewModel
         $vmPath = self::getVmPath();
         if ($vmPath)
         {
-            return '<script src="'.$vmPath.'"'."></script>\n".
-            "<script>\n".
-            "   ViewModel.init('/');\n".
-            "   ko.applyBindings(ViewModel);\n".
-            "</script>\n";
+            return
+               //  '<script src="'.$vmPath.'"'."></script>\n".
+                // "<script>\n".
+                "   ViewModel.init('/');\n".
+                "   ko.applyBindings(ViewModel); // \n"
+                // ."</script>\n"
+                ;
         }
         return '';
     }

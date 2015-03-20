@@ -15,6 +15,7 @@
 
 require_once(__DIR__.'/../../App/start/init.php');
 // \Tops\sys\TErrorException::SetErrorHandler();
+// \Tops\sys\TSession::Initialize();
 \Tops\sys\TObjectContainer::Register('configManager','\Tops\sys\TYmlConfigManager');
 \Tops\sys\TObjectContainer::Register('mailer','\Tops\sys\TSwiftMailer','configManager');
 \Tops\sys\TObjectContainer::Register('logManager','\Tops\sys\TLogManager','configManager,mailer');
@@ -26,5 +27,6 @@ require_once(__DIR__.'/../../App/start/init.php');
 \Tops\sys\TObjectContainer::Register('serviceHost','\Tops\services\TServiceHost','serviceFactory,user,exceptionHandler');
 \Tops\sys\TObjectContainer::Register('mailboxManager','\App\test\TestMailboxManager');
 \Tops\sys\TObjectContainer::Register('postoffice','\Tops\sys\TPostOffice','mailer,mailboxManager');
+
 
 

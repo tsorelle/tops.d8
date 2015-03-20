@@ -11,21 +11,21 @@
     $request->request->set('serviceCode','TestGetService');
     $request->request->set( 'request', 3);
 -->
-    <a href="topsService.php?serviceCode=TestGetService&request=3">Test Hello World</a>
+    <a href="tops/get/TestService/3">Test Hello World</a>
 
 </p>
 <div>
-    <form id="getserviceform" method="get" action="/tops/get" style="border: 1px solid black">
+    <form id="getserviceform" method="get" action="/tops/service" style="border: 1px solid black">
         <h2>Get</h2>
-        <p>Command: <input id="serviceCode" name="serviceCode"></p>
+        <p>Command: <input id="serviceCode" name="serviceCode" value="TestService"></p>
         <p>Request: <input id="request" name="request"></p>
         <input type="submit" value="Go" />
 
     </form>
 <br>
-    <form id="postserviceform" method="post" action="/tops/service/TestService" style="border: 1px solid black">
+    <form id="postserviceform" method="post" action="/tops/service" style="border: 1px solid black">
         <h2>Post</h2>
-        <p>Command: <input id="serviceCode" name="serviceCode"></p>
+        <p>Command: <input id="serviceCode" name="serviceCode" value="TestService"></p>
         <p>Request: <input id="request" name="request" style="width: 90%" value='{"":"","":""}'></p>
         <input type="submit" value="Go" />
     </form>

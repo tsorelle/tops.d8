@@ -4,6 +4,7 @@
  * This module integrates tops features with Drupal 8
  */
 use Tops\Drupal\TViewModel;
+use Tops\sys\TSession;
 
 /**
  * Implements hook_help().
@@ -24,10 +25,14 @@ function tops_help($route_name, \Drupal\Core\Routing\RouteMatchInterface $route_
 function tops_preprocess(&$variables, $hook)
 {
     if ($hook == 'html') {
-      $variables['peanut_messages'] = TViewModel::RenderMessageElements();
-      $variables['peanut_start_script'] = TViewModel::RenderStartScript();
+        $vmPath = TViewModel::getVmPath();
+        $hasVm = (!empty($vmPath));
+        $variables['peanut_viewmodel'] = $hasVm;
+        $variables['peanut_viewmodel_src'] = $vmPath;
+        $variables['tops_security_token'] = TSession::GetSecurityToken();
     }
 }
+
 
 /**
  * Implements hook_preprocess_HOOK().

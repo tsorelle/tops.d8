@@ -8,6 +8,7 @@
 
 namespace Tops\services;
 use Tops\sys\IUser;
+use Tops\sys\TSession;
 use Tops\sys\TUser;
 
 /**
@@ -89,8 +90,12 @@ abstract class TServiceCommand {
      * @param $request
      * @return TServiceResponse
      */
-    public function execute($request) {
+    public function execute($request, $securityToken = null) {
         $this->context = new TServiceContext();
+        if ($securityToken && !TSession::AuthenitcateSecurityToken($securityToken)) {
+            $this->addErrorMessage("Sorry, your session has expired or is not valid. Please return to home page.");
+            return $this->context->GetResponse();
+        }
         $this->request = $request;
         if ($this->isAuthorized())
             $this->run();

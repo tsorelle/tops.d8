@@ -14,12 +14,14 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Tops\sys\TSession;
 
 class TopsSubscriber implements EventSubscriberInterface {
 
     public function checkForViewModel(GetResponseEvent $event) {
         $req = $event->getRequest();
         TViewModel::Initialize($req);
+        TSession::Initialize();
     }
 
     /**

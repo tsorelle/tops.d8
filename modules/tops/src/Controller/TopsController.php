@@ -17,8 +17,8 @@ use Tops\services\TServiceHost;
 
 class TopsController extends ControllerBase {
 
-    public function executeService(Request $request, $serviceCode) {
-        $result = TServiceHost::ExecuteRequest($request, $serviceCode);
+    public function executeService(Request $request) { // }, $serviceCode) {
+        $result = TServiceHost::ExecuteRequest($request); // , $serviceCode);
         return new JsonResponse($result);
     }
 

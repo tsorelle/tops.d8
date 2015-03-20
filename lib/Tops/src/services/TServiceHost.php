@@ -108,6 +108,7 @@ class TServiceHost {
             $request = Request::createFromGlobals();
         }
 
+
         if ($serviceCode == null) {
             $serviceCode = $request->get('serviceCode');
         }
@@ -138,34 +139,30 @@ class TServiceHost {
             }
         }
 
-        return $this->_execute($serviceCode, $input);
-        /*        }
-                catch (\Exception $ex) {
-                    $rethrow = $this->handleException($ex);
-                    if ($rethrow) {
-                        throw $ex;
-                    }
-                    return $this->getFailureResponse();
-                }
-        */
+        $securityToken = $request->get('topsSecurityToken');
+        if (!$securityToken) {
+            $securityToken = 'invalid';
+        }
+
+        return $this->_execute($serviceCode, $input, $securityToken);
     }
 
 
     /**
      * @param $serviceCode
      * @param $input
+     * @param null $securityToken
      * @return TServiceResponse
      * @throws \Exception
      */
-    public static function Execute($serviceCode, $input) {
-        return self::getInstance()->_execute($serviceCode, $input);
+    public static function Execute($serviceCode, $input, $securityToken = null) {
+        return self::getInstance()->_execute($serviceCode, $input, $securityToken);
     }
 
-    public function _execute($serviceCode, $input) {
+    public function _execute($serviceCode, $input, $securityToken = null) {
         $command = $this->serviceFactory->CreateService($serviceCode);
         if (empty($command))
             throw new \Exception("Unable to create service command '$serviceCode'");
-        return $command->Execute($input);
+        return $command->Execute($input, $securityToken);
     }
-
 } 

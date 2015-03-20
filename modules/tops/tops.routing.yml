@@ -1,5 +1,5 @@
 tops.service:
-  path: '/tops/service/{serviceCode}'
+  path: '/tops/service'
   defaults:
     _controller: '\Drupal\tops\Controller\TopsController::executeService'
   requirements:

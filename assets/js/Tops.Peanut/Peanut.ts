@@ -10,9 +10,12 @@ module Tops {
         public Value: string;
     }
 
-
     export class Peanut {
+
+
         constructor(public clientApp: IPeanutClient) {
+            var me = this;
+            me.securityToken = me.readSecurityToken();
         }
         // private foo: any;
         // private serviceType: string = 'php';
@@ -28,6 +31,19 @@ module Tops {
         static serviceResultErrors: number = 3;
         static serviceResultServiceFailure: number = 4;
         static serviceResultServiceNotAvailable: number = 5;
+
+        securityToken: string = '';
+
+        readSecurityToken() {
+            var cookie = document.cookie;
+            if (cookie) {
+                var match = cookie.match(new RegExp('peanutSecurity=([^;]+)'));
+                if (match) {
+                    return match[1];
+                }
+            }
+            return '';
+        }
 
         parseErrorResult(result: any): string {
             var me = this;
@@ -52,7 +68,9 @@ module Tops {
 
         }
 
-
+        setSecurityToken(token: string) {
+            this.securityToken = token;
+        }
         getInfoMessages(messages: IServiceMessage[]): string[]{
             var _peanut = this;
             // var me = this;
@@ -156,8 +174,7 @@ module Tops {
         }
 
 
-        // Execute a peanut service and handle Service Response.
-        executeService(serviceName: string, parameters: any = "",
+        executeRPC(requestMethod: string, serviceName: string, parameters: any = "",
                        successFunction?: (serviceResponse: IServiceResponse) => void,
                        errorFunction?: (errorMessage: string) => void) : JQueryPromise<any> {
             var _peanut = this;
@@ -168,11 +185,59 @@ module Tops {
             else  {
                 parameters = JSON.stringify(parameters);
             }
+            var serviceRequest = { "serviceCode" : serviceName, "topsSecurityToken": _peanut.securityToken,  "request" : parameters};
+
+            var serviceUrl =  _peanut.clientApp.serviceUrl; // Drupal 8: tops/service, Drupal 6/7 or PHP: 'topsService.php';
+
+            var result =
+                jQuery.ajax({
+                    type: requestMethod, // "POST",
+                    data: serviceRequest,
+                    dataType: "json",
+                    cache: false,
+                    url: serviceUrl
+                })
+                    .done(
+                    function(serviceResponse) {
+                        _peanut.showServiceMessages(serviceResponse);
+                        if (successFunction) {
+                            successFunction(serviceResponse);
+                        }
+                    }
+                )
+                    .fail(
+                    function(jqXHR, textStatus ) {
+                        var errorMessage = _peanut.showExceptionMessage(jqXHR);
+                        if (errorFunction)
+                            errorFunction(errorMessage);
+                    });
+
+
+            return result;
+        }
+
+
+        // Execute a peanut service and handle Service Response.
+        executeService(serviceName: string, parameters: any = "",
+                       successFunction?: (serviceResponse: IServiceResponse) => void,
+                       errorFunction?: (errorMessage: string) => void) : JQueryPromise<any> {
+            var _peanut = this;
+            return _peanut.executeRPC("POST", serviceName, parameters, successFunction, errorFunction);
+        }
+        /*
+
+            // peanut controller requires parameter as a string.
+            if (!parameters)
+                parameters = "";
+            else  {
+                parameters = JSON.stringify(parameters);
+            }
             var serviceRequest = { "serviceCode" : serviceName, "request" : parameters};
             var serviceUrl =  _peanut.clientApp.serviceUrl; // 'topsService.php';
 
+
             var result =
-                $.ajax({
+                jQuery.ajax({
                     type: "POST",
                     data: serviceRequest,
                     dataType: "json",
@@ -197,10 +262,15 @@ module Tops {
 
             return result;
         }
+        */
 
         getFromService(serviceName: string, parameters: any = "",
                        successFunction?: (serviceResponse: IServiceResponse) => void,
                        errorFunction?: (errorMessage: string) => void) : JQueryPromise<any> {
+            var _peanut = this;
+            return _peanut.executeRPC("POST", serviceName, parameters, successFunction, errorFunction);
+        }
+        /*
             var _peanut = this;
 
             if (!parameters)
@@ -208,9 +278,11 @@ module Tops {
 
             var serviceRequest = { "serviceCode" : serviceName, "request" : parameters};
             var serviceUrl =  _peanut.clientApp.serviceUrl; // 'topsService.php';
+            // var serviceRequest = { "serviceCode" : serviceName, "request" : parameters};
+            // var serviceUrl =  _peanut.clientApp.serviceUrl; // 'topsService.php';
 
             var result =
-                $.ajax({
+                jQuery.ajax({
                     type: "GET",
                     data: serviceRequest,
                     dataType: "json",
@@ -235,6 +307,8 @@ module Tops {
 
             return result;
         }
+        */
+
 
     }
 }

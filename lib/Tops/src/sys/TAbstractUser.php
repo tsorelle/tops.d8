@@ -13,11 +13,11 @@ abstract class TAbstractUser implements IUser
 {
     protected $id = 0;
     protected $firstName = '';
-    protected $lastName  = '';
-    protected $middleName  = '';
-    protected $userName  = '';
+    protected $lastName = '';
+    protected $middleName = '';
+    protected $userName = '';
     protected $fullName = '';
-    protected $email  = '';
+    protected $email = '';
 
     protected $isCurrentUser = false;
 
@@ -59,7 +59,7 @@ abstract class TAbstractUser implements IUser
      * @param string $value
      * @return bool
      */
-    public abstract function isAuthorized($value='');
+    public abstract function isAuthorized($value = '');
 
     /**
      * @return bool
@@ -76,9 +76,9 @@ abstract class TAbstractUser implements IUser
     {
         $this->fullName = $this->firstName;
         if (!empty($this->middleName))
-            $this->fullName .= ' '.$this->middleName;
+            $this->fullName .= ' ' . $this->middleName;
         if (!empty($this->lastName))
-            $this->fullName .= ' '.$this->lastName;
+            $this->fullName .= ' ' . $this->lastName;
 
     }  //  concatFullName
 
@@ -118,7 +118,7 @@ abstract class TAbstractUser implements IUser
      * @param bool $defaultToUsername
      * @return string
      */
-    public function getFullName($defaultToUsername=true)
+    public function getFullName($defaultToUsername = true)
     {
         if (!empty($this->fullName))
             return $this->fullName;
@@ -148,7 +148,7 @@ abstract class TAbstractUser implements IUser
      * @param bool $defaultToUsername
      * @return string
      */
-    public function getUserShortName($defaultToUsername=true)
+    public function getUserShortName($defaultToUsername = true)
     {
         $result = '';
         if (!empty($this->firstName)) {
@@ -157,7 +157,7 @@ abstract class TAbstractUser implements IUser
         if (!empty($this->middleName)) {
             if (!empty($result))
                 $result .= ' ';
-            $result .= substr($this->middleName,0,1).'.';
+            $result .= substr($this->middleName, 0, 1) . '.';
         }
         if (!empty($this->lastName)) {
             if (!empty($result))
@@ -180,11 +180,13 @@ abstract class TAbstractUser implements IUser
         return $this->email;
     }  //  getEmail
 
-    public function isCurrent() {
+    public function isCurrent()
+    {
         return $this->isCurrentUser;
     }
 
-    protected function setCurrent() {
+    protected function setCurrent()
+    {
         $this->isCurrentUser = true;
     }
 

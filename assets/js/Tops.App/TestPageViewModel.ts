@@ -77,7 +77,7 @@ module Tops {
         // test() { alert("hello"); }
 
         // call this funtions at end of page
-        init(applicationPath: string, successFunction?: () => void) {
+        init(applicationPath: string, securityToken: string, successFunction?: () => void) {
             var me = this;
 
             // setup messaging and other application initializations

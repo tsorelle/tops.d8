@@ -18,7 +18,7 @@ module Tops {
 
         public static setWaiterType(waiterType: string) {
             waitMessage.waiterType = waiterType;
-            waitMessage.waitDialog = $(waitMessage.templates[waiterType]);
+            waitMessage.waitDialog = jQuery(waitMessage.templates[waiterType]);
             return waitMessage.waitDialog;
         }
 
@@ -156,14 +156,19 @@ module Tops {
         applicationPath: string = "/";
         peanut: Tops.Peanut;
         viewModel: any;
-        serviceUrl: string = "topsService.php";
+
+        // Drupal 8
+        // See modules/tops/tops.routing.yml and modules/tops/src/controller/TopsController.php
+        serviceUrl: string = "tops/service";
+        // Drupal 6/7 or PHP
+        // serviceUrl: string = "topsService.php";
 
 
         public getHtmlTemplate(name: string, successFunction: (htmlSource: string) => void) {
             var parts = name.split('-');
             var fileName = parts[0] + parts[1].charAt(0).toUpperCase() + parts[1].substring(1);
             var htmlSource = this.applicationPath + 'assets/templates/' + fileName + '.html';
-            $.get(htmlSource, successFunction);
+            jQuery.get(htmlSource, successFunction);
         }
 
         private registerComponent(name: string, vm: any, successFunction?: () => void) {
@@ -191,6 +196,7 @@ module Tops {
             var me = this;
             me.setApplicationPath(applicationPath);
             me.serviceUrl = this.applicationPath + this.serviceUrl;
+
             messageManager.instance = new messageManager();
             me.registerComponent('messages-component', messageManager.instance, function () {
                 me.loadWaitMessageTemplate('spin-waiter', function () {
