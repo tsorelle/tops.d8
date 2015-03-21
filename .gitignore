@@ -33,3 +33,5 @@ lib/tools/bin
 lib/test/quickTest.php
 sites/default/files
 assets/bootstrap
+assets/bootstrap/css
+assets/bootstrap/fonts
