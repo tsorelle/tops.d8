@@ -16,6 +16,8 @@ class TTracer
      */
     private $traceLogger = null;
 
+    private static $debugJs = false;
+
     const TRACE_MODE_CONSOLE = 2;
     const TRACE_MODE_LOGGING = 4;
     const TRACE_MODE_OFF = 0;
@@ -43,6 +45,7 @@ class TTracer
         $this->sessionId = uniqid('tr');
         $traceSection = $configManager->getLocal("appsettings", "trace");
         $consoleEnabled = $traceSection->isTrue("console", false);
+        self::$debugJs = $traceSection->isTrue('debugjs',false);
         if ($consoleEnabled) {
             $this->traceMode |= self::TRACE_MODE_CONSOLE;
         }
@@ -213,6 +216,16 @@ class TTracer
             }
         }
     }
+
+    public static function setJsDebug($on) {
+        self::$debugJs = $on;
+    }
+
+    public static function JsDebuggingOn() {
+        return self::$debugJs;
+    }
+
+
 
     // private
 

@@ -92,15 +92,16 @@ abstract class TServiceCommand {
      */
     public function execute($request, $securityToken = null) {
         $this->context = new TServiceContext();
-        if ($securityToken && !TSession::AuthenitcateSecurityToken($securityToken)) {
-            $this->addErrorMessage("Sorry, your session has expired or is not valid. Please return to home page.");
-            return $this->context->GetResponse();
+        if (TSession::AuthenitcateSecurityToken($securityToken)) {
+            $this->request = $request;
+            if ($this->isAuthorized())
+                $this->run();
+            else
+                $this->addErrorMessage("Sorry, you are not authorized to use this service.");
         }
-        $this->request = $request;
-        if ($this->isAuthorized())
-            $this->run();
-        else
-            $this->addErrorMessage("Sorry, you are not authorized to use this service.");
+        else {
+            $this->addErrorMessage("Sorry, your session has expired or is not valid. Please return to home page.");
+        }
         return $this->context->GetResponse();
     }
 }

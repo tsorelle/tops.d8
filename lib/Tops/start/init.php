@@ -28,5 +28,7 @@ require_once(__DIR__.'/../../App/start/init.php');
 \Tops\sys\TObjectContainer::Register('mailboxManager','\App\test\TestMailboxManager');
 \Tops\sys\TObjectContainer::Register('postoffice','\Tops\sys\TPostOffice','mailer,mailboxManager');
 
+// \Tops\sys\TTracer::setJsDebug(true);
+
 
 

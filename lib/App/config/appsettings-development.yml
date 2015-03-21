@@ -50,6 +50,7 @@ trace:
   console: 1
   logging: 1
   log: trace
+  debugjs: 1
   traces:
     default: 1
     trace1: 1

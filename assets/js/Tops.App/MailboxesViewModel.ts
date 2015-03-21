@@ -43,7 +43,7 @@ module Tops {
         init(applicationPath: string, successFunction?: () => void) {
             var me = this;
             // setup messaging and other application initializations
-            me.application.initialize(applicationPath, securityToken,
+            me.application.initialize(applicationPath,
                 function() {
                     // do view model initializations here.
                     me.getMailboxList(successFunction);

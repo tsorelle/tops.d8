@@ -80,11 +80,18 @@ class TSession
 
     public static function AuthenitcateSecurityToken($token)
     {
+        if (empty($token)) {
+            // empty token means no authentication required.
+            return true;
+        }
 
         $currentToken = self::Get('security-token');
         if (empty($currentToken)) {
-            return false;
+            // no stored token means no authentication required.
+            return true;
         }
+
+        // if tokens have value compare them
         return ($token === $currentToken);
     }
 }

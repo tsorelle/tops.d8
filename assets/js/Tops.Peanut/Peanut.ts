@@ -4,14 +4,20 @@
 ///<reference path='../typings/knockout/knockout.d.ts' />
 ///<reference path='../typings/jquery/jquery.d.ts' />
 ///<reference path='Peanut.d.ts' />
+///<reference path='Debugging.ts' />
 module Tops {
     export class KeyValueDTO implements Tops.INameValuePair {
         public Name: string;
         public Value: string;
     }
-
     export class Peanut {
 
+        public static debugging() {
+            if (Tops.Debugging) {
+                return Tops.Debugging.isEnabled();
+            }
+            return false;
+        }
 
         constructor(public clientApp: IPeanutClient) {
             var me = this;

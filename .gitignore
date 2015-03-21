@@ -31,3 +31,5 @@ assets/js/lib/bower_components
 assets/js/lib/jasmine
 lib/tools/bin
 lib/test/quickTest.php
+sites/default/files
+assets/bootstrap

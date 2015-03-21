@@ -2,6 +2,7 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/assets/js/Tops.Peanut/Debugging.js" />
         <item url="file://$PROJECT_DIR$/assets/js/typings/jquery/jquery-tests.js" />
         <item url="file://$PROJECT_DIR$/assets/js/Tops.App/MailboxesViewModel.js" />
         <item url="file://$PROJECT_DIR$/assets/js/Tops.App/App.js" />
@@ -18,6 +19,7 @@
       <root url="file://$PROJECT_DIR$/assets/js/typings/knockout/tests/knockout-templatingBehaviors-tests.js" />
       <root url="file://$PROJECT_DIR$/assets/js/typings/knockout/all-tests.js" />
       <root url="file://$PROJECT_DIR$/assets/js/typings/jquery/jquery-tests.js" />
+      <root url="file://$PROJECT_DIR$/assets/js/Tops.Peanut/Debugging.js" />
       <root url="file://$PROJECT_DIR$/assets/js/Tops.App/MailboxesViewModel.js" />
       <root url="file://$PROJECT_DIR$/assets/js/typings/requirejs/require-tests.js" />
       <root url="file://$PROJECT_DIR$/assets/js/Tops.App/App.js" />

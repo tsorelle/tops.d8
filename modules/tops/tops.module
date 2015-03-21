@@ -14,11 +14,6 @@ require_once(__DIR__.'/../../lib/Tops/start/init.php');
 // require_once(__DIR__.'/../../lib/App/start/init.php');
 
 
-function tops_help($route_name, \Drupal\Core\Routing\RouteMatchInterface $route_match)
-{
-    return 'Help from tops';
-}
-
 /**
  * Implements hook_preprocess().
  */
@@ -29,7 +24,7 @@ function tops_preprocess(&$variables, $hook)
         $hasVm = (!empty($vmPath));
         $variables['peanut_viewmodel'] = $hasVm;
         $variables['peanut_viewmodel_src'] = $vmPath;
-        $variables['tops_security_token'] = TSession::GetSecurityToken();
+        $variables['tops_js_debug'] =  \Tops\sys\TTracer::JsDebuggingOn();
     }
 }
 
@@ -43,6 +38,11 @@ function tops_preprocess(&$variables, $hook)
 function tops_page_attachments(array &$attachments)
 {
     if (TViewModel::isVmPage()) {
-        $attachments['#attached']['library'][] = 'tops/peanut.app';
+        if (\Tops\sys\TTracer::JsDebuggingOn()) {
+            $attachments['#attached']['library'][] = 'tops/peanut.debug';
+        }
+        else {
+            $attachments['#attached']['library'][] = 'tops/peanut.app';
+        }
     }
 }

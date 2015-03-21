@@ -11,6 +11,11 @@ peanut:
     - core/jquery
     - tops/knockoutJs
 
+bootstrapjs:
+  version: 3.3.5
+  js:
+    //maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js: { type: external }
+
 peanut.app:
   version: 1.0
   js:
@@ -19,3 +24,14 @@ peanut.app:
     - core/jquery
     - tops/knockoutJs
     - tops/peanut
+    - tops/bootstrapjs
+
+peanut.debug:
+  version: 1.0
+  js:
+    ../../assets/js/Tops.Peanut/Debugging.js: {}
+  dependencies:
+    - core/jquery
+    - tops/knockoutJs
+    - tops/bootstrapjs
+

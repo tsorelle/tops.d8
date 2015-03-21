@@ -13,5 +13,6 @@ date_default_timezone_set( $timezone ) ;
 if (!empty($includesPath)) {
     ini_set('include_path', ini_get('include_path') . $includesPath);
 }
+
 unset($includesPath);
 unset($timezone);
